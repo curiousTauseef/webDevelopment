@@ -1,0 +1,477 @@
+/** {*/
+/*margin  : 0px;*/
+/*padding : 0px;*/
+/*}*/
+
+html {
+    background-color : #EEF3F5; /*#e2e2d6;*/
+    }
+
+body {
+    /*font-family  : "Arial Black", Gadget, sans-serif;*/
+    /*font-weight  : 400;*/
+    /*font-style   : normal;*/
+    /*font-variant : normal;*/
+    /*line-height  : 125%;*/
+    /*width        : 100%;*/
+    /*min-height   : 100%;*/
+    /*margin       : 0px auto 0px auto;*/
+    /*color        : #474748;*/
+    }
+
+a {
+    text-decoration : none;
+    }
+
+a:link, a:visited {
+    }
+
+a:hover {
+    color : #F0414D;
+    }
+
+a:active {
+    }
+
+.content {
+    margin    : 0px auto 0px auto;
+    max-width : 1024px;
+    }
+
+.floater {
+    /*float            : left;*/
+    /*padding          : 0px 0px 0px 0px;*/
+    /*width            : 331px;*/
+    /*min-height       : 300px;*/
+    /*background-color : #BCBCBC;*/
+    background-color : #1CBCBC;
+    /*margin           : 0px 5px 0px 5px;*/
+    }
+
+/*------------- header ------------------*/
+#header {
+    color       : #F4F4F4;
+    font-family : "Arial Black", Gadget, sans-serif;
+    }
+
+#title {
+    background-color : #FFFFFF;
+    height           : 70px;
+    margin           : 0px auto 0px auto;
+    padding          : 0px 20px 0px 20px;
+    }
+
+#logo-left {
+    position : relative;
+    left     : -300px;
+    float    : left;
+    }
+
+#logo-left img {
+    height : 70px;
+    }
+
+#logo-right {
+    position : relative;
+    right    : -800px;
+    float    : left;
+    padding  : 15px 0px 10px 20px;
+    }
+
+#logo-right a {
+    line-height : 130%;
+    font-size   : large;
+    font-weight : bold;
+    font-family : "Arial Black", Gadget, sans-serif;
+    }
+
+#title a {
+    color           : #474748;
+    text-decoration : none;
+    }
+
+#navigation {
+    /*background-color : rgba(81, 81, 81, 0.5);*/
+    background-color : #820001;
+    /*text-align       : center;*/
+    /*height           : 40px;*/
+    }
+
+#navigation ul {
+    /*list-style-type : none;*/
+    /*margin          : 0;*/
+    /*padding         : 0;*/
+    /*position        : absolute;*/
+    }
+
+#navigation li {
+    /*display      : inline-block;*/
+    /*float        : left;*/
+    /*margin-right : 1px;*/
+    }
+
+#navigation li a {
+    /*display         : block;*/
+    /*min-width       : 120px;*/
+    text-align  : center;
+    /*line-height     : 40px;*/
+    font-weight : bolder;
+    font-family : "Arial Black", Gadget, sans-serif;
+    color       : #FFFFFF;
+    /*text-decoration : none;*/
+    }
+
+/*Hover state for top level links*/
+#navigation li:hover a {
+    background : #EEF3F5;
+    color      : #F0414D;
+    }
+
+/*Hide dropdown links until they are needed*/
+#navigation li ul {
+    display : none;
+    }
+
+/*Style 'show menu' label button and hide it by default*/
+#navigation .show-menu {
+    font-family     : "Arial Black", Gadget, sans-serif;
+    text-decoration : none;
+    /*color           : #FFFFFF;*/
+    /*background      : #F0414D;*/
+    text-align      : center;
+    padding         : 10px 0;
+    display         : none;
+    }
+
+/*Hide checkbox*/
+input[type=checkbox] {
+    display : none;
+    }
+
+/*Show menu when invisible checkbox is checked*/
+input[type=checkbox]:checked ~ #menu {
+    display : block;
+    }
+
+/*Responsive Styles*/
+@media screen and (max-width : 750px) {
+
+    /*Make dropdown links appear inline*/
+    #navigation ul {
+        position : static;
+        display  : none;
+        }
+
+    /*Create vertical spacing*/
+    #navigation li {
+        margin-bottom : 1px;
+        }
+
+    /*Make all menu links full width*/
+    #navigation ul li, li a {
+        width : 100%;
+        }
+
+    #navigation ul li a {
+        background-color : rgba(81, 81, 81, 0.8);
+        }
+
+    /*Display 'show menu' link*/
+    #navigation .show-menu {
+        display : block;
+        }
+
+    #logo-right {
+        display : none;
+        }
+
+    #about-img {
+        font-size : x-small;
+        padding   : 3px 5px;
+        }
+    }
+
+/*-- login --*/
+#nav-login {
+    font-size : small;
+    }
+
+/*-------------^ header ^------------------*/
+
+/*------------- home content ------------------*/
+
+#home-wrapper {
+    /*position : relative;*/
+    /*height   : 0;*/
+    /*width    : 100%;*/
+    /*margin   : 0px auto 0px auto;*/
+    /*overflow : hidden;*/
+
+    /*width:50%;*/
+    /*height:0;*/
+    /*padding-bottom: 30%; /!*acts as fluid height*!/*/
+    /*overflow:hidden;*/
+    /*position:relative;*/
+    }
+
+#home-image-show {
+    /*height : 578px;*/
+    }
+
+#home-image-show-slider {
+    /*position : relative;*/
+    }
+
+#home-image-show-slider img {
+    /*position  : absolute;*/
+    /*max-width : 1024px;*/
+    /*z-index   : -1;*/
+    /*width     : 100%;*/
+    /*height    : auto;*/
+    }
+
+#about-img {
+    /*position         : absolute;*/
+    /*z-index          : 1;*/
+    background-color : rgba(0, 0, 0, 0.4);
+    color            : rgba(255, 255, 255, 0.7);
+    /*font-family      : FontAwesome;*/
+    /*right            : 50px;*/
+    /*margin-top       : 50%;*/
+    padding          : 5px 10px;
+    }
+
+/* slider navigation ---- */
+#nav-slider-left, #nav-slider-right {
+    /*margin-top : 25%;*/
+    /*z-index    : 1;*/
+    /*position   : absolute;*/
+    font-size : 50px;
+    /*color      : rgba(0, 0, 0, 0.4);*/
+    /*cursor     : pointer;*/
+    }
+
+#nav-slider-left .fa, #nav-slider-right .fa {
+    /*margin : 50%;*/
+    }
+
+#nav-slider-left:hover, #nav-slider-right:hover {
+    /*color     : rgba(0, 0, 0, 0.5);*/
+    font-size : 51px;
+    }
+
+#nav-slider-left {
+    /*left : 20px;*/
+    }
+
+#nav-slider-right {
+    /*right : 20px;*/
+    }
+
+/*-------home news ---------*/
+#home-news {
+    }
+
+#home-other {
+    margin-top : 20px;
+    }
+
+#home-other .floater {
+    height        : 450px;
+    margin-top    : 10px;
+    margin-bottom : 10px;
+    }
+
+#home-gallery {
+    height           : 200px;
+    width            : 331px;
+    background-color : #F0414D;
+    margin-bottom    : 20px;
+    }
+
+#home-sponsor {
+    height           : 230px;
+    width            : 331px;
+    background-color : #249FDF;
+    }
+
+/*-------------^ home content ^------------------*/
+
+/*------------- Footer ------------------*/
+#footer {
+    width            : 100%;
+    height           : 100%;
+    position         : relative;
+    bottom           : 0px;
+    left             : 0;
+    background-color : #BCBCBC;
+    overflow         : auto;
+    }
+
+#footer p, a {
+    color       : #FFFFFF;
+    font-family : "Arial Black", Gadget, sans-serif;
+    }
+
+/*------footer left-------*/
+#footer-left {
+    padding-top  : 40px;
+    padding-left : 3px;
+    }
+
+#footer-left p {
+    line-height : 240%;
+    }
+
+#footer-left p, a {
+    font-family : "Helvetica Narrow", "Arial Narrow", Tahoma, Arial, Helvetica, sans-serif;
+    font-weight : bold;
+    }
+
+#web-designer {
+    margin-top : 65px;
+    }
+
+#web-designer a:hover {
+    color : #E0E6E9;
+    }
+
+/*-------footer middle------*/
+#footer-middle {
+    padding-top     : 45px;
+    color           : #FFFFFF;
+    font-family     : "Helvetica Narrow", "Arial Narrow", Tahoma, Arial, Helvetica, sans-serif;
+    text-decoration : none;
+    }
+
+#footer-middle ul {
+    list-style-type : none;
+    }
+
+#footer-middle ul li {
+    -webkit-transition : opacity 1s ease-in-out;
+    -moz-transition    : opacity 1s ease-in-out;
+    -o-transition      : opacity 1s ease-in-out;
+    -ms-transition     : opacity 1s ease-in-out;
+    transition         : opacity 1s ease-in-out;
+    }
+
+#footer-middle a:hover > img {
+    filter         : none;
+    -webkit-filter : grayscale(0);
+    }
+
+#footer-middle img {
+    margin         : 5px 10px 5px 40px;
+    vertical-align : middle;
+    width          : 25px;
+
+    filter         : gray; /*/!* IE6-9 *!/*/
+    filter         : grayscale(1); /* Firefox 35+ */
+    -webkit-filter : grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    }
+
+/*-------footer right------*/
+#footer-right {
+    text-align  : center;
+    padding-top : 25px;
+    }
+
+/*------footer social icons-----*/
+#footer .socialicons {
+    margin : 1.5em 0 0 0;
+    }
+
+#footer .socialicons li {
+    -moz-animation    : nav-icons 0.5s ease-in-out forwards;
+    -webkit-animation : nav-icons 0.5s ease-in-out forwards;
+    -o-animation      : nav-icons 0.5s ease-in-out forwards;
+    -ms-animation     : nav-icons 0.5s ease-in-out forwards;
+    animation         : nav-icons 0.5s ease-in-out forwards;
+    -moz-transform    : translate3d(0, 0, 0);
+    -webkit-transform : translate3d(0, 0, 0);
+    -o-transform      : translate3d(0, 0, 0);
+    -ms-transform     : translate3d(0, 0, 0);
+    transform         : translate3d(0, 0, 0);
+    display           : inline-block;
+    height            : 4em;
+    width             : 4em;
+    line-height       : 4.885em;
+    position          : relative;
+    }
+
+#footer .socialicons a {
+    -webkit-tap-highlight-color : transparent;
+    -webkit-touch-callout       : none;
+    border                      : 0;
+    display                     : inline-block;
+    color                       : #FFFFFF;
+    }
+
+#footer .socialicons a:before {
+    -moz-transition    : all 0.4s ease-in-out;
+    -webkit-transition : all 0.4s ease-in-out;
+    -o-transition      : all 0.4s ease-in-out;
+    -ms-transition     : all 0.4s ease-in-out;
+    transition         : all 0.4s ease-in-out;
+    border-radius      : 100%;
+    border             : solid 1px white;
+    display            : block;
+    font-size          : 1.3em;
+    height             : 2.5em;
+    width              : 2.5em;
+    line-height        : 2.5em;
+    position           : relative;
+    text-align         : center;
+    top                : 0;
+    }
+
+#footer ul.socialicons a:hover {
+    font-size : 1.2em;
+    color     : #F0414D;
+    }
+
+.icon {
+    text-decoration : none;
+    }
+
+.icon:before {
+    display                 : inline-block;
+    font-family             : FontAwesome;
+    font-size               : 1.25em;
+    text-decoration         : none;
+    font-style              : normal;
+    font-weight             : normal;
+    line-height             : 1;
+    -webkit-font-smoothing  : antialiased;
+    -moz-osx-font-smoothing : grayscale;
+    }
+
+.icon > .label {
+    display : none;
+    }
+
+#footer ul.socialicons a:hover .label {
+    width              : 100%;
+    height             : 100%;
+    position           : absolute;
+    font-size          : small;
+    top                : 80px;
+    left               : 0;
+    display            : inline-block;
+    -webkit-box-sizing : border-box;
+    -moz-box-sizing    : border-box;
+    box-sizing         : border-box;
+    }
+
+#copyright {
+    position     : absolute;
+    bottom       : 50px;
+    padding-left : 25px;
+    }
+
+#copyright a {
+    color : #FFFFFF;
+    }
+
+/*-------------^ Footer ^------------------*/

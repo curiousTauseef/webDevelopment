@@ -1,0 +1,331 @@
+/*
+Author: Chun Fan, Junjun guo
+*/
+
+/* start reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup,
+menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* end reset */
+
+/* start editing from here */
+
+/* start main frame */
+body {
+    margin: 0 auto;
+    width: 1000px;
+    font-family: 'Lato', sans-serif;
+    background-color: #FCFAF2;
+}
+
+/*---------- header ----------*/
+#header {
+    color       : #F4F4F4;
+    font-family : "Arial Black", Gadget, sans-serif;
+}
+
+#title {
+    background-color : #FFFFFF;
+    height           : 70px;
+    margin           : 0px auto 0px auto;
+    padding          : 0px 20px 0px 20px;
+}
+
+#logo-left {
+    float : left;
+}
+
+#logo-left img {
+    height : 70px;
+}
+
+#logo-right {
+    float   : left;
+    padding : 15px 0px 10px 20px;
+}
+
+#title a {
+    color           : #474748;
+    text-decoration : none;
+}
+
+#navigation {
+    /*background-color : rgba(81, 81, 81, 0.5);*/
+    background-color : #820001;
+    text-align       : center;
+    height           : 40px;
+}
+
+#navigation ul {
+    list-style-type : none;
+    margin          : 0;
+    padding         : 0;
+    position        : absolute;
+}
+
+#navigation li {
+    display      : inline-block;
+    float        : left;
+    margin-right : 1px;
+}
+
+#navigation li a {
+    display         : block;
+    min-width       : 120px;
+    text-align      : center;
+    line-height     : 40px;
+    font-weight     : bolder;
+    font-family     : "Arial Black", Gadget, sans-serif;
+    color           : #FFFFFF;
+    text-decoration : none;
+}
+
+/*Hover state for top level links*/
+#navigation li:hover a {
+    background : #EEF3F5;
+    /*color      : #249FDF;*/
+    color      : #F0414D;
+}
+
+/*Hide dropdown links until they are needed*/
+li ul {
+    display : none;
+}
+
+/*Style 'show menu' label button and hide it by default*/
+#navigation .show-menu {
+    font-family     : "Arial Black", Gadget, sans-serif;
+    text-decoration : none;
+    color           : #FFFFFF;
+    /*background      : #249FDF;*/
+    background      : #F0414D;
+    text-align      : center;
+    padding         : 10px 0;
+    display         : none;
+}
+
+/*Hide checkbox*/
+input[type=checkbox] {
+    display : none;
+}
+
+/*Show menu when invisible checkbox is checked*/
+input[type=checkbox]:checked ~ #menu {
+    display : block;
+}
+
+/*Responsive Styles*/
+
+@media screen and (max-width : 750px) {
+    /*Make dropdown links appear inline*/
+    #navigation ul {
+        position : static;
+        display  : none;
+    }
+
+    /*Create vertical spacing*/
+    #navigation li {
+        margin-bottom : 1px;
+    }
+
+    /*Make all menu links full width*/
+    #navigation ul li, li a {
+        width : 100%;
+    }
+
+    #navigation ul li a {
+        background-color : rgba(81, 81, 81, 0.8);
+    }
+
+    /*Display 'show menu' link*/
+    #navigation .show-menu {
+        display : block;
+    }
+
+    #logo-right {
+        display : none;
+    }
+}
+/*---------- header ----------*/
+/* end main frame */
+
+/*---------- home ----------*/
+#home-wrapper {
+    height : 100%;
+    width  : 100%;
+    margin : 0px auto 0px auto;
+}
+
+#home-other {
+    margin-top : 20px;
+}
+
+#home-other .floater {
+    height        : 450px;
+    margin-top    : 10px;
+    margin-bottom : 10px;
+}
+
+#home-gallery {
+    height           : 200px;
+    width            : 323px;
+    background-color : #F0414D;
+    margin-bottom    : 20px;
+}
+
+#home-sponsor {
+    height           : 230px;
+    width            : 323px;
+    background-color : #249FDF;
+}
+/*---------- home ----------*/
+
+/*---------- Footer ----------*/
+#footer {
+    width            : 100%;
+    height           : 100%;
+    position         : relative;
+    bottom           : 0px;
+    left             : 0;
+    background-color : #515151;
+}
+
+#footer p, a {
+    color       : #FFFFFF;
+    font-family : "Arial Black", Gadget, sans-serif;
+}
+
+/*footer right*/
+#footer-right {
+    text-align : center;
+}
+
+/*footer social icons*/
+#footer .socialicons {
+    margin : 1.5em 0 0 0;
+}
+
+#footer .socialicons li {
+    -moz-animation    : nav-icons 0.5s ease-in-out forwards;
+    -webkit-animation : nav-icons 0.5s ease-in-out forwards;
+    -o-animation      : nav-icons 0.5s ease-in-out forwards;
+    -ms-animation     : nav-icons 0.5s ease-in-out forwards;
+    animation         : nav-icons 0.5s ease-in-out forwards;
+    -moz-transform    : translate3d(0, 0, 0);
+    -webkit-transform : translate3d(0, 0, 0);
+    -o-transform      : translate3d(0, 0, 0);
+    -ms-transform     : translate3d(0, 0, 0);
+    transform         : translate3d(0, 0, 0);
+    display           : inline-block;
+    height            : 3.5em;
+    width             : 3.5em;
+    line-height       : 4.885em;
+    position          : relative;
+    /*border : double;*/
+}
+
+#footer .socialicons a {
+    -webkit-tap-highlight-color : transparent;
+    -webkit-touch-callout       : none;
+    border                      : 0;
+    display                     : inline-block;
+    color                       : rgba(255, 255, 255, 0.5);
+}
+
+#footer .socialicons a:before {
+    -moz-transition    : all 0.4s ease-in-out;
+    -webkit-transition : all 0.4s ease-in-out;
+    -o-transition      : all 0.4s ease-in-out;
+    -ms-transition     : all 0.4s ease-in-out;
+    transition         : all 0.4s ease-in-out;
+    border-radius      : 100%;
+    border             : solid 1px white;
+    display            : block;
+    font-size          : 1.3em;
+    height             : 2em;
+    width              : 2em;
+    line-height        : 2em;
+    position           : relative;
+    text-align         : center;
+    top                : 0;
+}
+
+#footer ul.socialicons a:hover {
+    font-size : 1.2em;
+    color     : #F0414D;
+}
+
+.icon {
+    text-decoration : none;
+}
+
+.icon:before {
+    display                 : inline-block;
+    font-family             : FontAwesome;
+    font-size               : 1.25em;
+    text-decoration         : none;
+    font-style              : normal;
+    font-weight             : normal;
+    line-height             : 1;
+    -webkit-font-smoothing  : antialiased;
+    -moz-osx-font-smoothing : grayscale;
+}
+
+.icon > .label {
+    display : none;
+}
+
+#footer ul.socialicons a:hover .label {
+    width              : 100%;
+    height             : 100%;
+    position           : absolute;
+    font-size          : small;
+    top                : 40px;
+    left               : 0;
+    display            : inline-block;
+    -webkit-box-sizing : border-box;
+    -moz-box-sizing    : border-box;
+    box-sizing         : border-box;
+}
+/*---------- Footer ----------*/
