@@ -32,7 +32,7 @@ function addImage(imgPath) {
     elemImg.setAttribute("class", "img-responsive");
     elemImg.setAttribute("alt", aboutImg);
     elemImg.src = imgPath;
-    if (document.getElementById("home-image-show-slider").contains("class", "img-responsive")) {
+    if (document.getElementById("home-image-show-slider").contains(elemImg)) {
         document.getElementById("home-image-show-slider").removeChild(elemImg);
     }
     document.getElementById("home-image-show-slider").appendChild(elemImg);

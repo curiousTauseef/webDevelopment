@@ -8,15 +8,9 @@ html {
     }
 
 body {
-    /*font-family  : "Arial Black", Gadget, sans-serif;*/
-    /*font-weight  : 400;*/
-    /*font-style   : normal;*/
-    /*font-variant : normal;*/
-    /*line-height  : 125%;*/
-    /*width        : 100%;*/
-    /*min-height   : 100%;*/
-    /*margin       : 0px auto 0px auto;*/
-    /*color        : #474748;*/
+    color      : #474748;
+    background : #EEF3F5;
+
     }
 
 a {
@@ -27,10 +21,13 @@ a:link, a:visited {
     }
 
 a:hover {
-    color : #F0414D;
+    color           : #F0414D;
+    text-decoration : none;
     }
 
-a:active {
+.active {
+    color            : #F0414D;
+    background-color : #EEF3F5;
     }
 
 .content {
@@ -39,13 +36,7 @@ a:active {
     }
 
 .floater {
-    /*float            : left;*/
-    /*padding          : 0px 0px 0px 0px;*/
-    /*width            : 331px;*/
-    /*min-height       : 300px;*/
-    /*background-color : #BCBCBC;*/
-    background-color : #1CBCBC;
-    /*margin           : 0px 5px 0px 5px;*/
+    /*background-color : #1CBCBC;*/
     }
 
 /*------------- header ------------------*/
@@ -93,32 +84,22 @@ a:active {
 #navigation {
     /*background-color : rgba(81, 81, 81, 0.5);*/
     background-color : #820001;
-    /*text-align       : center;*/
-    /*height           : 40px;*/
     }
 
 #navigation ul {
-    /*list-style-type : none;*/
-    /*margin          : 0;*/
-    /*padding         : 0;*/
-    /*position        : absolute;*/
+    width : 100%;
     }
 
 #navigation li {
-    /*display      : inline-block;*/
-    /*float        : left;*/
-    /*margin-right : 1px;*/
+    width : 14%;
     }
 
 #navigation li a {
-    /*display         : block;*/
-    /*min-width       : 120px;*/
+    /*min-width   : 120px;*/
     text-align  : center;
-    /*line-height     : 40px;*/
     font-weight : bolder;
     font-family : "Arial Black", Gadget, sans-serif;
     color       : #FFFFFF;
-    /*text-decoration : none;*/
     }
 
 /*Hover state for top level links*/
@@ -154,7 +135,7 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 /*Responsive Styles*/
-@media screen and (max-width : 750px) {
+@media screen and (max-width : 881px) {
 
     /*Make dropdown links appear inline*/
     #navigation ul {
@@ -191,6 +172,11 @@ input[type=checkbox]:checked ~ #menu {
         }
     }
 
+/*-- register --*/
+#nav-register {
+    font-size : small;
+    }
+
 /*-- login --*/
 #nav-login {
     font-size : small;
@@ -201,75 +187,46 @@ input[type=checkbox]:checked ~ #menu {
 /*------------- home content ------------------*/
 
 #home-wrapper {
-    /*position : relative;*/
-    /*height   : 0;*/
-    /*width    : 100%;*/
-    /*margin   : 0px auto 0px auto;*/
-    /*overflow : hidden;*/
-
-    /*width:50%;*/
-    /*height:0;*/
-    /*padding-bottom: 30%; /!*acts as fluid height*!/*/
-    /*overflow:hidden;*/
-    /*position:relative;*/
     }
 
-#home-image-show {
-    /*height : 578px;*/
+#home-image-show .content {
+    box-shadow : 0 0 10px black;
     }
 
 #home-image-show-slider {
-    /*position : relative;*/
     }
 
 #home-image-show-slider img {
-    /*position  : absolute;*/
-    /*max-width : 1024px;*/
-    /*z-index   : -1;*/
-    /*width     : 100%;*/
-    /*height    : auto;*/
+
     }
 
 #about-img {
-    /*position         : absolute;*/
-    /*z-index          : 1;*/
     background-color : rgba(0, 0, 0, 0.4);
     color            : rgba(255, 255, 255, 0.7);
-    /*font-family      : FontAwesome;*/
-    /*right            : 50px;*/
-    /*margin-top       : 50%;*/
     padding          : 5px 10px;
     }
 
 /* slider navigation ---- */
 #nav-slider-left, #nav-slider-right {
-    /*margin-top : 25%;*/
-    /*z-index    : 1;*/
-    /*position   : absolute;*/
     font-size : 50px;
-    /*color      : rgba(0, 0, 0, 0.4);*/
-    /*cursor     : pointer;*/
     }
 
 #nav-slider-left .fa, #nav-slider-right .fa {
-    /*margin : 50%;*/
     }
 
 #nav-slider-left:hover, #nav-slider-right:hover {
-    /*color     : rgba(0, 0, 0, 0.5);*/
     font-size : 51px;
     }
 
 #nav-slider-left {
-    /*left : 20px;*/
     }
 
 #nav-slider-right {
-    /*right : 20px;*/
     }
 
 /*-------home news ---------*/
 #home-news {
+    margin : 20px 0 0 0;
     }
 
 #home-other {
@@ -277,22 +234,22 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 #home-other .floater {
-    height        : 450px;
-    margin-top    : 10px;
-    margin-bottom : 10px;
     }
 
 #home-gallery {
     height           : 200px;
-    width            : 331px;
+    /*width            : 331px;*/
+    max-width        : 500px;
     background-color : #F0414D;
-    margin-bottom    : 20px;
+    margin           : 0 auto 20px auto;
     }
 
 #home-sponsor {
     height           : 230px;
-    width            : 331px;
+    /*width            : 331px;*/
+    max-width        : 450px;
     background-color : #249FDF;
+    margin           : 0 auto 20px auto;
     }
 
 /*-------------^ home content ^------------------*/
@@ -308,6 +265,9 @@ input[type=checkbox]:checked ~ #menu {
     overflow         : auto;
     }
 
+#footer a:hover {
+    }
+
 #footer p, a {
     color       : #FFFFFF;
     font-family : "Arial Black", Gadget, sans-serif;
@@ -315,8 +275,9 @@ input[type=checkbox]:checked ~ #menu {
 
 /*------footer left-------*/
 #footer-left {
-    padding-top  : 40px;
-    padding-left : 3px;
+    padding-top : 40px;
+    max-width   : 360px;
+    margin      : 0 auto;
     }
 
 #footer-left p {
@@ -329,7 +290,8 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 #web-designer {
-    margin-top : 65px;
+    margin-top     : 45px;
+    padding-bottom : 20px;
     }
 
 #web-designer a:hover {
@@ -337,7 +299,12 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 /*-------footer middle------*/
+#footer-middle .floater {
+    }
+
 #footer-middle {
+    max-width       : 360px;
+    margin          : 0 auto;
     padding-top     : 45px;
     color           : #FFFFFF;
     font-family     : "Helvetica Narrow", "Arial Narrow", Tahoma, Arial, Helvetica, sans-serif;
@@ -349,6 +316,7 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 #footer-middle ul li {
+    text-align         : left;
     -webkit-transition : opacity 1s ease-in-out;
     -moz-transition    : opacity 1s ease-in-out;
     -o-transition      : opacity 1s ease-in-out;
@@ -397,7 +365,6 @@ input[type=checkbox]:checked ~ #menu {
     height            : 4em;
     width             : 4em;
     line-height       : 4.885em;
-    position          : relative;
     }
 
 #footer .socialicons a {
@@ -465,9 +432,10 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 #copyright {
-    position     : absolute;
-    bottom       : 50px;
-    padding-left : 25px;
+    margin-top     : 110px;
+    bottom         : 50px;
+    padding-left   : 25px;
+    padding-bottom : 20px;
     }
 
 #copyright a {
@@ -475,3 +443,9 @@ input[type=checkbox]:checked ~ #menu {
     }
 
 /*-------------^ Footer ^------------------*/
+
+/*---------------- news ---------------*/
+
+.news-content img {
+    margin-bottom : 10px;
+    }
