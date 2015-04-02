@@ -12,7 +12,7 @@
  */
 function shuffleList(list) {
     var copy = [], n = list.length, index;
-    imgaddress = 'static/images/slider/';
+    imgaddress = 'images/slider/';
     while (n) {
         index = Math.floor(Math.random() * (n--));
         copy.push(imgaddress + list[index]);
@@ -95,6 +95,5 @@ function slideShow() {
 
 //run slide show
 slideShow();
-console.log("up running")
 
 //startLoop();

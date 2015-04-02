@@ -13,12 +13,12 @@
     <![endif]-->
 
     <!-- stylesheet -->
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/font-awesome.css"/>
-    <link rel="stylesheet" href="static/css/cssa-style.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css"/>
+    <link rel="stylesheet" href="css/cssa-style.css"/>
 
     <!-- scripts-->
-    <script src="static/js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
 <div id="header">
     <div id="title">
         <div class="content">
-            <div id="logo-left"><a href=""><img src="static/images/cssa_logo_new.jpg"></a></div>
+            <div id="logo-left"><a href=""><img src="images/cssa_logo_new.jpg"></a></div>
             <div id="logo-right"><a href="">
                 NTNU<br>
                 Chinese Student and Scholar Association</a>
@@ -49,11 +49,43 @@
                 <li><a href="">New Student</a></li>
                 <li><a href="">About</a></li>
                 <li><a href="">BBS</a></li>
-                <li id="nav-register"><a href="">Register</a></li>
-                <li id="nav-login"><a href="">login</a></li>
+                <!--<li id="nav-register"><a href="">Register</a></li>-->
+                <!--<li id="nav-login"><a href="">login</a></li>-->
+
+                <li id="nav-register"><a href="">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Register
+                    </button>
+                    </a></li>
+                <li id="nav-login"><a href="">
+
+                    login</a></li>
             </ul>
         </div>
     </nav>
+
+
+    <!-- Modal -->
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
 </div>
 <!-- #header end -->
 
@@ -122,11 +154,11 @@
         <div class="floater col-md-4">
             <div id="footer-middle">
                 <ul>
-                    <li><a href="http://www.chinese-embassy.no/"><img src="static/images/emblem.png">Chinese Embassy in
+                    <li><a href="http://www.chinese-embassy.no/"><img src="images/emblem.png">Chinese Embassy in
                                                                                                      Norway</a></li>
-                    <li><a href="http://www.stfk.no/"><img src="static/images/sor-trondelag.png">Sør-Trøndelag
+                    <li><a href="http://www.stfk.no/"><img src="images/sor-trondelag.png">Sør-Trøndelag
                                                                                                  fylkeskommune</a></li>
-                    <li><a href="http://www.ntnu.no/"><img src="static/images/ntnu-logo.jpg">NTNU</a></li>
+                    <li><a href="http://www.ntnu.no/"><img src="images/ntnu-logo.jpg">NTNU</a></li>
                 </ul>
             </div>
         </div>
@@ -145,9 +177,9 @@
     </div>
 </div>
 <!-- #footer end-->
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/animation.js"></script>
-<script src="static/js/imgSliderShow.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/imgSliderShow.js"></script>
 
 </body>
 </html>
