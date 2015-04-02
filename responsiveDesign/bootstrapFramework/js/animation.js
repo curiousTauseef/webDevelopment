@@ -21,4 +21,22 @@ $('#myModal').on('shown.bs.modal', function () {
 /**
  *jquery load to html file
  */
-$('#login-modal').load('loginmodal.html #cssaLoginModal');
+$('#login-modal').load('loginmodal.html #cssaRegisterModal, #cssaLoginModal');
+
+
+/**
+ * print login info in console
+ */
+$("#submitLogin").click(function () {
+    var inputEmail = $('#inputEmail').val();
+    //var myVar = $("#start").find('.myClass').val();
+
+    console.log("Email: " + inputEmail);
+    console.log("Email: ");
+});
+
+/**
+ * register js
+ */
+
+$('#myModal').modal('hide');
