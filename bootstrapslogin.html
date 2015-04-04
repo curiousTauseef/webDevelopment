@@ -123,7 +123,6 @@
     email.addEventListener("keyup", function (event) {
         if (email.validity.valid) {
             var inputEmail = $("input#inputEmail").val();
-            console.log("valid email " + inputEmail);
             //check server if the email exist
             if (inputEmail == "a@a.com") {
                 document.getElementById('form-group-email').className = "form-group has-success has-feedback";
@@ -143,7 +142,6 @@
 
         if (password.validity.valid) {
             var inputPassword = $("input#inputPassword").val();
-            console.log("valid email " + inputPassword);
             //check server if password correct
             if (inputPassword == "00") {
                 document.getElementById('form-group-password').className = "form-group has-success has-feedback";
@@ -159,22 +157,20 @@
 
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        if (!email.validity.valid) {
-        } else {
-            //            event.preventDefault();
-            if (password.validity.valid) {
-                //login succeed:
-                $('#welcome-back').modal('show');
-                //                welcome info
-                document.getElementById("welcome-back-user").innerHTML = "get user name from server and shows here";
-                ;
-                setTimeout(
-                        function () {
-                            $('#welcome-back').modal('hide');
-                            $('#loginModal').modal('hide');
-                        }, 2000);
-            }
+        event.preventDefault(); // keep modal window open
+        var inputPassword = $("input#inputPassword").val();
+        var inputEmail = $("input#inputEmail").val();
+        if (inputEmail == "a@a.com" & inputPassword == "00") {
+            //login succeed:
+            $('#welcome-back').modal('show');
+            //                welcome info
+            document.getElementById("welcome-back-user").innerHTML = "get user name from server and shows here";
+            ;
+            setTimeout(
+                    function () {
+                        $('#welcome-back').modal('hide');
+                        $('#loginModal').modal('hide');
+                    }, 2000);
         }
     }, false);
 </script>
