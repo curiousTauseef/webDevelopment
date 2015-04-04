@@ -112,12 +112,80 @@
 <!-- /.modal -->
 
 <script>
-    $("#loginSubmit").click(function () {
+    // There are many ways to pick a DOM node; here we get the form itself and the email
+    // input box, as well as the span element into which we will place the error message.
+
+    var form = document.getElementsByTagName('form')[0];
+    var email = document.getElementById('inputEmail');
+    var password = document.getElementById('inputPassword');
+
+
+    email.addEventListener("keyup", function (event) {
+        if (email.validity.valid) {
+            var inputEmail = $("input#inputEmail").val();
+            console.log("valid email " + inputEmail);
+            //check server if the email exist
+            if (inputEmail == "a@a.com") {
+                document.getElementById('form-group-email').className = "form-group has-success has-feedback";
+                document.getElementById('form-span-email').className = "glyphicon glyphicon-ok form-control-feedback";
+            } else {
+                document.getElementById('form-group-email').className = "form-group has-error has-feedback";
+                document.getElementById('form-span-email').className =
+                        "glyphicon glyphicon-remove form-control-feedback";
+            }
+        }
+    }, false);
+
+    password.addEventListener("keyup", function (event) {
+        //init
+        document.getElementById('form-group-password').className = "";
+        document.getElementById('form-span-password').className = "";
+
+        if (password.validity.valid) {
+            var inputPassword = $("input#inputPassword").val();
+            console.log("valid email " + inputPassword);
+            //check server if password correct
+            if (inputPassword == "00") {
+                document.getElementById('form-group-password').className = "form-group has-success has-feedback";
+                document.getElementById('form-span-password').className =
+                        "glyphicon glyphicon-ok form-control-feedback";
+            } else {
+                document.getElementById('form-group-password').className = "form-group has-error has-feedback";
+                document.getElementById('form-span-password').className =
+                        "glyphicon glyphicon-remove form-control-feedback";
+            }
+        }
+    }, false);
+
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!email.validity.valid) {
+        } else {
+            //            event.preventDefault();
+            if (password.validity.valid) {
+                //login succeed:
+                $('#welcome-back').modal('show');
+                //                welcome info
+                document.getElementById("welcome-back-user").innerHTML = "get user name from server and shows here";
+                ;
+                setTimeout(
+                        function () {
+                            $('#welcome-back').modal('hide');
+                            $('#loginModal').modal('hide');
+                        }, 2000);
+            }
+        }
+    }, false);
+</script>
+
+<!-- second method: with out listener-->
+<script>
+    $("#loginSubmit-").click(function () {
         //Get values
         var inputEmail = $("input#inputEmail").val();
         var inputPassword = $("input#inputPassword").val();
         console.log("Email: " + inputEmail + "\nPassword: " + inputPassword);
-
         // check email is valid
         if (inputEmail == "a@a.com") {
             document.getElementById('form-group-email').className = "form-group has-success has-feedback";
@@ -130,13 +198,13 @@
                 //login succeed:
                 $('#welcome-back').modal('show');
                 //                welcome info
-                document.getElementById("welcome-back-user").innerHTML = "" + inputEmail;
+                document.getElementById("welcome-back-user").innerHTML =
+                        "get user name from server and shows here";
                 setTimeout(
                         function () {
                             $('#welcome-back').modal('hide');
                             $('#loginModal').modal('hide');
                         }, 2000);
-
             } else {
                 document.getElementById('form-group-password').className = "form-group has-error has-feedback";
                 document.getElementById('form-span-password').className =
@@ -147,7 +215,6 @@
             document.getElementById('form-span-email').className =
                     "glyphicon glyphicon-remove form-control-feedback";
         }
-
         return false;
     }); //end of click event
 </script>
