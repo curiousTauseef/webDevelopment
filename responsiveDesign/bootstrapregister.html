@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!-- * Created by GuoJunjun on 04/04/15. <junjunguo.com> *-->
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content row="IE=edge">
+    <meta name="viewport" content row="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content row must come *after* these tags -->
+
+    <title>Bootstrap Register with Validation</title>
+
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="bootstrapFramework/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrapFramework/css/font-awesome.css"/>
+    <!--<link rel="stylesheet" href="css/cssa-style.css"/>-->
+
+    <!-- scripts-->
+    <script src="bootstrapFramework/js/jquery-1.11.2.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="bootstrapFramework/js/bootstrap.js"></script>
+</head>
+<body>
+
+<p class="text-center">
+    <button id="nav-register" role="button" class="btn-lg">register
+    </button>
+</p>
+
+<div class="modal fade" id="registerModal">
+    <div class="modal-dialog modal-lg">
+        <div class="row modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title form-signin-heading">Please Sign Up</h4>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <form role="form" id="registerForm">
+                    <!--<hr class="colorgraph">-->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-first-name">
+                                <input type="text" id="inputFirstName" class="form-control input-lg"
+                                       placeholder="First Name" tabindex="1" autofocus pattern=".{2,16}" required
+                                       title="2 to 12 characters">
+                                <span id="form-span-first-name" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-last-name">
+                                <input type="text" id="inputLastName" class="form-control input-lg"
+                                       placeholder="Last Name" tabindex="2" pattern=".{2,12}" required
+                                       title="2 to 16 characters">
+                                <span id="form-span-last-name" aria-hidden="true"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<input type="text"  id="display_name" class="form-control input-lg"-->
+                    <!--placeholder="Display Name" tabindex="3">-->
+                    <!--</div>-->
+                    <div id="form-group-email">
+                        <input type="email" id="inputEmail" class="form-control input-lg"
+                               placeholder="Email Address" tabindex="4" required>
+                        <span id="form-span-email" aria-hidden="true"></span>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-password">
+                                <input type="password" id="inputPassword" class="form-control input-lg"
+                                       placeholder="Password" tabindex="5" pattern=".{4,}" required
+                                       title="password too short !">
+                                <span id="form-span-password" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-password-confirm">
+                                <input type="password" id="inputPasswordConfirm"
+                                       class="form-control input-lg" placeholder="Confirm Password"
+                                       tabindex="6" required>
+                                <span id="form-span-password-confirm" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            By clicking <strong class="label label-primary">Register</strong>, you agree to the
+                            <a href="#" id="btn-t-c">Terms and Conditions</a>
+                            set out by this site.
+                        </div>
+                    </div>
+
+                    <!--<hr class="colorgraph">-->
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8">
+                            <input type="submit" value="Register" class="btn btn-primary btn-block btn-lg"
+                                   tabindex="7" id="registerSubmit">
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <button type="button" class="btn btn-default btn-block btn-lg" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- terms and conditions Modal -->
+    <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close hide-t-c" aria-hidden="true">×</a>
+                    <h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Bootstrap is a free and open-source collection of tools for creating websites and web
+                       applications. It contains HTML- and CSS-based design templates for typography, forms, buttons,
+                       navigation and other interface components, as well as optional JavaScript extensions. As of March
+                       2015, it was the most-starred project on GitHub.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary hide-t-c" aria-hidden="true">I Agree</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+
+
+<!-- Modal register succeed -->
+<div class="modal fade" id="register-succeed" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close hide-t-c" aria-hidden="true">×</a>
+                <h4 class="modal-title">Register succeed</h4>
+            </div>
+            <div class="modal-body">
+                <p>Congratulations: </p>
+                <h4 id="congratulations-user"></h4>
+
+                <p>you are successfully registered</p>
+
+                <h5>Please go to login menu and login!</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script src="js/bootstrapregister.js"></script>
+
+</body>
+</html>
