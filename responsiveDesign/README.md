@@ -169,7 +169,3 @@ setTimeout(
         $('#register-succeed').modal('hide');
     }, 4000);
 ```                    
-
-{% highlight css %}
-
-{% endhighlight %}

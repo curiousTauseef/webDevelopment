@@ -1,0 +1,112 @@
+body {
+    font  : 16px/150% "Oswald", sans-serif;
+    color : #BF360C;
+    }
+
+a {
+    color           : #FF5722;
+    text-decoration : none;
+    }
+
+a:hover {
+    color : #E64A19;
+    }
+
+#wrapper {
+    padding : 5px;
+    width   : 1024px;
+    margin  : 20px auto;
+    }
+
+#header {
+    height           : 180px;
+    text-align       : center;
+    background-color : #FFAB91;
+    }
+
+#left-side {
+    width : 600px;
+    float : left;
+    }
+
+#left-side h2, #right-side h2 {
+    text-align : center;
+    }
+
+#right-side {
+    width : 364px;
+    float : right;
+    }
+
+#footer {
+    clear            : both;
+    text-align       : center;
+    background-color : #FF8A65;
+    }
+
+/* absolute size when width > 1044 */
+/* when window width <= 1044px: resize by percentage */
+@media screen and (max-width : 1044px) {
+
+    #wrapper {
+        width : 94%;
+        }
+
+    #left-side {
+        width : 64%;
+        }
+
+    #right-side {
+        width : 30%;
+        }
+
+    }
+
+/* when 700px or less: no float right side move down */
+@media screen and (max-width : 750px) {
+
+    #left-side {
+        width : auto;
+        float : none;
+        }
+
+    #right-side {
+        width : auto;
+        float : none;
+        }
+
+    }
+
+/* when 480px or less: hide right side  */
+@media screen and (max-width : 480px) {
+
+    #header {
+        height : auto;
+        }
+
+    h1 {
+        font-size : 24px;
+        }
+
+    #right-side {
+        display : none;
+        }
+
+    }
+
+/* border  */
+#left-side {
+    background : #FBE9E7;
+    }
+
+#right-side {
+    background : #FFCCBC;
+    }
+
+#header, #left-side, #right-side {
+    margin-bottom : 5px;
+    }
+
+#wrapper, #header, #left-side, #right-side, #footer {
+    border : solid 1px #FF7043;
+    }

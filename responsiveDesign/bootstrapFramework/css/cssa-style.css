@@ -365,6 +365,8 @@ input[type=checkbox]:checked ~ #menu {
     height            : 4em;
     width             : 4em;
     line-height       : 4.885em;
+    vertical-align    : middle;
+
     }
 
 #footer .socialicons a {
@@ -453,9 +455,9 @@ input[type=checkbox]:checked ~ #menu {
 /*---------------- login & register window ---------------*/
 
 .modal-content {
-    color          : #474748;
-    background     : #EEF3F5;
-    font-family    : FontAwesome;
+    color       : #474748;
+    background  : #EEF3F5;
+    font-family : FontAwesome;
     /*padding-bottom : 50px;*/
     }
 
@@ -529,4 +531,16 @@ input[type=checkbox]:checked ~ #menu {
     background-image : -moz-linear-gradient(left, #C4E17F, #C4E17F 12.5%, #F7FDCA 12.5%, #F7FDCA 25%, #FECF71 25%, #FECF71 37.5%, #F0776C 37.5%, #F0776C 50%, #DB9DBE 50%, #DB9DBE 62.5%, #C49CDE 62.5%, #C49CDE 75%, #669AE1 75%, #669AE1 87.5%, #62C2E4 87.5%, #62C2E4);
     background-image : -o-linear-gradient(left, #C4E17F, #C4E17F 12.5%, #F7FDCA 12.5%, #F7FDCA 25%, #FECF71 25%, #FECF71 37.5%, #F0776C 37.5%, #F0776C 50%, #DB9DBE 50%, #DB9DBE 62.5%, #C49CDE 62.5%, #C49CDE 75%, #669AE1 75%, #669AE1 87.5%, #62C2E4 87.5%, #62C2E4);
     background-image : linear-gradient(to right, #C4E17F, #C4E17F 12.5%, #F7FDCA 12.5%, #F7FDCA 25%, #FECF71 25%, #FECF71 37.5%, #F0776C 37.5%, #F0776C 50%, #DB9DBE 50%, #DB9DBE 62.5%, #C49CDE 62.5%, #C49CDE 75%, #669AE1 75%, #669AE1 87.5%, #62C2E4 87.5%, #62C2E4);
+    }
+
+#cssaRegisterModal .modal-content a {
+    color : #820001;
+    }
+
+#cssaRegisterModal .modal-content {
+    padding-bottom : 30px;
+    }
+
+.label-primary {
+    background-color : #820001
     }

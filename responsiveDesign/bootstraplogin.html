@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- * Created by GuoJunjun on 03/04/15. <junjunguo.com> *-->
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content row="IE=edge">
+    <meta name="viewport" content row="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content row must come *after* these tags -->
+
+    <title>Bootstrap Login with Validation</title>
+
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="bootstrapFramework/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrapFramework/css/font-awesome.css"/>
+    <!--<link rel="stylesheet" href="css/cssa-style.css"/>-->
+
+    <!-- scripts-->
+    <script src="bootstrapFramework/js/jquery-1.11.2.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="bootstrapFramework/js/bootstrap.js"></script>
+
+    <style>
+        .form-signin {
+            max-width : 330px;
+            padding   : 15px;
+            margin    : 0 auto;
+            }
+
+        .form-signin, .form-signin {
+            margin-bottom : 10px;
+            }
+
+        #inputPassword, #inputEmail, #loginSubmit {
+            margin : 10px 0;
+            }
+    </style>
+</head>
+<body>
+
+
+<p class="text-center">
+    <button class="btn btn-default" data-toggle="modal"
+            data-target="#loginModal">Login
+    </button>
+</p>
+
+<!-- Modal HTML -->
+<div id="loginModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                <h4 class="modal-title form-signin-heading">Please Login</h4>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" class="form-signin" data-toggle="validator"
+                      role="form">
+                    <div id="form-group-email">
+                        <label for="inputEmail" class="sr-only">Email
+                                                                address</label>
+                        <input type="email" id="inputEmail" class="form-control"
+                               placeholder="Email address" required
+                               oninvalid="this.setCustomValidity('Please fill out your Email')"
+                               oninput="setCustomValidity('')"
+                               autofocus>
+                        <span id="form-span-email" aria-hidden="true"></span>
+                    </div>
+                    <div id="form-group-password">
+                        <label for="inputPassword"
+                               class="sr-only">Password</label>
+                        <input type="password" id="inputPassword"
+                               class="form-control" placeholder="Password"
+                               required
+                               oninvalid="this.setCustomValidity('Please fill out your Password')"
+                               oninput="setCustomValidity('')">
+                        <span id="form-span-password" aria-hidden="true"></span>
+                    </div>
+                    <button id="loginSubmit"
+                            class="btn btn-lg btn-primary btn-block"
+                            type="submit">Login
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal welcome back-->
+<div class="modal fade" id="welcome-back" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close hide-t-c" aria-hidden="true">×</a>
+                <h4 class="modal-title">Welcome Back</h4>
+            </div>
+            <div class="modal-body">
+                <p>Welcome back</p>
+                <h4 id="welcome-back-user"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+    // There are many ways to pick a DOM node; here we get the form itself and the email
+    // input box, as well as the span element into which we will place the error message.
+
+    var form = document.getElementsByTagName('form')[0];
+    var email = document.getElementById('inputEmail');
+    var password = document.getElementById('inputPassword');
+
+
+    email.addEventListener("keyup", function (event) {
+        if (email.validity.valid) {
+            var inputEmail = $("input#inputEmail").val();
+            //check server if the email exist
+            if (inputEmail == "a@a.com") {
+                document.getElementById('form-group-email').className =
+                        "form-group has-success has-feedback";
+                document.getElementById('form-span-email').className =
+                        "glyphicon glyphicon-ok form-control-feedback";
+            } else {
+                document.getElementById('form-group-email').className =
+                        "form-group has-error has-feedback";
+                document.getElementById('form-span-email').className =
+                        "glyphicon glyphicon-remove form-control-feedback";
+            }
+        }
+    }, false);
+
+    password.addEventListener("keyup", function (event) {
+        //init
+        document.getElementById('form-group-password').className = "";
+        document.getElementById('form-span-password').className = "";
+
+        if (password.validity.valid) {
+            var inputPassword = $("input#inputPassword").val();
+            //check server if password correct
+            if (inputPassword == "00") {
+                document.getElementById('form-group-password').className =
+                        "form-group has-success has-feedback";
+                document.getElementById('form-span-password').className =
+                        "glyphicon glyphicon-ok form-control-feedback";
+            } else {
+                document.getElementById('form-group-password').className =
+                        "form-group has-error has-feedback";
+                document.getElementById('form-span-password').className =
+                        "glyphicon glyphicon-remove form-control-feedback";
+            }
+        }
+    }, false);
+
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // keep modal window open
+        var inputPassword = $("input#inputPassword").val();
+        var inputEmail = $("input#inputEmail").val();
+        if (inputEmail == "a@a.com" & inputPassword == "00") {
+            //login succeed:
+            $('#welcome-back').modal('show');
+            //                welcome info
+            document.getElementById("welcome-back-user").innerHTML =
+                    "get user name from server and shows here";
+            ;
+            setTimeout(
+                    function () {
+                        $('#welcome-back').modal('hide');
+                        $('#loginModal').modal('hide');
+                    }, 2000);
+        }
+    }, false);
+</script>
+
+<!-- second method: with out listener-->
+<script>
+    $("#loginSubmit-").click(function () {
+        //Get values
+        var inputEmail = $("input#inputEmail").val();
+        var inputPassword = $("input#inputPassword").val();
+        console.log("Email: " + inputEmail + "\nPassword: " + inputPassword);
+        // check email is valid
+        if (inputEmail == "a@a.com") {
+            document.getElementById('form-group-email').className =
+                    "form-group has-success has-feedback";
+            document.getElementById('form-span-email').className =
+                    "glyphicon glyphicon-ok form-control-feedback";
+            //check password is valid
+            if (inputPassword == "00") {
+                document.getElementById('form-group-password').className =
+                        "form-group has-success has-feedback";
+                document.getElementById('form-span-password').className =
+                        "glyphicon glyphicon-ok form-control-feedback";
+                //login succeed:
+                $('#welcome-back').modal('show');
+                //                welcome info
+                document.getElementById("welcome-back-user").innerHTML =
+                        "get user name from server and shows here";
+                setTimeout(
+                        function () {
+                            $('#welcome-back').modal('hide');
+                            $('#loginModal').modal('hide');
+                        }, 2000);
+            } else {
+                document.getElementById('form-group-password').className =
+                        "form-group has-error has-feedback";
+                document.getElementById('form-span-password').className =
+                        "glyphicon glyphicon-remove form-control-feedback";
+            }
+        } else {
+            document.getElementById('form-group-email').className =
+                    "form-group has-error has-feedback";
+            document.getElementById('form-span-email').className =
+                    "glyphicon glyphicon-remove form-control-feedback";
+        }
+        return false;
+    }); //end of click event
+</script>
+
+
+</body>
+</html>
