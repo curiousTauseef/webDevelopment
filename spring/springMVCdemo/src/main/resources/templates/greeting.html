@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<!--Thymeleaf is a Java library. It is an XML / XHTML / HTML5 template engine (extensible to other
+formats) that can work both in web and non-web environments. It is better suited for serving
+XHTML/HTML5 at the view layer of web applications, but it can process any XML file even in offline
+environments.
+
+It provides an optional module for integration with Spring MVC, so that you can use it as a
+complete substitute of JSP in your applications made with this technology, even with HTML5.
+
+The main goal of Thymeleaf is to provide an elegant and well-formed way of creating templates.
+Its Standard and SpringStandard dialects allow you to create powerful natural templates,
+that can be correctly displayed by browsers and therefore work also as static prototypes.
+You can also extend Thymeleaf by developing your own dialects.-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p th:text="'Hello, ' + ${name} + '!'"/>
+</body>
+</html>
