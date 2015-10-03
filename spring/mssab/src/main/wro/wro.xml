@@ -1,0 +1,23 @@
+<groups xmlns="http://www.isdc.ro/wro">
+    <group name="angular-bootstrap">
+        <css>webjar:bootstrap/3.2.0/less/bootstrap.less</css>
+        <css>file:${project.basedir}/src/main/wro/main.less</css>
+        <js>webjar:jquery/2.1.1/jquery.min.js</js>
+        <js>webjar:angularjs/1.3.8/angular.min.js</js>
+        <js>webjar:angularjs/1.3.8/angular-route.min.js</js>
+        <js>webjar:angularjs/1.3.8/angular-cookies.min.js</js>
+    </group>
+</groups>
+        <!--wro.xml declares a single "group" of resources called "angular-bootstrap", and this
+        ends up being the base name of the static resources that are generated. It includes
+        references to <css> and <js> elements in the webjars we added, and also to a local source
+        file main.less.-->
+
+        <!--wro.properties is a configuration file for the preprocessing and rendering engine in wro4j.
+        You can use it to switch on and off various parts of the toolchain. In this case we use it to
+        compile CSS from Less and to minify JavaScript, ultimately combining the sources from all the
+        libraries we need in two files.-->
+
+        <!--main.less could be used to customise the look and feel,
+        changing the default settings in Twitter Bootstrap. E.g. to change the colours from default
+        blue to light pink you could add a single line: @brand-primary: #de8579;-->

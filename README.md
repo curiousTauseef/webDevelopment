@@ -7,17 +7,16 @@ Web development
 - [Responsive Web: simple layout](responsiveDesign/responsiveWeb/README.md)
 
 
-# Web Server Development
+#Server Development
 
 [Pivotal Software: Spring Framework](https://spring.io/)
---
+
 
 [Red Hat: Hibernate ORM](http://hibernate.org/)
---
+
 
 
 [Java servlet](https://en.wikipedia.org/wiki/Java_servlet)
----
 
 ##[Apache: Tomcat](http://tomcat.apache.org/)
 ###start tomcat:
