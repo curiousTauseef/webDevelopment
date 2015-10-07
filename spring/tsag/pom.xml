@@ -3,16 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.junjunguo</groupId>
+    <groupId>com.junjunguo.tsag</groupId>
     <artifactId>tsag</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <version>1.0.0</version>
+    <name>tsag</name>
 
     <properties>
         <springframework.version>4.2.1.RELEASE</springframework.version>
-        <hibernate.version>5.0.2.Final</hibernate.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+        <!--<hibernate.version>5.0.2.Final</hibernate.version>-->
         <mysql.version>5.1.36</mysql.version>
         <joda-time.version>2.8.2</joda-time.version>
+
+        <testng.version>6.9.4</testng.version>
+        <mockito.version>1.10.19</mockito.version>
+        <h2.version>1.4.187</h2.version>
+        <dbunit.version>2.2</dbunit.version>
     </properties>
 
     <dependencies>
@@ -50,11 +57,37 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!-- jsr303 validation -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.1.3.Final</version>
+        </dependency>
+
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
+        </dependency>
+
+        <!-- Joda-Time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time.version}</version>
+        </dependency>
+
+        <!-- To map JodaTime with database type -->
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>3.0.0.CR1</version>
         </dependency>
 
         <!-- Servlet+JSP+JSTL -->
@@ -74,23 +107,6 @@
             <version>1.2</version>
         </dependency>
 
-        <!-- validation -->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.2.2.Final</version>
-        </dependency>
-        <!-- Json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20150729</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -99,7 +115,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>2.4</version>
                     <configuration>
                         <warSourceDirectory>src/main/webapp</warSourceDirectory>
                         <warName>tsag</warName>
@@ -111,3 +127,4 @@
         <finalName>tsag</finalName>
     </build>
 </project>
+
