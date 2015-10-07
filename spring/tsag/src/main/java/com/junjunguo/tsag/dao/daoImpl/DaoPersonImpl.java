@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on October 06, 2015.
  */
-@Repository
+@Repository("daoPerson")
 public class DaoPersonImpl implements DaoPerson {
     private SessionFactory sessionFactory;
     private Session session;

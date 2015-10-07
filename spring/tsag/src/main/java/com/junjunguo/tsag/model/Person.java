@@ -1,6 +1,9 @@
 package com.junjunguo.tsag.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * This file is part of tsag
@@ -10,11 +13,23 @@ import javax.persistence.*;
 @Entity
 @Table(name = "person")
 public class Person {
-    private long id;
-    private String username, password, email;
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    private long id;
+
+    @Size(min = 3, max = 250)
+    @Column(name = "username", nullable = false)
+    private String username;
+    @Size(min = 3, max = 250)
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Size(min = 3, max = 250)
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    //    @Id
+    //    @GeneratedValue
     public long getId() {
         return id;
     }
@@ -23,7 +38,7 @@ public class Person {
         this.id = id;
     }
 
-    @Column(nullable = false)
+    //    @Column(nullable = false)
     public String getUsername() {
         return username;
     }
@@ -32,7 +47,7 @@ public class Person {
         this.username = username;
     }
 
-    @Column(nullable = false)
+    //    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
@@ -41,7 +56,7 @@ public class Person {
         this.password = password;
     }
 
-    @Column(unique = true, nullable = false)
+    //    @Column(unique = true, nullable = false)
     public String getEmail() {
         return email;
     }
@@ -50,3 +65,15 @@ public class Person {
         this.email = email;
     }
 }
+
+/*
+mysql> create database tsag_test;
+mysql> USE tsag_test
+CREATE TABLE person(
+     id INT NOT NULL auto_increment,
+     username VARCHAR(250) NOT NULL,
+     password VARCHAR(250) NOT NULL,
+     email VARCHAR(250) NOT NULL,
+     PRIMARY KEY (id)
+ );
+ */
