@@ -1,31 +1,27 @@
 package com.junjunguo.springrest.controller;
 
-import java.util.List;
-
+import com.junjunguo.springrest.model.User;
 import com.junjunguo.springrest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.junjunguo.springrest.model.User;
+import java.util.List;
 
 @RestController
-public class HelloWorldRestController {
+@RequestMapping(value = "/user/")
+public class UserController {
 
 	@Autowired UserService userService;  //Service which will do all data retrieval/manipulation work
 
 	
 	//-------------------Retrieve All Users--------------------------------------------------------
 	
-	@RequestMapping(value = "/user/", method = RequestMethod.GET)
+	@RequestMapping(value = "/user_list/", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> listAllUsers() {
 		List<User> users = userService.findAllUsers();
 		if(users.isEmpty()){
@@ -37,7 +33,8 @@ public class HelloWorldRestController {
 
 	//-------------------Retrieve Single User--------------------------------------------------------
 	
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType
+			.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> getUser(@PathVariable("id") long id) {
 		System.out.println("Fetching User with id " + id);
 		User user = userService.findById(id);
@@ -52,7 +49,7 @@ public class HelloWorldRestController {
 	
 	//-------------------Create a User--------------------------------------------------------
 	
-	@RequestMapping(value = "/user/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<Void> createUser(@RequestBody User user, 	UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating User " + user.getName());
 
@@ -71,7 +68,7 @@ public class HelloWorldRestController {
 	
 	//------------------- Update a User --------------------------------------------------------
 	
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
 		System.out.println("Updating User " + id);
 		
@@ -92,7 +89,7 @@ public class HelloWorldRestController {
 
 	//------------------- Delete a User --------------------------------------------------------
 	
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
 		System.out.println("Fetching & Deleting User with id " + id);
 
@@ -109,7 +106,7 @@ public class HelloWorldRestController {
 	
 	//------------------- Delete All User --------------------------------------------------------
 	
-	@RequestMapping(value = "/user/", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete_all/", method = RequestMethod.DELETE)
 	public ResponseEntity<User> deleteAllUsers() {
 		System.out.println("Deleting All Users");
 

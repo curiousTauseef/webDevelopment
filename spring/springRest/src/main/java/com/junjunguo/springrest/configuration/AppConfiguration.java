@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.junjunguo.springrest")
-public class HelloWorldConfiguration {
+public class AppConfiguration {
 	
 
 }
