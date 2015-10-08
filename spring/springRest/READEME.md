@@ -52,3 +52,10 @@ This annotation indicates that a method parameter should be bound to a URI templ
 Basically, @RestController , @RequestBody, ResponseEntity & @PathVariable are all you need to know to implement a REST API in Spring 4. Additionally, spring provides several support classes to help you implement something customized.
 
 MediaType : With @RequestMapping annotation, you can additionally, specify the MediaType to be produced or consumed (using produces or consumes attributes) by that particular controller method, to further narrow down the mapping.
+
+##[A multi-tier architecture for building RESTful Web services](http://www.ibm.com/developerworks/library/wa-aj-multitier/)
+####Diagram of a multi-tiered Web application environment
+
+![](img/fig01.gif)
+
+##[REST API: guide](https://parse.com/docs/rest/guide)
