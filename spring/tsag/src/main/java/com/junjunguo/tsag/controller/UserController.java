@@ -32,23 +32,49 @@ public class UserController {
     }
 
 
-    //-------------------Retrieve Single
-    // User--------------------------------------------------------
+    //-------------------Retrieve Single User------------------------------------------------------
 
-    @RequestMapping(value = "{id}", method = RequestMethod.GET,
+    //    @RequestMapping(value = "{id}", method = RequestMethod.GET,
+    //                    produces = MediaType.APPLICATION_JSON_VALUE)
+    //    public ResponseEntity<User> getUser(
+    //            @PathVariable("id")
+    //            long id) {
+    //        System.out.println("Fetching User with id " + id);
+    //        User user = userService.findById(id);
+    //        if (user == null) {
+    //            System.out.println("User with id " + id + " not found");
+    //            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+    //        }
+    //        return new ResponseEntity<User>(user, HttpStatus.OK);
+    //    }
+
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getUser(
-            @PathVariable("id")
-            long id) {
-        System.out.println("Fetching User with id " + id);
-        User user = userService.findById(id);
+    public ResponseEntity<User> getUserByName(
+            @PathVariable("name")
+            String name) {
+        System.out.println("Fetching User with name " + name);
+        User user = userService.findByName(name);
         if (user == null) {
-            System.out.println("User with id " + id + " not found");
+            System.out.println("User with name " + name + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUserByEmail(
+            @PathVariable("email")
+            String email) {
+        System.out.println("Fetching User with email " + email);
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            System.out.println("User with email " + email + " not found");
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
 
     //-------------------Create a User--------------------------------------------------------
 
@@ -58,33 +84,34 @@ public class UserController {
             User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getName());
 
-        if (userService.isUserExist(user)) {
-            System.out.println("A User with name " + user.getName() + " already exist");
+        if (userService.isUserExist(user.getEmail())) {
+            System.out.println("A User with email " + user.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
 
         userService.saveUser(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/{id}").buildAndExpand(user.getId()).toUri());
+        headers.setLocation(
+                ucBuilder.path("/email/{email}").buildAndExpand(user.getEmail()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
 
     //------------------- Update a User --------------------------------------------------------
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{email:.+}", method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(
-            @PathVariable("id")
-            long id,
+            @PathVariable("email")
+            String email,
             @RequestBody
             User user) {
-        System.out.println("Updating User " + id);
+        System.out.println("Updating User " + email);
 
-        User currentUser = userService.findById(id);
+        User currentUser = userService.findByEmail(email);
 
         if (currentUser == null) {
-            System.out.println("User with id " + id + " not found");
+            System.out.println("User with email " + email + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
@@ -98,30 +125,19 @@ public class UserController {
 
     //------------------- Delete a User --------------------------------------------------------
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{email:.+}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(
-            @PathVariable("id")
-            long id) {
-        System.out.println("Fetching & Deleting User with id " + id);
+            @PathVariable("email")
+            String email) {
+        System.out.println("Fetching & Deleting User with email " + email);
 
-        User user = userService.findById(id);
+        User user = userService.findByEmail(email);
         if (user == null) {
-            System.out.println("Unable to delete. User with id " + id + " not found");
+            System.out.println("Unable to delete. User with email " + email + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
-        userService.deleteUserById(id);
-        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-    }
-
-
-    //------------------- Delete All User --------------------------------------------------------
-
-    @RequestMapping(value = "delete_all/", method = RequestMethod.DELETE)
-    public ResponseEntity<User> deleteAllUsers() {
-        System.out.println("Deleting All Users");
-
-        userService.deleteAllUsers();
+        userService.deleteUserByEmail(email);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 

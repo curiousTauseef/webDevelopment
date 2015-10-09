@@ -11,8 +11,8 @@ public class User {
     private String email;
     private String country;
     private String password;
-    private Calendar birth;
-    private Calendar registeredtime;
+    private long birth;
+    private long registeredtime;
 
     private int age;
 
@@ -23,17 +23,23 @@ public class User {
     }
 
     public User(long id, String name, int age, double salary) {
-        this(id, name, "c@china.cn", salary, "password", "China", Calendar.getInstance(), age);
+        this(
+                id, name, "c@china.cn", salary, "password", "China",
+                Calendar.getInstance().getTimeInMillis(), age);
+    }
+
+    public User(String name, String email, String country, String password) {
+        this(0, name, email, 0, password, country, Calendar.getInstance().getTimeInMillis(), 0);
     }
 
     public User(
             long id, String name, String email, double salary, String password, String country,
-            Calendar birth, int age) {
+            long birth, int age) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.salary = salary;
-        this.registeredtime = Calendar.getInstance();
+        this.registeredtime = Calendar.getInstance().getTimeInMillis();
         this.password = password;
         this.country = country;
         this.birth = birth;
@@ -96,19 +102,25 @@ public class User {
         this.password = password;
     }
 
-    public Calendar getBirth() {
+    public long getBirth() {
         return birth;
     }
 
-    public void setBirth(Calendar birth) {
+    public void setBirth(long birth) {
         this.birth = birth;
     }
 
-    public Calendar getRegisteredtime() {
+    public long getRegisteredtime() {
         return registeredtime;
     }
 
-    public void setRegisteredtime(Calendar registeredtime) {
+    public String getRegisteredtimeStr() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(registeredtime);
+        return cal.getTime().toString();
+    }
+
+    public void setRegisteredtime(long registeredtime) {
         this.registeredtime = registeredtime;
     }
 
@@ -140,7 +152,7 @@ public class User {
                ", country='" + country +
                ", password='" + password +
                ", birth=" + birth +
-               ", registeredtime=" + registeredtime +
+               ", registeredtime=" + registeredtime + " " + getRegisteredtimeStr() +
                ']';
     }
 }
