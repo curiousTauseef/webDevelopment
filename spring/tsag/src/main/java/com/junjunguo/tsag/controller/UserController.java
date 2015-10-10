@@ -89,7 +89,7 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
 
-        userService.saveUser(user);
+        userService.addUser(user);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(
@@ -115,9 +115,7 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
 
-        currentUser.setName(user.getName());
-        currentUser.setAge(user.getAge());
-        currentUser.setSalary(user.getSalary());
+        currentUser.updateUser(user);
 
         userService.updateUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);

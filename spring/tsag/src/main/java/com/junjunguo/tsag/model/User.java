@@ -3,55 +3,43 @@ package com.junjunguo.tsag.model;
 import java.util.Calendar;
 
 public class User {
-
-    private long id;
-
+    private static int stid = 0;
+    private int obid;
     private String name;
-
     private String email;
     private String country;
     private String password;
     private long birth;
     private long registeredtime;
 
-    private int age;
-
-    private double salary;
-
-    public User() {
-        id = 0;
-    }
-
-    public User(long id, String name, int age, double salary) {
-        this(
-                id, name, "c@china.cn", salary, "password", "China",
-                Calendar.getInstance().getTimeInMillis(), age);
-    }
-
     public User(String name, String email, String country, String password) {
-        this(0, name, email, 0, password, country, Calendar.getInstance().getTimeInMillis(), 0);
+        this(name, email, country, password, Calendar.getInstance().getTimeInMillis(),
+             Calendar.getInstance().getTimeInMillis());
     }
 
-    public User(
-            long id, String name, String email, double salary, String password, String country,
-            long birth, int age) {
-        this.id = id;
+    public User(String name, String email, String password) {
+        this(name, email, "", password);
+    }
+
+    public User(String name, String email, String country, String password, long birth) {
+        this(name, email, country, password, birth, Calendar.getInstance().getTimeInMillis());
+    }
+
+    public User(String name, String email, String country, String password, long birth,
+                long registeredtime) {
         this.name = name;
         this.email = email;
-        this.salary = salary;
-        this.registeredtime = Calendar.getInstance().getTimeInMillis();
-        this.password = password;
         this.country = country;
+        this.password = password;
         this.birth = birth;
-        this.age = age;
+        this.registeredtime = registeredtime;
+        stid += 1;
+        obid = stid;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public User() {
+        stid += 1;
+        obid = stid;
     }
 
     public String getName() {
@@ -60,22 +48,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
     }
 
     public String getEmail() {
@@ -114,21 +86,24 @@ public class User {
         return registeredtime;
     }
 
-    public String getRegisteredtimeStr() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(registeredtime);
-        return cal.getTime().toString();
-    }
-
     public void setRegisteredtime(long registeredtime) {
         this.registeredtime = registeredtime;
+    }
+
+    public void updateUser(User user) {
+        setName(user.getName());
+        setEmail(user.getEmail());
+        setBirth(user.getBirth());
+        setCountry(user.getCountry());
+        setPassword(user.getPassword());
+        setRegisteredtime(user.getRegisteredtime());
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + (obid ^ (obid >>> 32));
         return result;
     }
 
@@ -138,21 +113,17 @@ public class User {
         if (obj == null) { return false; }
         if (getClass() != obj.getClass()) { return false; }
         User other = (User) obj;
-        if (id != other.id) { return false; }
-        return true;
+        return (email.equalsIgnoreCase(other.getEmail()));
     }
 
     @Override
     public String toString() {
-        return "User [id=" + id +
-               ", name=" + name +
-               ", age=" + age +
-               ", salary=" + salary +
+        return "User [name=" + name +
                ", email='" + email +
                ", country='" + country +
                ", password='" + password +
                ", birth=" + birth +
-               ", registeredtime=" + registeredtime + " " + getRegisteredtimeStr() +
+               ", registeredtime=" + registeredtime +
                ']';
     }
 }

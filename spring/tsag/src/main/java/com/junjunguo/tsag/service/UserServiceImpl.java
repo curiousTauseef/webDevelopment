@@ -12,8 +12,6 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    //    private static final AtomicLong counter = new AtomicLong();
-
     private static List<User> users;
 
     static {
@@ -23,15 +21,6 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllUsers() {
         return users;
     }
-
-    //    public User findById(long id) {
-    //        for (User user : users) {
-    //            if (user.getId() == id) {
-    //                return user;
-    //            }
-    //        }
-    //        return null;
-    //    }
 
     public User findByEmail(String email) {
         for (User user : users) {
@@ -51,8 +40,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    public void saveUser(User user) {
-        //        user.setId(counter.incrementAndGet());
+    public void addUser(User user) {
         users.add(user);
     }
 
@@ -60,16 +48,6 @@ public class UserServiceImpl implements UserService {
         int index = users.indexOf(user);
         users.set(index, user);
     }
-
-    //    public void deleteUserById(long id) {
-    //
-    //        for (Iterator<User> iterator = users.iterator(); iterator.hasNext(); ) {
-    //            User user = iterator.next();
-    //            if (user.getId() == id) {
-    //                iterator.remove();
-    //            }
-    //        }
-    //    }
 
     public void deleteUserByEmail(String email) {
         for (Iterator<User> iterator = users.iterator(); iterator.hasNext(); ) {
@@ -86,10 +64,6 @@ public class UserServiceImpl implements UserService {
 
     private static List<User> populateDummyUsers() {
         List<User> users = new ArrayList<User>();
-        //        users.add(new User(counter.incrementAndGet(), "Sam", 30, 70000));
-        //        users.add(new User(counter.incrementAndGet(), "Tom", 40, 50000));
-        //        users.add(new User(counter.incrementAndGet(), "Jerome", 45, 30000));
-        //        users.add(new User(counter.incrementAndGet(), "Silvia", 50, 40000));
         users.add(new User("Johan", "johan@a.a", "china", "password"));
         users.add(new User("Ola", "ola@a.a", "china", "password"));
         users.add(new User("William", "william@a.a", "china", "password"));
