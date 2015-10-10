@@ -13,10 +13,11 @@ public class Video {
     private String fileName;
     private String fileExtension;
     private String ownerEmail;
-    private Location location;
+    //    private Location location;
+    private double latitude, longitude, altitude;
 
     public Video(String title, String tags, String description, long timeStamp, String filePath, String fileName,
-                 String fileExtension, String ownerEmail, Location location) {
+                 String fileExtension, String ownerEmail, double latitude, double longitude, double altitude) {
         this.title = title;
         this.tags = tags;
         this.description = description;
@@ -25,20 +26,21 @@ public class Video {
         this.fileName = fileName;
         this.fileExtension = fileExtension;
         this.ownerEmail = ownerEmail;
-        this.location = location;
+        //        this.location = location;
         stid += 1;
         id = stid;
     }
 
     public Video(String title, String tags, String description, String filePath, String fileName, String fileExtension,
-                 String ownerEmail, Location location) {
+                 String ownerEmail, double latitude, double longitude, double altitude) {
         this(title, tags, description, Calendar.getInstance().getTimeInMillis(), filePath, fileName, fileExtension,
-             ownerEmail, location);
+             ownerEmail, latitude, longitude, altitude);
     }
 
-    public Video(String filePath, String fileName, String fileExtension, String ownerEmail, Location location) {
+    public Video(String filePath, String fileName, String fileExtension, String ownerEmail, double latitude,
+                 double longitude, double altitude) {
         this("Video", "", ownerEmail + "'s video", Calendar.getInstance().getTimeInMillis(), filePath, fileName,
-             fileExtension, ownerEmail, location);
+             fileExtension, ownerEmail, latitude, longitude, altitude);
     }
 
     public Video() {
@@ -114,12 +116,36 @@ public class Video {
         this.ownerEmail = ownerEmail;
     }
 
-    public Location getLocation() {
-        return location;
+    //    public Location getLocation() {
+    //        return location;
+    //    }
+    //
+    //    public void setLocation(Location location) {
+    //        this.location = location;
+    //    }
+
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
     }
 
     public void updateVideo(Video video) {
@@ -129,7 +155,9 @@ public class Video {
         setFilePath(video.getFilePath());
         setFileName(video.getFileName());
         setFileExtension(video.getFileExtension());
-        setLocation(video.getLocation());
+        setLatitude(video.getLatitude());
+        setLongitude(video.getLongitude());
+        setAltitude(video.getAltitude());
     }
 
     @Override
@@ -160,7 +188,9 @@ public class Video {
                ", fileName='" + fileName +
                ", fileExtension='" + fileExtension +
                ", ownerEmail='" + ownerEmail +
-               ", location=" + location +
+               ", latitude=" + latitude +
+               ", longitude=" + longitude +
+               ", altitude=" + altitude +
                ']';
     }
 }

@@ -1,6 +1,5 @@
 package com.junjunguo.tsag.service.serviceImpl;
 
-import com.junjunguo.tsag.model.Location;
 import com.junjunguo.tsag.model.Video;
 import com.junjunguo.tsag.service.VideoService;
 import org.springframework.stereotype.Service;
@@ -88,15 +87,15 @@ public class VideoServiceImpl implements VideoService {
 
     private static List<Video> populateDummyvideos() {
         List<Video> videos = new ArrayList<Video>();
-        videos.add(new Video("file path", "video1", "mkv", "ola@a.a", new Location(61.11, 10.12)));
-        videos.add(new Video("file path", "videoo", "mkv", "ola@a.a", new Location(61.66, 10.12)));
-        videos.add(new Video("file path", "videow", "mkv", "william@a.a", new Location(61.99, 10.12)));
-        videos.add(new Video("file path", "videoj", "mkv", "johan@a.a", new Location(61.11, 10.99)));
-        videos.add(new Video("file path", "videoj", "mkv", "johan@a.a", new Location(62.11, 10.99)));
-        videos.add(new Video("20sag", "trondheim", "trondheim fest", "file path", "videoj", "mkv", "johan@a.a",
-                             new Location(60.11, 10.99)));
-        videos.add(new Video("20sag", "trondheim", "trondheim fest", "file path", "videoj", "mkv", "johan@a.a",
-                             new Location(60.11, 11.99)));
+        videos.add(new Video("file path", "video1", "mkv", "ola@a.a", 61.11, 10.12, 0));
+        videos.add(new Video("file path", "videoo", "mkv", "ola@a.a", 61.66, 10.12, 0));
+        videos.add(new Video("file path", "videow", "mkv", "william@a.a", 61.99, 10.12, 0));
+        videos.add(new Video("file path", "videoj", "mkv", "johan@a.a", 61.11, 10.99, 0));
+        videos.add(new Video("file path", "videoj", "mkv", "johan@a.a", 62.11, 10.99, 0));
+        videos.add(new Video("20sag", "trondheim", "trondheim fest", "file path", "videoj", "mkv", "johan@a.a", 60.11,
+                             10.99, 0));
+        videos.add(new Video("20sag", "trondheim", "trondheim fest", "file path", "videoj", "mkv", "johan@a.a", 60.11,
+                             11.99, 0));
         return videos;
     }
 }

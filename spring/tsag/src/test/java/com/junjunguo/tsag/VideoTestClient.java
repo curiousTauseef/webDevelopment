@@ -1,6 +1,5 @@
 package com.junjunguo.tsag;
 
-import com.junjunguo.tsag.model.Location;
 import com.junjunguo.tsag.model.Video;
 import org.springframework.web.client.RestTemplate;
 
@@ -104,7 +103,7 @@ public class VideoTestClient {
         System.out.println("Testing create Video API----------");
         RestTemplate restTemplate = new RestTemplate();
         Video video = new Video("20sag", "trondheim", "trondheim fest test created", "file path", "videoj", "mkv",
-                                "johan@a.a", new Location(60.11, 11.99));
+                                "johan@a.a", 60.11, 11.99, 0);
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
         System.out.println("Location : " + uri.toASCIIString());
     }
@@ -115,7 +114,7 @@ public class VideoTestClient {
         System.out.println("Testing update Video API----------");
         RestTemplate restTemplate = new RestTemplate();
         Video video = new Video("20sag", "trondheim, fest", "trondheim fest test updated", "file path", "videoj", "mkv",
-                                "johan@a.a", new Location(60.11, 11.99));
+                                "johan@a.a", 60.11, 11.99, 0);
         restTemplate.put(REST_SERVICE_URI + "sarah@a.a", video);
         System.out.println(video);
     }
