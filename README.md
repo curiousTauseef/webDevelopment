@@ -9,11 +9,16 @@ Web development
 
 #Server Development
 
+- [Representational State Transfer (REST) + spring ](spring/springRest)
+- [Spring Hibernate WebServer](spring/SpringHibernateWebServer)
+- [SpringMVC Hibernate MySQL Maven Servlet](spring/springHibernateServlet)
+- [springMVCdemo](spring/springMVCdemo)
+
+
 [Pivotal Software: Spring Framework](https://spring.io/)
 
 
 [Red Hat: Hibernate ORM](http://hibernate.org/)
-
 
 
 [Java servlet](https://en.wikipedia.org/wiki/Java_servlet)
