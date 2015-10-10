@@ -1,6 +1,7 @@
-package com.junjunguo.tsag.service;
+package com.junjunguo.tsag.service.serviceImpl;
 
 import com.junjunguo.tsag.model.User;
+import com.junjunguo.tsag.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
