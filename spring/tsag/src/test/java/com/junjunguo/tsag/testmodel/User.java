@@ -1,62 +1,45 @@
-package com.junjunguo.tsag.model;
+package com.junjunguo.tsag.testmodel;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
-@Entity
-@Table(name = "USER")
 public class User {
-    //    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ID", nullable = false)
     private int id;
-    //    @Size(min = 3, max = 100)
-//    @Column(name = "NAME", nullable = false)
     private String name;
-    //    @Id
-//    @Size(min = 3, max = 100)
-//    @Column(name = "EMAIL", nullable = false)
     private String email;
-    //    @Size(min = 3, max = 100)
-//    @Column(name = "COUNTRY", nullable = true)
     private String country;
-    //    @Size(min = 3, max = 255)
-//    @Column(name = "NAME", nullable = false)
     private String password;
-    //    @Column(name = "BIRTH", nullable = true)
-    private Date birth;
-    //    @Column(name = "REGISTERED_TIME", nullable = false)
-    private Date registeredTime;
+    private long birth;
+    private long registeredTime;
 
     public User(String name, String email, String country, String password) {
-        this(name, email, country, password, Calendar.getInstance().getTime(),
-                Calendar.getInstance().getTime());
+        this(name, email, country, password, Calendar.getInstance().getTimeInMillis(),
+                Calendar.getInstance().getTimeInMillis());
     }
 
     public User(String name, String email, String password) {
         this(name, email, "", password);
     }
 
-    public User(String name, String email, String country, String password, Date birth) {
-        this(name, email, country, password, birth, Calendar.getInstance().getTime());
+    public User(String name, String email, String country, String password, long birth) {
+        this(name, email, country, password, birth, Calendar.getInstance().getTimeInMillis());
     }
 
-    public User(String name, String email, String country, String password, Date birth,
-                Date registeredtime) {
+    public User(String name, String email, String country, String password, long birth,
+                long registeredtime) {
         this.name = name;
         this.email = email;
         this.country = country;
         this.password = password;
         this.birth = birth;
         this.registeredTime = registeredtime;
+
+        this.id = (int) (Math.random() * 10000);
     }
 
     public User() {
+        id = (int) (Math.random() * 10000);
     }
 
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -73,8 +56,6 @@ public class User {
         this.name = name;
     }
 
-    @Id
-    @Column(name = "EMAIL")
     public String getEmail() {
         return email;
     }
@@ -99,19 +80,19 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirth() {
+    public long getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(long birth) {
         this.birth = birth;
     }
 
-    public Date getRegisteredTime() {
+    public long getRegisteredTime() {
         return registeredTime;
     }
 
-    public void setRegisteredTime(Date registeredTime) {
+    public void setRegisteredTime(long registeredTime) {
         this.registeredTime = registeredTime;
     }
 
@@ -151,24 +132,8 @@ public class User {
                 ", email='" + email +
                 ", country='" + country +
                 ", password='" + password +
-                ", birth=" + birth.toString() +
-                ", registeredTime=" + registeredTime.toString() +
+                ", birth=" + birth +
+                ", registeredTime=" + registeredTime +
                 "]";
     }
-
-/*
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  `email` varchar(64) NOT NULL,
-  `country` varchar(64),
-  `birth` date,
-  `registeredtime` datetime NOT NULL,
-  `password` varchar(64) NOT NULL,
-  UNIQUE KEY (`email`),
-  PRIMARY KEY (`id`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8
-
- */
 }

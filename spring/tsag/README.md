@@ -1,3 +1,6 @@
+
+
+
 ##Issues need to remember :)
 
 
@@ -26,3 +29,60 @@ The relation between the two methods is:
 > The value received from hashCode() is used as the bucket number for storing elements of the set/map. This bucket number is the address of the element inside the set/map.
 
 > When you do contains() it will take the hash code of the element, then look for the bucket where hash code points to. If more than 1 element is found in the same bucket (multiple objects can have the same hash code), then it uses the equals() method to evaluate if the objects are equal, and then decide if contains() is true or false, or decide if element could be added in the set or not.
+
+> Create: 	put
+> Read:		get
+> Update:	post
+> Delete:	delete
+
+> CRUD: request  <-> controller <--> services <---> model 
+> web  <--> build a new controller ...
+
+#Spring mvc 
+![](img/Spring-3-MVC-Basic-Flow.jpg)
+
+#structure
+```
+spring/tsag/
+├── README.md
+├── pom.xml
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── junjunguo
+│   │   │           └── tsag
+│   │   │               ├── configuration
+│   │   │               │   ├── AppConfiguration.java
+│   │   │               │   └── AppInitializer.java
+│   │   │               ├── controller
+│   │   │               │   ├── UserController.java
+│   │   │               │   └── VideoController.java
+│   │   │               ├── dao
+│   │   │               │   ├── UserDao.java
+│   │   │               │   ├── VideoDao.java
+│   │   │               │   └── daoImpl
+│   │   │               │       ├── UserDaoImpl.java
+│   │   │               │       └── VideoDaoImpl.java
+│   │   │               ├── model
+│   │   │               │   ├── Location.java
+│   │   │               │   ├── User.java
+│   │   │               │   └── Video.java
+│   │   │               └── service
+│   │   │                   ├── UserService.java
+│   │   │                   ├── VideoService.java
+│   │   │                   └── serviceImpl
+│   │   │                       ├── UserServiceImpl.java
+│   │   │                       └── VideoServiceImpl.java
+│   │   ├── resources
+│   │   └── webapp
+│   └── test
+│       └── java
+│           └── com
+│               └── junjunguo
+│                   └── tsag
+│                       ├── UserTestClient.java
+│                       └── VideoTestClient.java
+├── target
+└── tsag.iml
+```

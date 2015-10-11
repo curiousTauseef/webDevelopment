@@ -16,7 +16,8 @@ import java.util.List;
 @RequestMapping(value = "/user/")
 public class UserController {
 
-    @Autowired UserService userService;//Service which will do all data retrieval/manipulation work
+    @Autowired
+    UserService userService;//Service which will do all data retrieval/manipulation work
 
 
     //-------------------Retrieve All Users--------------------------------------------------------
@@ -34,22 +35,8 @@ public class UserController {
 
     //-------------------Retrieve Single User------------------------------------------------------
 
-    //    @RequestMapping(value = "{id}", method = RequestMethod.GET,
-    //                    produces = MediaType.APPLICATION_JSON_VALUE)
-    //    public ResponseEntity<User> getUser(
-    //            @PathVariable("id")
-    //            long id) {
-    //        System.out.println("Fetching User with id " + id);
-    //        User user = userService.findById(id);
-    //        if (user == null) {
-    //            System.out.println("User with id " + id + " not found");
-    //            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-    //        }
-    //        return new ResponseEntity<User>(user, HttpStatus.OK);
-    //    }
-
     @RequestMapping(value = "/name/{name}", method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserByName(
             @PathVariable("name")
             String name) {
@@ -63,7 +50,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserByEmail(
             @PathVariable("email")
             String email) {
@@ -88,12 +75,12 @@ public class UserController {
             System.out.println("A User with email " + user.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-
+        System.out.println("adding User " + user.getName());
         userService.addUser(user);
+        System.out.println("adding User finished" + user.getName());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(
-                ucBuilder.path("/email/{email}").buildAndExpand(user.getEmail()).toUri());
+        headers.setLocation(ucBuilder.path("/user/email/{email}").buildAndExpand(user.getEmail()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 

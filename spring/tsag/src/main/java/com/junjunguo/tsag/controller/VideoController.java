@@ -82,18 +82,18 @@ public class VideoController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<Void> createVideo(
             @RequestBody
-            Video Video, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating Video " + Video.getId());
+            Video video, UriComponentsBuilder ucBuilder) {
+        System.out.println("Creating Video " + video.getId());
 
-        if (videoService.isVideoExist(Video.getId())) {
-            System.out.println("A Video with id " + Video.getId() + " already exist");
+        if (videoService.isVideoExist(video.getId())) {
+            System.out.println("A Video with id " + video.getId() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
 
-        videoService.addVideo(Video);
+        videoService.addVideo(video);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/id/{id}").buildAndExpand(Video.getId()).toUri());
+        headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 

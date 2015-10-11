@@ -26,6 +26,9 @@ public class Video {
         this.fileName = fileName;
         this.fileExtension = fileExtension;
         this.ownerEmail = ownerEmail;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.latitude = altitude;
         //        this.location = location;
         stid += 1;
         id = stid;
@@ -44,12 +47,16 @@ public class Video {
     }
 
     public Video() {
-        stid += 1;
+        stid += 10;
         id = stid;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -174,20 +181,21 @@ public class Video {
         if (obj == null) { return false; }
         if (getClass() != obj.getClass()) { return false; }
         Video other = (Video) obj;
-        return (id == other.id);
+        return (id == other.getId());
     }
 
     @Override
     public String toString() {
         return "Video [" +
-               "title='" + title +
-               ", tags='" + tags +
-               ", description='" + description +
+               "title=" + title +
+               ", tags=" + tags +
+               ", id=" + id +
+               ", description=" + description +
                ", timeStamp=" + timeStamp +
-               ", filePath='" + filePath +
-               ", fileName='" + fileName +
-               ", fileExtension='" + fileExtension +
-               ", ownerEmail='" + ownerEmail +
+               ", filePath=" + filePath +
+               ", fileName=" + fileName +
+               ", fileExtension=" + fileExtension +
+               ", ownerEmail=" + ownerEmail +
                ", latitude=" + latitude +
                ", longitude=" + longitude +
                ", altitude=" + altitude +

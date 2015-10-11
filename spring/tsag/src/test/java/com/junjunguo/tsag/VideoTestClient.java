@@ -24,6 +24,7 @@ public class VideoTestClient {
             for (LinkedHashMap<String, Object> map : videosMap) {
                 System.out.println("Video :  title=" + map.get("title") +
                                    ", tags=" + map.get("tags") +
+                                   ", id=" + map.get("id") +
                                    ", description=" + map.get("description") +
                                    ", timeStamp=" + map.get("timeStamp") +
                                    ", fileName=" + map.get("fileName") +
@@ -41,7 +42,7 @@ public class VideoTestClient {
 
     /* GET */
     private static void getVideoById() {
-        System.out.println("Testing getVideo API----------");
+        System.out.println("Testing getVideo by id API----------");
         RestTemplate restTemplate = new RestTemplate();
         Video video = restTemplate.getForObject(REST_SERVICE_URI + "/id/1", Video.class);
         System.out.println(video);
@@ -58,6 +59,7 @@ public class VideoTestClient {
             for (LinkedHashMap<String, Object> map : videosMap) {
                 System.out.println("Video :  title=" + map.get("title") +
                                    ", tags=" + map.get("tags") +
+                                   ", id=" + map.get("id") +
                                    ", description=" + map.get("description") +
                                    ", timeStamp=" + map.get("timeStamp") +
                                    ", fileName=" + map.get("fileName") +
@@ -75,7 +77,7 @@ public class VideoTestClient {
 
     /* GET */
     private static void getVideosByTitle() {
-        System.out.println("Testing getVideosByEmail API----------");
+        System.out.println("Testing getVideosBy title API----------");
         RestTemplate restTemplate = new RestTemplate();
         List<LinkedHashMap<String, Object>> videosMap = restTemplate
                 .getForObject(REST_SERVICE_URI + "/title/20sag", List.class);
@@ -84,6 +86,7 @@ public class VideoTestClient {
             for (LinkedHashMap<String, Object> map : videosMap) {
                 System.out.println("Video :  title=" + map.get("title") +
                                    ", tags=" + map.get("tags") +
+                                   ", id=" + map.get("id") +
                                    ", description=" + map.get("description") +
                                    ", timeStamp=" + map.get("timeStamp") +
                                    ", fileName=" + map.get("fileName") +
@@ -98,13 +101,16 @@ public class VideoTestClient {
         }
     }
 
+    static Video cvideo;
+
     /* POST */
     private static void createVideo() {
         System.out.println("Testing create Video API----------");
         RestTemplate restTemplate = new RestTemplate();
-        Video video = new Video("20sag", "trondheim", "trondheim fest test created", "file path", "videoj", "mkv",
-                                "johan@a.a", 60.11, 11.99, 0);
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+        cvideo = new Video("20sag", "trondheim", "trondheim fest test created", "file path", "videoj", "mkv",
+                           "johan@a.a", 60.11, 11.99, 0);
+        System.out.println("new video: " + cvideo);
+        URI uri = restTemplate.postForLocation(REST_SERVICE_URI, cvideo, Video.class);
         System.out.println("Location : " + uri.toASCIIString());
     }
 
@@ -115,7 +121,8 @@ public class VideoTestClient {
         RestTemplate restTemplate = new RestTemplate();
         Video video = new Video("20sag", "trondheim, fest", "trondheim fest test updated", "file path", "videoj", "mkv",
                                 "johan@a.a", 60.11, 11.99, 0);
-        restTemplate.put(REST_SERVICE_URI + "sarah@a.a", video);
+        video.setId(cvideo.getId());
+        restTemplate.put(REST_SERVICE_URI + cvideo.getId(), video);
         System.out.println(video);
     }
 
