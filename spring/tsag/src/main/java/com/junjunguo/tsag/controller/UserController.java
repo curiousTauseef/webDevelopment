@@ -70,7 +70,6 @@ public class UserController {
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.toString());
-        System.out.println("user exist : " + userService.isUserExist(user.getEmail()));
         if (userService.isUserExist(user.getEmail())) {
             System.out.println("A User with email " + user.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
