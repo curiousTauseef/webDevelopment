@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean isUserExist(String email) {
+        System.out.println("is user exist with email " + email);
         return findByEmail(email) != null;
     }
 

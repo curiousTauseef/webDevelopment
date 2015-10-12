@@ -1,21 +1,16 @@
 package com.junjunguo.springmvc.model;
 
-import java.math.BigDecimal;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.math.BigDecimal;
+import java.util.Date;
+//import java.sql.Date;
 
 @Entity
 @Table(name="EMPLOYEE")
@@ -32,8 +27,9 @@ public class Employee {
 	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yyyy") 
 	@Column(name = "JOINING_DATE", nullable = false)
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate joiningDate;
+//	@Type(type="java.sql.Date")
+	@Type(type="java.sql.Date")
+	private Date joiningDate;
 
 	@NotNull
 	@Digits(integer=8, fraction=2)
@@ -60,11 +56,11 @@ public class Employee {
 		this.name = name;
 	}
 
-	public LocalDate getJoiningDate() {
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
 
-	public void setJoiningDate(LocalDate joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 

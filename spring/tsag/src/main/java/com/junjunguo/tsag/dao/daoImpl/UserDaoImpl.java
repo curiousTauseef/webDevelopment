@@ -52,31 +52,16 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public User findByEmail(String email) {
-        String hql = "from User where email=" + email;
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-
-        @SuppressWarnings("unchecked")
-        List<User> listUser = (List<User>) query.list();
-
-        if (listUser != null && !listUser.isEmpty()) {
-            return listUser.get(0);
-        }
-
-        return null;
+        System.out.println("find by email user dao impl: " + email);
+        Query q = sessionFactory.getCurrentSession().createQuery("from User where email = '" + email + "'");
+        System.out.println("find by email user dao impl-----");
+        return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
+
 
     @Transactional
     public User findByName(String name) {
-        String hql = "from User where name=" + name;
-        Query query = sessionFactory.getCurrentSession().createQuery(hql);
-
-        @SuppressWarnings("unchecked")
-        List<User> listUser = (List<User>) query.list();
-
-        if (listUser != null && !listUser.isEmpty()) {
-            return listUser.get(0);
-        }
-
-        return null;
+        Query q = sessionFactory.getCurrentSession().createQuery("from User where name = '" + name + "'");
+        return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
 }

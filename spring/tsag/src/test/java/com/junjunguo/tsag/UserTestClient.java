@@ -6,10 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class UserTestClient {
 
@@ -42,8 +39,12 @@ public class UserTestClient {
     private static void getUserByName() {
         System.out.println("Testing getUserByName by name API----------");
         RestTemplate restTemplate = new RestTemplate();
-        User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/Ola", User.class);
-        System.out.println(user);
+        User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/johan", User.class);
+        if (user != null) {
+            System.out.println(user);
+        } else {
+            System.out.println("user not found!");
+        }
     }
 
     /* GET */
@@ -51,7 +52,11 @@ public class UserTestClient {
         System.out.println("Testing getUser By Email API----------");
         RestTemplate restTemplate = new RestTemplate();
         User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/ola@a.a", User.class);
-        System.out.println("get by email: " + user);
+        if (user != null) {
+            System.out.println("get by email: " + user);
+        } else {
+            System.out.println("user not found");
+        }
     }
 
     /* POST */
@@ -67,9 +72,13 @@ public class UserTestClient {
         System.out.println("Testing update User API----------");
         RestTemplate restTemplate = new RestTemplate();
         User user = new User("Sarah", "sarah@a.a", "Norway", "sarah's password",
-                getCalendar("03 14 " + "16:02:37 2011").getTimeInMillis());
+                getDate("03 14 " + "16:02:37 2011"));
         restTemplate.put(REST_SERVICE_URI + "sarah@a.a", user);
-        System.out.println(user);
+        if (user != null) {
+            System.out.println("updated user: " + user);
+        } else {
+            System.out.println("update not succeed");
+        }
     }
 
     /* DELETE */
@@ -81,7 +90,7 @@ public class UserTestClient {
     }
 
     public static void main(String args[]) {
-        createUser(new User("Johan", "johan@a.a", "johan's password"));
+        createUser(new User("Ola", "ola@a.a", "ola's password"));
         listAllUsers();
         getUserByName();//by name
         getUserByEmail();
@@ -94,27 +103,20 @@ public class UserTestClient {
         listAllUsers();
     }
 
-    public static Calendar getCalendar(String dateTime) {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("mm dd HH:mm:ss yyyy", Locale.getDefault());
-        try {
-            cal.setTime(sdf.parse(dateTime));
-            //            cal.setTime(sdf.parse("03 14 16:02:37 2011"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return cal;
-    }
 
-    public static Calendar getCalendar(String month, String day, String time, String year) {
-        Calendar cal = Calendar.getInstance();
+    public static Date getDate(String dateInString) {
         SimpleDateFormat sdf = new SimpleDateFormat("mm dd HH:mm:ss yyyy", Locale.getDefault());
+
         try {
-            cal.setTime(sdf.parse(month + " " + day + " " + time + " " + year));
-            //            cal.setTime(sdf.parse("03 14 16:02:37 2011"));
+
+            Date date = sdf.parse(dateInString);
+            System.out.println(date);
+            System.out.println(sdf.format(date));
+            return date;
+
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
-        return cal;
     }
 }

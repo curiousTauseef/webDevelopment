@@ -18,7 +18,7 @@ public class UserTestClient {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		List<LinkedHashMap<String, Object>> usersMap = restTemplate.getForObject
-				(REST_SERVICE_URI+"user_list/", List.class);
+				(REST_SERVICE_URI+"list/", List.class);
 		
 		if(usersMap!=null){
 			for(LinkedHashMap<String, Object> map : usersMap){

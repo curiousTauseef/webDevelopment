@@ -1,43 +1,48 @@
 package com.junjunguo.tsag.testmodel;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class User {
     private int id;
     private String name;
+    //    @Id
     private String email;
+    //    @Size(min = 3, max = 100)
+//    @Column(name = "COUNTRY", nullable = true)
     private String country;
+    //    @Size(min = 3, max = 255)
+//    @Column(name = "NAME", nullable = false)
     private String password;
-    private long birth;
-    private long registeredTime;
+    //    @Column(name = "BIRTH", nullable = true)
+    private Date birth;
+    //    @Column(name = "REGISTERED_TIME", nullable = false)
+    private Date registeredTime;
 
     public User(String name, String email, String country, String password) {
-        this(name, email, country, password, Calendar.getInstance().getTimeInMillis(),
-                Calendar.getInstance().getTimeInMillis());
+        this(name, email, country, password, Calendar.getInstance().getTime(),
+                Calendar.getInstance().getTime());
     }
 
     public User(String name, String email, String password) {
         this(name, email, "", password);
     }
 
-    public User(String name, String email, String country, String password, long birth) {
-        this(name, email, country, password, birth, Calendar.getInstance().getTimeInMillis());
+    public User(String name, String email, String country, String password, Date birth) {
+        this(name, email, country, password, birth, Calendar.getInstance().getTime());
     }
 
-    public User(String name, String email, String country, String password, long birth,
-                long registeredtime) {
+    public User(String name, String email, String country, String password, Date birth,
+                Date registeredtime) {
         this.name = name;
         this.email = email;
         this.country = country;
         this.password = password;
         this.birth = birth;
         this.registeredTime = registeredtime;
-
-        this.id = (int) (Math.random() * 10000);
     }
 
     public User() {
-        id = (int) (Math.random() * 10000);
     }
 
     public int getId() {
@@ -80,19 +85,19 @@ public class User {
         this.password = password;
     }
 
-    public long getBirth() {
+    public Date getBirth() {
         return birth;
     }
 
-    public void setBirth(long birth) {
+    public void setBirth(Date birth) {
         this.birth = birth;
     }
 
-    public long getRegisteredTime() {
+    public Date getRegisteredTime() {
         return registeredTime;
     }
 
-    public void setRegisteredTime(long registeredTime) {
+    public void setRegisteredTime(Date registeredTime) {
         this.registeredTime = registeredTime;
     }
 
@@ -103,28 +108,28 @@ public class User {
         setPassword(user.getPassword());
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        User other = (User) obj;
-        return (email.equalsIgnoreCase(other.getEmail()));
-    }
+//    @Override
+//    public int hashCode() {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + id;
+//        return result;
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) {
+//            return true;
+//        }
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        User other = (User) obj;
+//        return (email.equalsIgnoreCase(other.getEmail()));
+//    }
 
     @Override
     public String toString() {
@@ -132,8 +137,10 @@ public class User {
                 ", email='" + email +
                 ", country='" + country +
                 ", password='" + password +
-                ", birth=" + birth +
-                ", registeredTime=" + registeredTime +
+                ", birth=" + birth.toString() +
+                ", registeredTime=" + registeredTime.toString() +
                 "]";
     }
+
+
 }
