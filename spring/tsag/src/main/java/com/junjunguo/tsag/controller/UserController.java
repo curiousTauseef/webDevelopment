@@ -23,13 +23,14 @@ public class UserController {
     //-------------------Retrieve All Users--------------------------------------------------------
 
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> listAllUsers() {
+//    public ResponseEntity<List<User>> listAllUsers() {
+    public String listAllUsers() {
         List<User> users = userService.findAllUsers();
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(
-                    HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+                    HttpStatus.NOT_FOUND).toString();
         }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK).getBody().toString();
     }
 
 
@@ -44,7 +45,7 @@ public class UserController {
         User user = userService.findByName(name);
         if (user == null) {
             System.out.println("User with name " + name + " not found");
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<User>(new User(), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }

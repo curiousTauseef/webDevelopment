@@ -1,6 +1,8 @@
 package com.junjunguo.tsag;
 
 import com.junjunguo.tsag.testmodel.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -29,7 +31,6 @@ public class UserTestClient {
                             ", password=" + map.get("password") +
                             ", registered time=" + map.get("registeredtime") +
                             ", birth=" + map.get("birth"));
-                    ;
                 }
             } else {
                 System.out.println("No user exist----------");
@@ -40,24 +41,31 @@ public class UserTestClient {
     }
 
     /* GET */
-    private static void getUserByName() {
+    private static void getUserByName(String name) {
         System.out.println("Testing getUserByName by name API----------");
         RestTemplate restTemplate = new RestTemplate();
-
         try {
-            User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/johan", User.class);
-            System.out.println("get user by name : " + user);
+            ResponseEntity<User> re = restTemplate.getForEntity(REST_SERVICE_URI + "/name/" + name, User.class);
+            if (re.getStatusCode() == HttpStatus.OK) {
+                User user = re.getBody();
+                System.out.println("get user by name : " + user);
+            } else if (re.getStatusCode() == HttpStatus.NOT_FOUND) {
+                System.out.println("not found : " + name);
+            } else {
+                System.out.println("oops! error occurred!");
+            }
+//            User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/johan", User.class);
         } catch (org.springframework.web.client.RestClientException e) {
             e.printStackTrace();
         }
     }
 
     /* GET */
-    private static void getUserByEmail() {
+    private static void getUserByEmail(String email) {
         System.out.println("Testing getUser By Email API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/ola@a.a", User.class);
+            User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/" + email, User.class);
             if (user != null) {
                 System.out.println("get by email: " + user);
             } else {
@@ -112,8 +120,8 @@ public class UserTestClient {
     public static void main(String args[]) {
         createUser(new User("Ola", "ola@a.a", "ola's password"));
         listAllUsers();
-        getUserByName();//by name
-        getUserByEmail();
+        getUserByName("ol");//by name
+        getUserByEmail("ola@a.a");
         createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
         listAllUsers();
         updateUser();
@@ -127,14 +135,11 @@ public class UserTestClient {
 
     public static Date getDate(String dateInString) {
         SimpleDateFormat sdf = new SimpleDateFormat("mm dd HH:mm:ss yyyy", Locale.getDefault());
-
         try {
-
             Date date = sdf.parse(dateInString);
             System.out.println(date);
             System.out.println(sdf.format(date));
             return date;
-
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
