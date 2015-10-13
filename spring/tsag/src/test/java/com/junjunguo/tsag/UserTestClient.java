@@ -2,7 +2,6 @@ package com.junjunguo.tsag;
 
 import com.junjunguo.tsag.testmodel.User;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -36,7 +35,11 @@ public class UserTestClient {
                 System.out.println("No user exist----------");
             }
         } catch (org.springframework.web.client.RestClientException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("not found !");
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
+            }
         }
     }
 
@@ -45,19 +48,16 @@ public class UserTestClient {
         System.out.println("Testing getUserByName by name API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<User> re = restTemplate.getForEntity(REST_SERVICE_URI + "/name/" + name, User.class);
-            if (re.getStatusCode() == HttpStatus.OK) {
-                User user = re.getBody();
-                System.out.println("get user by name : " + user);
-            } else if (re.getStatusCode() == HttpStatus.NOT_FOUND) {
-                System.out.println("not found : " + name);
-            } else {
-                System.out.println("oops! error occurred!");
-            }
-//            User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/johan", User.class);
+            User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/" + name, User.class);
+            System.out.println("find user by name : " + user);
         } catch (org.springframework.web.client.RestClientException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("user name: {" + name + "} not found !");
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
+            }
         }
+
     }
 
     /* GET */
@@ -68,11 +68,13 @@ public class UserTestClient {
             User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/" + email, User.class);
             if (user != null) {
                 System.out.println("get by email: " + user);
-            } else {
-                System.out.println("user not found");
             }
         } catch (org.springframework.web.client.RestClientException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("user with email: {" + email + "} not found !");
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
+            }
         }
     }
 
@@ -84,37 +86,44 @@ public class UserTestClient {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI, user, User.class);
             System.out.println("Location : " + uri.toASCIIString());
         } catch (org.springframework.web.client.RestClientException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
+                System.out.println("user: {" + user.toString() + "} already exist !");
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
+            }
         }
     }
 
     /* PUT */
-    private static void updateUser() {
+    private static void updateUser(User user) {
         System.out.println("Testing update User API----------");
         RestTemplate restTemplate = new RestTemplate();
-        User user = new User("Sarah", "sarah@a.a", "Norway", "sarah's password",
-                getDate("03 14 " + "16:02:37 2011"));
         try {
             restTemplate.put(REST_SERVICE_URI + "sarah@a.a", user);
             System.out.println("update user: " + user);
         } catch (org.springframework.web.client.RestClientException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("user: {" + user + "} not found !");
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
+            }
         }
-
     }
 
     /* DELETE */
-    private static void deleteUser() {
+    private static void deleteUserByEmail(String email) {
         System.out.println("Testing delete User API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            restTemplate.delete(REST_SERVICE_URI + "sarah@a.a");
-            System.out.println("deleted: sarah@a.a");
+            restTemplate.delete(REST_SERVICE_URI + email);
+            System.out.println("user with email: " + email + "deleted");
         } catch (org.springframework.web.client.RestClientException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("user with email: {" + email + "} not found !");
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
+            }
         }
-
-
     }
 
     public static void main(String args[]) {
@@ -124,9 +133,10 @@ public class UserTestClient {
         getUserByEmail("ola@a.a");
         createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
         listAllUsers();
-        updateUser();
+        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password",
+                getDate("03 14 " + "16:02:37 2011")));
         listAllUsers();
-        deleteUser();
+        deleteUserByEmail("sarah@a.a");
         listAllUsers();
         createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
         listAllUsers();

@@ -23,14 +23,13 @@ public class UserController {
     //-------------------Retrieve All Users--------------------------------------------------------
 
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
-//    public ResponseEntity<List<User>> listAllUsers() {
-    public String listAllUsers() {
+    public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(
-                    HttpStatus.NOT_FOUND).toString();
+                    HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK).getBody().toString();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
 
@@ -75,9 +74,7 @@ public class UserController {
             System.out.println("A User with email " + user.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-        System.out.println("adding User " + user.getName());
         userService.addUser(user);
-        System.out.println("adding User finished" + user.getName());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/email/{email}").buildAndExpand(user.getEmail()).toUri());
@@ -121,7 +118,6 @@ public class UserController {
             System.out.println("Unable to delete. User with email " + email + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
-
         userService.deleteUserByEmail(email);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
