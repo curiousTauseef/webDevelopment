@@ -20,6 +20,7 @@ Web development
 
 [Red Hat: Hibernate ORM](http://hibernate.org/)
 
+- [hibernate](hibernate.md)
 
 [Java servlet](https://en.wikipedia.org/wiki/Java_servlet)
 

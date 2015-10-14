@@ -40,10 +40,29 @@ public class HibernateConfiguration {
         return dataSource;
     }
 
+    /*
+    # hibernate.hbm2ddl.auto
+    Automatically validates or exports schema DDL to the database when
+    the SessionFactory is created. With create-drop, the database schema will be dropped when
+    the SessionFactory is closed explicitly.
 
+    e.g. validate | update | create | create-drop
+
+    validate:       validate the schema, makes no changes to the database.
+    update:         update the schema. {Not best for production}
+    create:         creates the schema, destroying previous data.
+    create-drop:    drop the schema at the end of the session.
+
+    # hibernate.show_sql
+    which specifies whether the sql queries will be shown in the console or the logger
+     */
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
+        properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.connection.charSet", "UTF-8");
+        properties.put("hibernate.connection.characterEncoding", "UTF-8");
+        properties.put("hibernate.connection.useUnicode", "true");
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return properties;
     }
@@ -63,7 +82,6 @@ public class HibernateConfiguration {
             SessionFactory sessionFactory) {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager(
                 sessionFactory);
-
         return transactionManager;
     }
 
@@ -72,43 +90,4 @@ public class HibernateConfiguration {
     public UserDao getUserDao(SessionFactory sessionFactory) {
         return new UserDaoImpl(sessionFactory);
     }
-
-
-//    @Autowired
-//    private Environment environment;
-//
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setPackagesToScan(new String[]{"com.junjunguo.tsag.model"});
-//        sessionFactory.setHibernateProperties(hibernateProperties());
-//        return sessionFactory;
-//    }
-//
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
-//        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-//        return dataSource;
-//    }
-//
-//    private Properties hibernateProperties() {
-//        Properties properties = new Properties();
-//        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
-//        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-//        properties.put("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
-//        return properties;
-//    }
-//
-//    @Bean
-//    @Autowired
-//    public HibernateTransactionManager transactionManager(SessionFactory s) {
-//        HibernateTransactionManager txManager = new HibernateTransactionManager();
-//        txManager.setSessionFactory(s);
-//        return txManager;
-//    }
 }
