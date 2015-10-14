@@ -27,6 +27,7 @@ public class UserTestClient {
                 for (LinkedHashMap<String, Object> map : usersMap) {
                     System.out.println("User :  Name=" + map.get("name") +
                             ", email=" + map.get("email") +
+                            ", country=" + map.get("country") +
                             ", password=" + map.get("password") +
                             ", registered time=" + map.get("registeredtime") +
                             ", birth=" + map.get("birth"));
@@ -48,7 +49,7 @@ public class UserTestClient {
         System.out.println("Testing getUserByName by name API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/" + name, User.class);
+            User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/" + name + "/", User.class);
             System.out.println("find user by name : " + user);
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
@@ -65,7 +66,7 @@ public class UserTestClient {
         System.out.println("Testing getUser By Email API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/" + email, User.class);
+            User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/" + email + "/", User.class);
             if (user != null) {
                 System.out.println("get by email: " + user);
             }
@@ -84,7 +85,7 @@ public class UserTestClient {
         RestTemplate restTemplate = new RestTemplate();
         try {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI, user, User.class);
-            System.out.println("Location : " + uri.toASCIIString());
+            System.out.println("Location : " + uri.toASCIIString() + "/");
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
                 System.out.println("user: {" + user.toString() + "} already exist !");
@@ -99,7 +100,8 @@ public class UserTestClient {
         System.out.println("Testing update User API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            restTemplate.put(REST_SERVICE_URI + "sarah@a.a", user);
+            restTemplate.put(REST_SERVICE_URI, user);
+//            restTemplate.put(REST_SERVICE_URI + user.getEmail() + "/", user);
             System.out.println("update user: " + user);
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
@@ -115,8 +117,8 @@ public class UserTestClient {
         System.out.println("Testing delete User API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            restTemplate.delete(REST_SERVICE_URI + email);
-            System.out.println("user with email: " + email + "deleted");
+            restTemplate.delete(REST_SERVICE_URI + email + "/");
+            System.out.println("user with email: " + email + " deleted");
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
                 System.out.println("user with email: {" + email + "} not found !");
@@ -131,14 +133,15 @@ public class UserTestClient {
         listAllUsers();
         getUserByName("ol");//by name
         getUserByEmail("ola@a.a");
+        getUserByEmail("jonas@gmail.com");
         createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
         listAllUsers();
-        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password",
+        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
                 getDate("03 14 " + "16:02:37 2011")));
         listAllUsers();
-        deleteUserByEmail("sarah@a.a");
         listAllUsers();
         createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
+        deleteUserByEmail("sarah@a.a");
         listAllUsers();
     }
 
