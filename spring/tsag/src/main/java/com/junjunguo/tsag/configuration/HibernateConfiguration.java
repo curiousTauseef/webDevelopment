@@ -60,10 +60,10 @@ public class HibernateConfiguration {
         Properties properties = new Properties();
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.connection.charSet", "UTF-8");
-        properties.put("hibernate.connection.characterEncoding", "UTF-8");
-        properties.put("hibernate.connection.useUnicode", "true");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+//        properties.put("hibernate.connection.charSet", "UTF-8");
+//        properties.put("hibernate.connection.characterEncoding", "UTF-8");
+//        properties.put("hibernate.connection.useUnicode", "true");
+        properties.put("hibernate.dialect", "com.junjunguo.tsag.util.CustomMysqlDialect");
         return properties;
     }
 

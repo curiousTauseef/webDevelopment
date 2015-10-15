@@ -40,16 +40,16 @@ e.g. validate | update | create | create-drop
     int scale() default 0; // decimal scale
 ```
 
-> 1	name (optional): the column name (default to the property name)
-> 2	unique (optional): set a unique constraint on this column or not (default false)
-> 3	nullable (optional): set the column as nullable (default true).
-> 4	insertable (optional): whether or not the column will be part of the insert statement (default true)
-> 5	updatable (optional): whether or not the column will be part of the update statement (default true)
-> 6	columnDefinition (optional): override the sql DDL fragment for this particular column (non portable)
-> 7	table (optional): define the targeted table (default primary table)
-> 8	length (optional): column length (default 255)
-> 9	precision (optional): column decimal precision (default 0)
-> 10	scale (optional): column decimal scale if useful (default 0)
+> 1.	name (optional): the column name (default to the property name)
+> 2.	unique (optional): set a unique constraint on this column or not (default false)
+> 3.	nullable (optional): set the column as nullable (default true).
+> 4.	insertable (optional): whether or not the column will be part of the insert statement (default true)
+> 5.	updatable (optional): whether or not the column will be part of the update statement (default true)
+> 6.	columnDefinition (optional): override the sql DDL fragment for this particular column (non portable)
+> 7.	table (optional): define the targeted table (default primary table)
+> 8.	length (optional): column length (default 255)
+> 9.	precision (optional): column decimal precision (default 0)
+> 10.	scale (optional): column decimal scale if useful (default 0)
 
 
 #example:
@@ -142,3 +142,65 @@ mysql> show columns from user;
 ```
 
 with {hibernate.hbm2ddl.auto -> update: update the schema} the table will be build when there is no table, but not destroy the table if it already exist.
+
+##show full columns from table:
+
+```
+mysql> show full columns from user;
++----------------+--------------+-------------------+------+-----+---------+-------+---------------------------------+---------+
+| Field          | Type         | Collation         | Null | Key | Default | Extra | Privileges                      | Comment |
++----------------+--------------+-------------------+------+-----+---------+-------+---------------------------------+---------+
+| EMAIL          | varchar(128) | latin1_swedish_ci | NO   | PRI | NULL    |       | select,insert,update,references |         |
+| BIRTH          | date         | NULL              | YES  |     | NULL    |       | select,insert,update,references |         |
+| COUNTRY        | varchar(128) | latin1_swedish_ci | YES  |     | NULL    |       | select,insert,update,references |         |
+| NAME           | varchar(128) | latin1_swedish_ci | NO   |     | NULL    |       | select,insert,update,references |         |
+| PASSWORD       | varchar(128) | latin1_swedish_ci | NO   |     | NULL    |       | select,insert,update,references |         |
+| REGISTEREDTIME | datetime     | NULL              | NO   |     | NULL    |       | select,insert,update,references |         |
++----------------+--------------+-------------------+------+-----+---------+-------+---------------------------------+---------+
+6 rows in set (0.01 sec)
+```
+
+##UTF-8
+####latin1_swedish_ci is not what we want, we need utf8_general_ci
+find the solution from this [blog](http://blog.tremend.ro/2007/08/14/how-to-set-the-default-charset-to-utf-8-for-create-table-when-using-hibernate-with-java-persistence-annotations/)
+
+build a custom mySQL dialect:
+
+```
+extends MySQL5InnoDBDialect {
+    public String getTableTypeString() {
+        return " ENGINE=InnoDB DEFAULT CHARSET=utf8";
+    }
+```
+
+and change the configuration from 
+
+```
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+```
+
+to 
+
+```
+        properties.put("hibernate.dialect", "com.junjunguo.tsag.util.CustomMysqlDialect");
+```
+
+1. delete the table user
+2. run the server again 
+3. we got a net table 
+
+```
+mysql> show full columns from user;
++----------------+--------------+-----------------+------+-----+---------+-------+---------------------------------+---------+
+| Field          | Type         | Collation       | Null | Key | Default | Extra | Privileges                      | Comment |
++----------------+--------------+-----------------+------+-----+---------+-------+---------------------------------+---------+
+| EMAIL          | varchar(128) | utf8_general_ci | NO   | PRI | NULL    |       | select,insert,update,references |         |
+| BIRTH          | date         | NULL            | YES  |     | NULL    |       | select,insert,update,references |         |
+| COUNTRY        | varchar(128) | utf8_general_ci | YES  |     | NULL    |       | select,insert,update,references |         |
+| NAME           | varchar(128) | utf8_general_ci | NO   |     | NULL    |       | select,insert,update,references |         |
+| PASSWORD       | varchar(128) | utf8_general_ci | NO   |     | NULL    |       | select,insert,update,references |         |
+| REGISTEREDTIME | datetime     | NULL            | NO   |     | NULL    |       | select,insert,update,references |         |
++----------------+--------------+-----------------+------+-----+---------+-------+---------------------------------+---------+
+6 rows in set (0.00 sec)
+```
+with 'utf8_general_ci' :)
