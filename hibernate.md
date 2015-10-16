@@ -187,7 +187,7 @@ to
 
 1. delete the table user
 2. run the server again 
-3. we got a net table 
+3. we got a new table whith new Collation:
 
 ```
 mysql> show full columns from user;
