@@ -1,6 +1,7 @@
 package com.junjunguo.tsag.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by GuoJunjun <junjunguo.com> on 16/10/15.
@@ -17,7 +18,8 @@ public class Tag {
     private int id;
     @Column(name = "LABEL", nullable = false, columnDefinition = "VARCHAR(255)")
     private String label;
-
+    @ManyToMany
+    private List<User> users;
 
     public Tag(String label) {
         this.label = label;

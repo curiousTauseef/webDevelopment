@@ -3,6 +3,7 @@ package com.junjunguo.tsag.model;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /*
 (https://docs.jboss.org/hibernate/stable/annotations/reference/en/html_single/)
@@ -48,6 +49,9 @@ public class User {
     private Date birth;
     @Column(name = "REGISTEREDTIME", nullable = false, columnDefinition = "datetime")
     private Date registeredTime;
+//    @ManyToMany(mappedBy = "users")
+//    @JoinColumn
+//    private List<Tag> tags;
 
     public User(String name, String email, String country, String password) {
         this(name, email, country, password, Calendar.getInstance().getTime(),
@@ -75,6 +79,21 @@ public class User {
     public User() {
     }
 
+//    public List<Tag> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(List<Tag> tags) {
+//        this.tags = tags;
+//    }
+//
+//    public void addTag(Tag tag) {
+//        tags.add(tag);
+//    }
+//
+//    public void addTagLabel(String label) {
+//        tags.add(new Tag(label));
+//    }
 
     public String getName() {
         return name;

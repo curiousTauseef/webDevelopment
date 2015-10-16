@@ -1,5 +1,21 @@
 #Hibernate
 
+####Architecture
+![architecture](http://docs.jboss.org/hibernate/orm/5.0/userGuide/en-US/html_single/images/overview.png)
+
+##Persistence
+> Hibernate ORM is concerned with helping your application to achieve persistence. So what is persistence? Persistence simply means that we would like our application’s data to outlive the applications process. In Java terms, we would like the state of (some of) our objects to live beyond the scope of the JVM so that the same state is available later.
+###Relational Databases
+> Specifically, Hibernate ORM is concerned with data persistence as it applies to relational databases (RDBMS). In the world of Object-Oriented applications, there is often a discussion about using an object database (ODBMS) as opposed to a RDBMS. We are not going to explore that discussion here. Suffice it to say that RDBMS remain a very popular persistence mechanism and will so for the foreseeable future.
+> [What is Object/Relational Mapping?](http://hibernate.org/orm/what-is-an-orm/)
+
+###JPA Provider
+In addition to its own "native" API, Hibernate is also an implementation of the Java Persistence API (JPA) specification. As such, it can be easily used in any environment supporting JPA including Java SE applications, Java EE application servers, Enterprise OSGi containers, etc. [Hibernate ORM](http://hibernate.org/orm/)
+
+
+###Cascade Operations and Relationships
+> Entities that use relationships often have dependencies on the existence of the other entity in the relationship. For example, a line item is part of an order; if the order is deleted, the line item also should be deleted. This is called a cascade delete relationship. [Cascade Operations and Relationships](https://docs.oracle.com/cd/E19798-01/821-1841/bnbqm/index.html)
+
 [hibernate ORM documentation](http://hibernate.org/orm/documentation/5.0/)
 
 [Hibernate Domain Model Mapping Guide](http://docs.jboss.org/hibernate/orm/5.0/mappingGuide/en-US/html_single/)

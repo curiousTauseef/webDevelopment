@@ -2,7 +2,9 @@ package com.junjunguo.tsag.configuration;
 
 import javax.sql.DataSource;
 
+import com.junjunguo.tsag.dao.TagDao;
 import com.junjunguo.tsag.dao.UserDao;
+import com.junjunguo.tsag.dao.daoImpl.TagDaoImpl;
 import com.junjunguo.tsag.dao.daoImpl.UserDaoImpl;
 import com.junjunguo.tsag.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -89,5 +91,11 @@ public class HibernateConfiguration {
     @Bean(name = "userDao")
     public UserDao getUserDao(SessionFactory sessionFactory) {
         return new UserDaoImpl(sessionFactory);
+    }
+
+    @Autowired
+    @Bean(name = "tagDao")
+    public TagDao getTagDao(SessionFactory sessionFactory) {
+        return new TagDaoImpl(sessionFactory);
     }
 }
