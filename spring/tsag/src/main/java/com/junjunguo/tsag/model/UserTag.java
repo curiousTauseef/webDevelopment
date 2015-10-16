@@ -13,11 +13,11 @@ public class UserTag {
     @Column(name = "ID")
     private int id;
     @Column(name = "USER_ID", nullable = false)
-    private int userId;
+    private String userId;
     @Column(name = "TAG_ID", nullable = false)
     private int tagId;
 
-    public UserTag(int userId, int tagId) {
+    public UserTag(String userId, int tagId) {
         this.userId = userId;
         this.tagId = tagId;
     }
@@ -27,11 +27,11 @@ public class UserTag {
     }
 
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    void setUserId(int userId) {
+    void setUserId(String userId) {
         this.userId = userId;
     }
 
