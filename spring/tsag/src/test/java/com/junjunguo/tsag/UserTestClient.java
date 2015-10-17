@@ -1,6 +1,6 @@
 package com.junjunguo.tsag;
 
-import com.junjunguo.tsag.testmodel.User;
+import com.junjunguo.tsag.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,46 +16,73 @@ public class UserTestClient {
     /* GET */
     @SuppressWarnings("unchecked")
     private static void listAllUsers() {
-        System.out.println("Testing listAllUsers API-----------");
+        log("Testing listAllUsers API-----------");
 
         RestTemplate restTemplate = new RestTemplate();
         try {
             List<LinkedHashMap<String, Object>> usersMap = restTemplate
-                    .getForObject(REST_SERVICE_URI + "/list/", List.class);
+                    .getForObject(REST_SERVICE_URI + "list/", List.class);
 
             if (usersMap != null) {
                 for (LinkedHashMap<String, Object> map : usersMap) {
-                    System.out.println("User :  Name=" + map.get("name") +
-                            ", email=" + map.get("email") +
-                            ", country=" + map.get("country") +
-                            ", password=" + map.get("password") +
-                            ", registered time=" + map.get("registeredtime") +
-                            ", birth=" + map.get("birth"));
+                    log("User {'Name':'" + map.get("name") +
+                            "', 'email':'" + map.get("email") +
+                            "', 'country':'" + map.get("country") +
+                            "', 'password':'" + map.get("password") +
+                            "', 'registeredtime':'" + map.get("registeredtime") +
+                            "', 'birth':'" + map.get("birth") + "'}");
                 }
             } else {
-                System.out.println("No user exist----------");
+                log("No user exist----------");
             }
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                System.out.println("not found !");
+                log("not found !");
             } else {
-                System.out.println("oops! error occurred! " + e.getMessage());
+                log("oops! error occurred! " + e.getMessage());
+            }
+        }
+    }
+
+    /* GET */
+    @SuppressWarnings("unchecked")
+    private static void listAllTags() {
+        log("Testing list all tags API-----------");
+
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            List<LinkedHashMap<String, Object>> tagsMap = restTemplate
+                    .getForObject(REST_SERVICE_URI + "/tag/list/", List.class);
+
+            if (tagsMap != null) {
+                for (LinkedHashMap<String, Object> map : tagsMap) {
+                    log("Tag :  Label=" + map.get("label") +
+                            ", id=" + map.get("id"));
+                }
+            } else {
+                log("No user exist----------");
+            }
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                log("not found !");
+            } else {
+                log("oops! error occurred! " + e.getMessage());
             }
         }
     }
 
     /* GET */
     private static void getUserByName(String name) {
-        System.out.println("Testing getUserByName by name API----------");
+        log("Testing getUserByName by name API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
             User user = restTemplate.getForObject(REST_SERVICE_URI + "/name/" + name + "/", User.class);
-            System.out.println("find user by name : " + user);
+            log("find user by name : " + user);
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                System.out.println("user name: {" + name + "} not found !");
+                log("user name: {" + name + "} not found !");
             } else {
-                System.out.println("oops! error occurred! " + e.getMessage());
+                log("oops! error occurred! " + e.getMessage());
             }
         }
 
@@ -63,86 +90,107 @@ public class UserTestClient {
 
     /* GET */
     private static void getUserByEmail(String email) {
-        System.out.println("Testing getUser By Email API----------");
+        log("Testing getUser By Email API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
             User user = restTemplate.getForObject(REST_SERVICE_URI + "/email/" + email + "/", User.class);
             if (user != null) {
-                System.out.println("get by email: " + user);
+                log("get by email: " + user);
             }
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                System.out.println("user with email: {" + email + "} not found !");
+                log("user with email: {" + email + "} not found !");
             } else {
-                System.out.println("oops! error occurred! " + e.getMessage());
+                log("oops! error occurred! " + e.getMessage());
             }
         }
     }
 
     /* POST */
     private static void createUser(User user) {
-        System.out.println("Testing create User API----------");
+        log("Testing create User API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
-            URI uri = restTemplate.postForLocation(REST_SERVICE_URI, user, User.class);
-            System.out.println("Location : " + uri.toASCIIString() + "/");
+            URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "create/", user, User.class);
+            log("Location : " + uri.toASCIIString() + "/");
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
-                System.out.println("user: {" + user.toString() + "} already exist !");
+                log("user: {" + user.toString() + "} already exist !");
             } else {
-                System.out.println("oops! error occurred! " + e.getMessage());
+                log("oops! error occurred! " + e.getMessage());
+            }
+        }
+    }
+
+    /* POST */
+    private static void createTag(String tag) {
+        log("Testing create tag API----------");
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "tag/create/", tag);
+            log("Location : " + uri.toASCIIString() + "/");
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
+                log("user: {" + tag + "} already exist !");
+            } else {
+                log("oops! error occurred! " + e.getMessage());
             }
         }
     }
 
     /* PUT */
     private static void updateUser(User user) {
-        System.out.println("Testing update User API----------");
+        log("Testing update User API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.put(REST_SERVICE_URI, user);
-//            restTemplate.put(REST_SERVICE_URI + user.getEmail() + "/", user);
-            System.out.println("update user: " + user);
+            //            restTemplate.put(REST_SERVICE_URI + user.getEmail() + "/", user);
+            log("update user: " + user);
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                System.out.println("user: {" + user + "} not found !");
+                log("user: {" + user + "} not found !");
             } else {
-                System.out.println("oops! error occurred! " + e.getMessage());
+                log("oops! error occurred! " + e.getMessage());
             }
         }
     }
 
     /* DELETE */
     private static void deleteUserByEmail(String email) {
-        System.out.println("Testing delete User API----------");
+        log("Testing delete User API----------");
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.delete(REST_SERVICE_URI + email + "/");
-            System.out.println("user with email: " + email + " deleted");
+            log("user with email: " + email + " deleted");
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                System.out.println("user with email: {" + email + "} not found !");
+                log("user with email: {" + email + "} not found !");
             } else {
-                System.out.println("oops! error occurred! " + e.getMessage());
+                log("oops! error occurred! " + e.getMessage());
             }
         }
     }
 
     public static void main(String args[]) {
-        createUser(new User("Ola", "ola@a.a", "ola's password"));
-        listAllUsers();
-        getUserByName("ol");//by name
-        getUserByEmail("ola@a.a");
-        getUserByEmail("jonas@gmail.com");
-        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
-        listAllUsers();
-        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
-                getDate("03 14 " + "16:02:37 2011")));
-        listAllUsers();
-        listAllUsers();
-        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
-        deleteUserByEmail("sarah@a.a");
-        listAllUsers();
+        //        createUser(new User("Ola", "ola@a.a", "ola's password"));
+        createTag("Trondheim");
+        //        listAllTags();
+        //        listAllUsers();
+        //        getUserByName("junjun");//by name
+        //
+        //        getUserByEmail("ola@a.a");
+        //        getUserByEmail("jonas@gmail.com");
+        //        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
+        //        listAllUsers();
+        //        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
+        //                getDate("03 14 " + "16:02:37 2011")));
+        //        updateUser(new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
+        //                getDate("03 14 " + "16:02:37 2011")));
+        //        listAllUsers();
+        //        listAllUsers();
+        //        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
+        //        deleteUserByEmail("sarah@a.a");
+        //        listAllUsers();
     }
 
 
@@ -150,12 +198,16 @@ public class UserTestClient {
         SimpleDateFormat sdf = new SimpleDateFormat("mm dd HH:mm:ss yyyy", Locale.getDefault());
         try {
             Date date = sdf.parse(dateInString);
-            System.out.println(date);
-            System.out.println(sdf.format(date));
+            log(date.toString());
+            log(sdf.format(date));
             return date;
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static void log(String s) {
+        System.out.println("---------- User Test Client: " + s);
     }
 }

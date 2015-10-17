@@ -1,5 +1,6 @@
 package com.junjunguo.tsag.controller;
 
+import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import com.junjunguo.tsag.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/user/")
+@RequestMapping(value = "/user")
 public class UserController {
 
     @Autowired
@@ -22,7 +23,7 @@ public class UserController {
 
     //-------------------Retrieve All Users--------------------------------------------------------
 
-    @RequestMapping(value = "/list/", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
         if (users.isEmpty()) {
@@ -33,6 +34,19 @@ public class UserController {
     }
 
 
+    //-------------------Retrieve All tags--------------------------------------------------------
+
+    @RequestMapping(value = "/tag/list/", method = RequestMethod.GET)
+    public ResponseEntity<List<Tag>> listAllTags() {
+        log("retrieve all tags !");
+        List<Tag> tags = userService.findAllTags();
+        if (tags.isEmpty()) {
+            return new ResponseEntity<List<Tag>>(
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
+    }
+
     //-------------------Retrieve Single User------------------------------------------------------
 
     @RequestMapping(value = "/name/{name}/", method = RequestMethod.GET,
@@ -40,10 +54,10 @@ public class UserController {
     public ResponseEntity<User> getUserByName(
             @PathVariable("name")
             String name) {
-        System.out.println("Fetching User with name " + name);
+        log("Fetching User with name " + name);
         User user = userService.findByName(name);
         if (user == null) {
-            System.out.println("User with name " + name + " not found");
+            log("User with name " + name + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -54,10 +68,10 @@ public class UserController {
     public ResponseEntity<User> getUserByEmail(
             @PathVariable("email")
             String email) {
-        System.out.println("Fetching User with email " + email);
+        log("Fetching User with email " + email);
         User user = userService.findByEmail(email);
         if (user == null) {
-            System.out.println("User with email " + email + " not found");
+            log("User with email " + email + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -65,13 +79,13 @@ public class UserController {
 
     //-------------------Create a User--------------------------------------------------------
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating User " + user.toString());
+        log("Creating User " + user.toString());
         if (userService.isUserExist(user.getEmail())) {
-            System.out.println("A User with email " + user.getEmail() + " already exist");
+            log("A User with email " + user.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
         userService.addUser(user);
@@ -81,6 +95,25 @@ public class UserController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
+    //-------------------Create a Tag--------------------------------------------------------
+
+        @RequestMapping(value = "/tag/create", method = RequestMethod.POST)
+        public ResponseEntity<Void> createUser(
+                @RequestBody
+                String tag, UriComponentsBuilder ucBuilder) {
+            log("Creating tag " + tag);
+            log("has tag ? " + userService.hasTag(tag));
+            if (userService.hasTag(tag)) {
+                log("tag " + tag + " already exist");
+                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            }
+
+            userService.addTag(tag);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(ucBuilder.path("/user/tag/{tag}").buildAndExpand(tag).toUri());
+            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        }
 
     //------------------- Update a User --------------------------------------------------------
     @RequestMapping(value = "", method = RequestMethod.PUT)
@@ -88,7 +121,7 @@ public class UserController {
             @RequestBody
             User user) {
         if (userService.findByEmail(user.getEmail()) == null) {
-            System.out.println("User with email " + user.getEmail() + " not found");
+            log("User with email " + user.getEmail() + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         userService.updateUser(user);
@@ -101,15 +134,18 @@ public class UserController {
     public ResponseEntity<User> deleteUser(
             @PathVariable("email")
             String email) {
-        System.out.println("Fetching & Deleting User with email " + email);
+        log("Fetching & Deleting User with email " + email);
 
         User user = userService.findByEmail(email);
         if (user == null) {
-            System.out.println("Unable to delete. User with email " + email + " not found");
+            log("Unable to delete. User with email " + email + " not found");
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         userService.deleteUserByEmail(email);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 
+    public void log(String s) {
+        System.out.print("----------" + this.getClass().getSimpleName() + " " + s);
+    }
 }

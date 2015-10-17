@@ -18,8 +18,8 @@ public class Tag {
     private int id;
     @Column(name = "LABEL", nullable = false, columnDefinition = "VARCHAR(255)")
     private String label;
-    @ManyToMany
-    private List<User> users;
+    //    @ManyToMany
+    //    private List<User> users;
 
     public Tag(String label) {
         this.label = label;
@@ -28,7 +28,22 @@ public class Tag {
     public Tag() {
 
     }
-
+    //
+    //    public void addUser(User user) {
+    //        users.add(user);
+    //    }
+    //
+    //    public void removeUser(User user) {
+    //        users.remove(user);
+    //    }
+    //
+    //    public List<User> getUsers() {
+    //        return users;
+    //    }
+    //
+    //    public void setUsers(List<User> users) {
+    //        this.users = users;
+    //    }
 
     /**
      * Gets TAG ID.
@@ -64,5 +79,12 @@ public class Tag {
      */
     void setLabel(String label) {
         this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag [id=" + id +
+                ", label='" + label +
+                ']';
     }
 }

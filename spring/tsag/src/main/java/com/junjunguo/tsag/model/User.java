@@ -32,9 +32,10 @@ import java.util.List;
 8	precision (optional): column decimal precision (default 0)
 10	scale (optional): column decimal scale if useful (default 0)
  */
+
 @Entity
 @Table(name = "USER")
-public class User {
+public class    User {
 
     @Column(name = "NAME", nullable = false, columnDefinition = "varchar(128)")
     private String name;
@@ -49,8 +50,8 @@ public class User {
     private Date birth;
     @Column(name = "REGISTEREDTIME", nullable = false, columnDefinition = "datetime")
     private Date registeredTime;
-//    @ManyToMany(mappedBy = "users")
-//    @JoinColumn
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}) //(mappedBy = "users")
+//    @JoinTable()
 //    private List<Tag> tags;
 
     public User(String name, String email, String country, String password) {
@@ -154,6 +155,7 @@ public class User {
                 ", registeredTime=" + registeredTime.toString() +
                 "]";
     }
+}
 
 /*
 
@@ -170,4 +172,3 @@ CREATE TABLE `user` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 
  */
-}

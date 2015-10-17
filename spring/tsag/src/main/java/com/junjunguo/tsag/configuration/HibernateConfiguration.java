@@ -6,6 +6,7 @@ import com.junjunguo.tsag.dao.TagDao;
 import com.junjunguo.tsag.dao.UserDao;
 import com.junjunguo.tsag.dao.daoImpl.TagDaoImpl;
 import com.junjunguo.tsag.dao.daoImpl.UserDaoImpl;
+import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
@@ -30,7 +31,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan({"com.junjunguo.tsag.configuration"})
 public class HibernateConfiguration {
-
+    /*
+    A factory for connections to the physical data source that this DataSource object represents
+     */
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
@@ -38,7 +41,6 @@ public class HibernateConfiguration {
         dataSource.setUrl("jdbc:mysql://localhost:3306/tsag_test");
         dataSource.setUsername("junjunguo");
         dataSource.setPassword("passwords");
-
         return dataSource;
     }
 
@@ -62,9 +64,9 @@ public class HibernateConfiguration {
         Properties properties = new Properties();
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
-//        properties.put("hibernate.connection.charSet", "UTF-8");
-//        properties.put("hibernate.connection.characterEncoding", "UTF-8");
-//        properties.put("hibernate.connection.useUnicode", "true");
+        //        properties.put("hibernate.connection.charSet", "UTF-8");
+        //        properties.put("hibernate.connection.characterEncoding", "UTF-8");
+        //        properties.put("hibernate.connection.useUnicode", "true");
         properties.put("hibernate.dialect", "com.junjunguo.tsag.util.CustomMysqlDialect");
         return properties;
     }
@@ -74,7 +76,7 @@ public class HibernateConfiguration {
     public SessionFactory getSessionFactory(DataSource dataSource) {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
         sessionBuilder.addProperties(getHibernateProperties());
-        sessionBuilder.addAnnotatedClasses(User.class);
+        sessionBuilder.addAnnotatedClasses(User.class,Tag.class);
         return sessionBuilder.buildSessionFactory();
     }
 
@@ -87,15 +89,16 @@ public class HibernateConfiguration {
         return transactionManager;
     }
 
-    @Autowired
-    @Bean(name = "userDao")
-    public UserDao getUserDao(SessionFactory sessionFactory) {
-        return new UserDaoImpl(sessionFactory);
-    }
 
     @Autowired
     @Bean(name = "tagDao")
     public TagDao getTagDao(SessionFactory sessionFactory) {
         return new TagDaoImpl(sessionFactory);
+    }
+
+    @Autowired
+    @Bean(name = "userDao")
+    public UserDao getUserDao(SessionFactory sessionFactory) {
+        return new UserDaoImpl(sessionFactory);
     }
 }

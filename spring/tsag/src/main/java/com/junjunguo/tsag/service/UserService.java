@@ -1,5 +1,6 @@
 package com.junjunguo.tsag.service;
 
+import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 
 import java.util.List;
@@ -11,6 +12,12 @@ public interface UserService {
 
     User findByName(String name);
 
+    Tag findByTag(String label);
+
+    void addTag(String label);
+
+    boolean hasTag(String label);
+
     void addUser(User user);
 
     void updateUser(User user);
@@ -18,6 +25,8 @@ public interface UserService {
     void deleteUserByEmail(String email);
 
     List<User> findAllUsers();
+
+    List<Tag> findAllTags();
 
     boolean isUserExist(String email);
 

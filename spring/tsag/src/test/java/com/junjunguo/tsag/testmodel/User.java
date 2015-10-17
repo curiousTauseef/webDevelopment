@@ -9,10 +9,10 @@ public class User {
     //    @Id
     private String email;
     //    @Size(min = 3, max = 100)
-//    @Column(name = "COUNTRY", nullable = true)
+    //    @Column(name = "COUNTRY", nullable = true)
     private String country;
     //    @Size(min = 3, max = 255)
-//    @Column(name = "NAME", nullable = false)
+    //    @Column(name = "NAME", nullable = false)
     private String password;
     //    @Column(name = "BIRTH", nullable = true)
     private Date birth;
@@ -108,28 +108,28 @@ public class User {
         setPassword(user.getPassword());
     }
 
-//    @Override
-//    public int hashCode() {
-//        final int prime = 31;
-//        int result = 1;
-//        result = prime * result + id;
-//        return result;
-//    }
-//
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        User other = (User) obj;
-//        return (email.equalsIgnoreCase(other.getEmail()));
-//    }
+    //    @Override
+    //    public int hashCode() {
+    //        final int prime = 31;
+    //        int result = 1;
+    //        result = prime * result + id;
+    //        return result;
+    //    }
+    //
+    //    @Override
+    //    public boolean equals(Object obj) {
+    //        if (this == obj) {
+    //            return true;
+    //        }
+    //        if (obj == null) {
+    //            return false;
+    //        }
+    //        if (getClass() != obj.getClass()) {
+    //            return false;
+    //        }
+    //        User other = (User) obj;
+    //        return (email.equalsIgnoreCase(other.getEmail()));
+    //    }
 
     @Override
     public String toString() {

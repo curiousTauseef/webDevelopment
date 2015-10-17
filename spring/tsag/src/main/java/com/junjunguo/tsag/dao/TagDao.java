@@ -13,7 +13,7 @@ public interface TagDao {
 
     Tag findTagByLabel(String label);
 
-    List<String> findAllTags();
+    List<Tag> findAllTags();
 
     void saveTag(String tag);
 

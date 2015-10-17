@@ -2,9 +2,11 @@ package com.junjunguo.tsag.dao.daoImpl;
 
 import com.junjunguo.tsag.dao.TagDao;
 import com.junjunguo.tsag.model.Tag;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 /**
  * Created by GuoJunjun <junjunguo.com> on 16/10/15.
  */
-
+@Repository
 public class TagDaoImpl implements TagDao {
     @Autowired
     private SessionFactory sessionFactory;
@@ -37,9 +39,9 @@ public class TagDaoImpl implements TagDao {
     }
 
     @Transactional
-    public List<String> findAllTags() {
+    public List<Tag> findAllTags() {
         @SuppressWarnings("unchecked")
-        List<String> tags = (List<String>) sessionFactory.getCurrentSession().createCriteria(String.class);
+        List<Tag> tags = (List<Tag>) sessionFactory.getCurrentSession().createCriteria(Tag.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return tags;
     }
 
