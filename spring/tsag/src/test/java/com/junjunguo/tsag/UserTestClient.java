@@ -1,5 +1,6 @@
 package com.junjunguo.tsag;
 
+import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
@@ -26,11 +27,11 @@ public class UserTestClient {
             if (usersMap != null) {
                 for (LinkedHashMap<String, Object> map : usersMap) {
                     log("User {'Name':'" + map.get("name") +
-                            "', 'email':'" + map.get("email") +
-                            "', 'country':'" + map.get("country") +
-                            "', 'password':'" + map.get("password") +
-                            "', 'registeredtime':'" + map.get("registeredtime") +
-                            "', 'birth':'" + map.get("birth") + "'}");
+                        "', 'email':'" + map.get("email") +
+                        "', 'country':'" + map.get("country") +
+                        "', 'password':'" + map.get("password") +
+                        "', 'registeredtime':'" + map.get("registeredtime") +
+                        "', 'birth':'" + map.get("birth") + "'}");
                 }
             } else {
                 log("No user exist----------");
@@ -57,7 +58,7 @@ public class UserTestClient {
             if (tagsMap != null) {
                 for (LinkedHashMap<String, Object> map : tagsMap) {
                     log("Tag :  Label=" + map.get("label") +
-                            ", id=" + map.get("id"));
+                        ", id=" + map.get("id"));
                 }
             } else {
                 log("No user exist----------");
@@ -100,6 +101,42 @@ public class UserTestClient {
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
                 log("user with email: {" + email + "} not found !");
+            } else {
+                log("oops! error occurred! " + e.getMessage());
+            }
+        }
+    }
+
+    /* GET */
+    private static void getTagById(int id) {
+        log("Testing get tag By Tag id API----------");
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            Tag tag = restTemplate.getForObject(REST_SERVICE_URI + "/tag/id/" + id + "/", Tag.class);
+            if (tag != null) {
+                log("get by tag: " + tag);
+            }
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                log("tag with tag: {" + id + "} not found !");
+            } else {
+                log("oops! error occurred! " + e.getMessage());
+            }
+        }
+    }
+
+    /* GET */
+    private static void getTagByLabel(String label) {
+        log("Testing get tag By Tag label API----------");
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            Tag tag = restTemplate.getForObject(REST_SERVICE_URI + "/tag/label/" + label + "/", Tag.class);
+            if (tag != null) {
+                log("get by tag: " + label);
+            }
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                log("tag with tag: {" + label + "} not found !");
             } else {
                 log("oops! error occurred! " + e.getMessage());
             }
@@ -172,25 +209,28 @@ public class UserTestClient {
     }
 
     public static void main(String args[]) {
-        //        createUser(new User("Ola", "ola@a.a", "ola's password"));
-        createTag("Trondheim");
-        //        listAllTags();
-        //        listAllUsers();
-        //        getUserByName("junjun");//by name
-        //
-        //        getUserByEmail("ola@a.a");
-        //        getUserByEmail("jonas@gmail.com");
-        //        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
-        //        listAllUsers();
-        //        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
-        //                getDate("03 14 " + "16:02:37 2011")));
-        //        updateUser(new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
-        //                getDate("03 14 " + "16:02:37 2011")));
-        //        listAllUsers();
-        //        listAllUsers();
-        //        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
-        //        deleteUserByEmail("sarah@a.a");
-        //        listAllUsers();
+        createUser(new User("Ola", "ola@a.a", "ola's password"));
+        createTag("lucky");
+        getTagById(5);
+        getTagByLabel("fun");
+        getTagByLabel("not exit");
+        listAllTags();
+        listAllUsers();
+        getUserByName("junjun");//by name
+
+        getUserByEmail("ola@a.a");
+        getUserByEmail("jonas@gmail.com");
+        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
+        listAllUsers();
+        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
+                            getDate("03 14 " + "16:02:37 2011")));
+        updateUser(new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
+                            getDate("03 14 " + "16:02:37 2011")));
+        listAllUsers();
+        listAllUsers();
+        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
+        deleteUserByEmail("sarah@a.a");
+        listAllUsers();
     }
 
 

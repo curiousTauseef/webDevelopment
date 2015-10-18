@@ -77,6 +77,36 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    //-------------------Retrieve Single Tag------------------------------------------------------
+
+    @RequestMapping(value = "/tag/id/{id}/", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Tag> getTagById(
+            @PathVariable("id")
+            int id) {
+        log("Fetching Tag with id " + id);
+        Tag tag = userService.findByTagId(id);
+        if (tag == null) {
+            log("Tag with id " + id + " not found");
+            return new ResponseEntity<Tag>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Tag>(tag, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tag/label/{label}/", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Tag> getTagByLabel(
+            @PathVariable("label")
+            String label) {
+        log("Fetching Tag with id " + label);
+        Tag tag = userService.findByTag(label);
+        if (tag == null) {
+            log("Tag with id " + label + " not found");
+            return new ResponseEntity<Tag>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Tag>(tag, HttpStatus.OK);
+    }
+
     //-------------------Create a User--------------------------------------------------------
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -97,23 +127,23 @@ public class UserController {
 
     //-------------------Create a Tag--------------------------------------------------------
 
-        @RequestMapping(value = "/tag/create", method = RequestMethod.POST)
-        public ResponseEntity<Void> createUser(
-                @RequestBody
-                String tag, UriComponentsBuilder ucBuilder) {
-            log("Creating tag " + tag);
-            log("has tag ? " + userService.hasTag(tag));
-            if (userService.hasTag(tag)) {
-                log("tag " + tag + " already exist");
-                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-            }
-
-            userService.addTag(tag);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(ucBuilder.path("/user/tag/{tag}").buildAndExpand(tag).toUri());
-            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    @RequestMapping(value = "/tag/create", method = RequestMethod.POST)
+    public ResponseEntity<Void> createUser(
+            @RequestBody
+            String tag, UriComponentsBuilder ucBuilder) {
+        log("Creating tag " + tag);
+        log("has tag ? " + userService.hasTag(tag));
+        if (userService.hasTag(tag)) {
+            log("tag " + tag + " already exist");
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
+
+        userService.addTag(tag);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/user/tag/label/{tag}").buildAndExpand(tag).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
 
     //------------------- Update a User --------------------------------------------------------
     @RequestMapping(value = "", method = RequestMethod.PUT)

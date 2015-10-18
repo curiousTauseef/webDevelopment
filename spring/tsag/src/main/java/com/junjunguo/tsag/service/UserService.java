@@ -14,6 +14,8 @@ public interface UserService {
 
     Tag findByTag(String label);
 
+    Tag findByTagId(int id);
+
     void addTag(String label);
 
     boolean hasTag(String label);

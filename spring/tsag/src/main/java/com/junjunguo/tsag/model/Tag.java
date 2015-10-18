@@ -16,7 +16,7 @@ public class Tag {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
-    @Column(name = "LABEL", nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "LABEL", nullable = false, columnDefinition = "VARCHAR(255)", unique = true)
     private String label;
     //    @ManyToMany
     //    private List<User> users;

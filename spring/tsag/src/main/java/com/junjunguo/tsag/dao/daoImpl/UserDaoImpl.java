@@ -33,8 +33,8 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllUsers() {
         @SuppressWarnings("unchecked")
         List<User> listUser = (List<User>) sessionFactory.getCurrentSession()
-                .createCriteria(User.class)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                                                         .createCriteria(User.class)
+                                                         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return listUser;
     }
 
@@ -45,16 +45,15 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public void deleteUserByEmail(String email) {
-        User userToDelete = new User();
-        userToDelete.setEmail(email);
-        sessionFactory.getCurrentSession().delete(userToDelete);
+        //        User userToDelete = new User();
+        //        userToDelete.setEmail(email);
+        log("delete user by email");
+        sessionFactory.getCurrentSession().delete(findByEmail(email));
     }
 
     @Transactional
     public User findByEmail(String email) {
-        System.out.println("find by email user dao impl: " + email);
         Query q = sessionFactory.getCurrentSession().createQuery("from User where email = '" + email + "'");
-        System.out.println("find by email user dao impl-----");
         return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
 
@@ -63,4 +62,9 @@ public class UserDaoImpl implements UserDao {
         Query q = sessionFactory.getCurrentSession().createQuery("from User where name = '" + name + "'");
         return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
+
+    public void log(String s) {
+        System.out.print("----------" + this.getClass().getSimpleName() + " " + s);
+    }
+
 }

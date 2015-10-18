@@ -14,13 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Properties;
 
@@ -64,9 +60,9 @@ public class HibernateConfiguration {
         Properties properties = new Properties();
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
-        //        properties.put("hibernate.connection.charSet", "UTF-8");
-        //        properties.put("hibernate.connection.characterEncoding", "UTF-8");
-        //        properties.put("hibernate.connection.useUnicode", "true");
+        properties.put("hibernate.connection.charSet", "UTF-8");
+        properties.put("hibernate.connection.characterEncoding", "UTF-8");
+        properties.put("hibernate.connection.useUnicode", "true");
         properties.put("hibernate.dialect", "com.junjunguo.tsag.util.CustomMysqlDialect");
         return properties;
     }
@@ -76,7 +72,7 @@ public class HibernateConfiguration {
     public SessionFactory getSessionFactory(DataSource dataSource) {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
         sessionBuilder.addProperties(getHibernateProperties());
-        sessionBuilder.addAnnotatedClasses(User.class,Tag.class);
+        sessionBuilder.addAnnotatedClasses(Tag.class, User.class);
         return sessionBuilder.buildSessionFactory();
     }
 
@@ -88,7 +84,6 @@ public class HibernateConfiguration {
                 sessionFactory);
         return transactionManager;
     }
-
 
     @Autowired
     @Bean(name = "tagDao")

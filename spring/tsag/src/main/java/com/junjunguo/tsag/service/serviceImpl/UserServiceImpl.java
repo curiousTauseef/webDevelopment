@@ -41,6 +41,10 @@ public class UserServiceImpl implements UserService {
         return tagDao.findTagByLabel(label);
     }
 
+    public Tag findByTagId(int id) {
+        return tagDao.findTagById(id);
+    }
+
     public void addTag(String label) {
         log("add tag: " + label);
         tagDao.saveTag(label);
@@ -67,6 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteUserByEmail(String email) {
+        log("delete user by email " + email);
         userDao.deleteUserByEmail(email);
     }
 
