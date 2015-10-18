@@ -1,6 +1,7 @@
 package com.junjunguo.tsag.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,11 +16,11 @@ public class Tag {
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    private int id;
+    private int    id;
     @Column(name = "LABEL", nullable = false, columnDefinition = "VARCHAR(255)", unique = true)
     private String label;
-    //    @ManyToMany
-    //    private List<User> users;
+    @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<User>();
 
     public Tag(String label) {
         this.label = label;
@@ -28,22 +29,22 @@ public class Tag {
     public Tag() {
 
     }
-    //
-    //    public void addUser(User user) {
-    //        users.add(user);
-    //    }
-    //
-    //    public void removeUser(User user) {
-    //        users.remove(user);
-    //    }
-    //
-    //    public List<User> getUsers() {
-    //        return users;
-    //    }
-    //
-    //    public void setUsers(List<User> users) {
-    //        this.users = users;
-    //    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     /**
      * Gets TAG ID.
@@ -84,7 +85,26 @@ public class Tag {
     @Override
     public String toString() {
         return "Tag [id=" + id +
-                ", label='" + label +
-                ']';
+               ", label='" + label +
+               ']';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tag)) return false;
+
+        Tag tag = (Tag) o;
+
+        if (getId() != tag.getId()) return false;
+        return getLabel().equals(tag.getLabel());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getLabel().hashCode();
+        return result;
     }
 }

@@ -1,9 +1,7 @@
 package com.junjunguo.tsag.model;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /*
 (https://docs.jboss.org/hibernate/stable/annotations/reference/en/html_single/)
@@ -35,7 +33,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "USER")
-public class    User {
+public class User {
 
     @Column(name = "NAME", nullable = false, columnDefinition = "varchar(128)")
     private String name;
@@ -47,16 +45,17 @@ public class    User {
     @Column(name = "COUNTRY", nullable = true, columnDefinition = "varchar(128)")
     private String country;
     @Column(name = "BIRTH", nullable = true, columnDefinition = "date")
-    private Date birth;
+    private Date   birth;
     @Column(name = "REGISTEREDTIME", nullable = false, columnDefinition = "datetime")
-    private Date registeredTime;
-//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}) //(mappedBy = "users")
-//    @JoinTable()
-//    private List<Tag> tags;
+    private Date   registeredTime;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "user_tag", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "tag_id")})
+    private List<Tag> tags = new ArrayList<Tag>();
 
     public User(String name, String email, String country, String password) {
         this(name, email, country, password, Calendar.getInstance().getTime(),
-                Calendar.getInstance().getTime());
+             Calendar.getInstance().getTime());
     }
 
     public User(String name, String email, String password) {
@@ -80,21 +79,21 @@ public class    User {
     public User() {
     }
 
-//    public List<Tag> getTags() {
-//        return tags;
-//    }
-//
-//    public void setTags(List<Tag> tags) {
-//        this.tags = tags;
-//    }
-//
-//    public void addTag(Tag tag) {
-//        tags.add(tag);
-//    }
-//
-//    public void addTagLabel(String label) {
-//        tags.add(new Tag(label));
-//    }
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+    }
+
+    public void addTagLabel(String label) {
+        tags.add(new Tag(label));
+    }
 
     public String getName() {
         return name;
@@ -148,12 +147,38 @@ public class    User {
     @Override
     public String toString() {
         return "User [name=" + name +
-                ", email='" + email +
-                ", country='" + country +
-                ", password='" + password +
-                ", birth=" + birth.toString() +
-                ", registeredTime=" + registeredTime.toString() +
-                "]";
+               ", email='" + email +
+               ", country='" + country +
+               ", password='" + password +
+               ", birth=" + birth.toString() +
+               ", registeredTime=" + registeredTime.toString() +
+               "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (!getName().equals(user.getName())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
+        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
+        return getRegisteredTime().equals(user.getRegisteredTime());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
+        return result;
     }
 }
 

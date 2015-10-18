@@ -210,7 +210,10 @@ public class UserTestClient {
 
     public static void main(String args[]) {
         createUser(new User("Ola", "ola@a.a", "ola's password"));
+        createUser(new User("Johan", "johan@gmail.com", "johan's password"));
         createTag("lucky");
+        createTag("NTNU");
+        createTag("CS");
         getTagById(5);
         getTagByLabel("fun");
         getTagByLabel("not exit");
@@ -223,9 +226,9 @@ public class UserTestClient {
         createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
         listAllUsers();
         updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
-                            getDate("03 14 " + "16:02:37 2011")));
+                getDate("03 14 " + "16:02:37 2011")));
         updateUser(new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
-                            getDate("03 14 " + "16:02:37 2011")));
+                getDate("03 14 " + "16:02:37 2011")));
         listAllUsers();
         listAllUsers();
         createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));

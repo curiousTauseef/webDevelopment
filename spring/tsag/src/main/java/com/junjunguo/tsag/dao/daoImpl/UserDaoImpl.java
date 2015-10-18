@@ -3,6 +3,7 @@ package com.junjunguo.tsag.dao.daoImpl;
 import com.junjunguo.tsag.dao.UserDao;
 import com.junjunguo.tsag.model.User;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,11 @@ public class UserDaoImpl implements UserDao {
     @Transactional
     public List<User> findAllUsers() {
         @SuppressWarnings("unchecked")
-        List<User> listUser = (List<User>) sessionFactory.getCurrentSession()
-                                                         .createCriteria(User.class)
+        List<User> listUser = (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class)
                                                          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        for (User u : listUser) {
+            Hibernate.initialize(u.getTags());
+        }
         return listUser;
     }
 
@@ -53,14 +56,28 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public User findByEmail(String email) {
+
         Query q = sessionFactory.getCurrentSession().createQuery("from User where email = '" + email + "'");
-        return !q.list().isEmpty() ? (User) q.list().get(0) : null;
+        if (q.list().isEmpty()) {
+            return null;
+        } else {
+            User user = (User) q.list().get(0);
+            Hibernate.initialize(user.getTags());
+            return user;
+        }
+        //        return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
 
     @Transactional
     public User findByName(String name) {
         Query q = sessionFactory.getCurrentSession().createQuery("from User where name = '" + name + "'");
-        return !q.list().isEmpty() ? (User) q.list().get(0) : null;
+        if (q.list().isEmpty()) {
+            return null;
+        } else {
+            User user = (User) q.list().get(0);
+            Hibernate.initialize(user.getTags());
+            return user;
+        }
     }
 
     public void log(String s) {
