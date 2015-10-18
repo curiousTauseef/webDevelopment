@@ -55,7 +55,7 @@ public class User {
 
     public User(String name, String email, String country, String password) {
         this(name, email, country, password, Calendar.getInstance().getTime(),
-             Calendar.getInstance().getTime());
+                Calendar.getInstance().getTime());
     }
 
     public User(String name, String email, String password) {
@@ -67,7 +67,7 @@ public class User {
     }
 
     public User(String name, String email, String country, String password, Date birth,
-                Date registeredtime) {
+            Date registeredtime) {
         this.name = name;
         this.email = email;
         this.country = country;
@@ -92,6 +92,7 @@ public class User {
     }
 
     public void addTagLabel(String label) {
+
         tags.add(new Tag(label));
     }
 
@@ -152,6 +153,7 @@ public class User {
                ", password='" + password +
                ", birth=" + birth.toString() +
                ", registeredTime=" + registeredTime.toString() +
+               ", tags=" + tags.toString() +
                "]";
     }
 

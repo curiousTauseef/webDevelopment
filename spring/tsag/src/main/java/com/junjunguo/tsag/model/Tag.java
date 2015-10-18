@@ -19,8 +19,8 @@ public class Tag {
     private int    id;
     @Column(name = "LABEL", nullable = false, columnDefinition = "VARCHAR(255)", unique = true)
     private String label;
-    @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
-    private List<User> users = new ArrayList<User>();
+//    @ManyToMany(mappedBy = "tags", cascade = CascadeType.ALL)
+//    private List<User> users = new ArrayList<User>();
 
     public Tag(String label) {
         this.label = label;
@@ -30,21 +30,21 @@ public class Tag {
 
     }
 
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public void removeUser(User user) {
-        users.remove(user);
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+//    public void addUser(User user) {
+//        users.add(user);
+//    }
+//
+//    public void removeUser(User user) {
+//        users.remove(user);
+//    }
+//
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 
     /**
      * Gets TAG ID.

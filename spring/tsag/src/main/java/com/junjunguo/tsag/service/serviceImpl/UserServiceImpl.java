@@ -59,15 +59,16 @@ public class UserServiceImpl implements UserService {
     }
 
     public void updateUser(User user) {
-        userDao.saveUser(user);
-        //        User entity = userDao.findByEmail(user.getEmail());
-        //        if (entity != null) {
-        //            entity.setName(user.getName());
-        //            entity.setBirth(user.getBirth());
-        //            entity.setCountry(user.getCountry());
-        //            entity.setPassword(user.getPassword());
-        //            entity.setRegisteredTime(user.getRegisteredTime());
-        //        }
+//        userDao.saveUser(user);
+                User entity = userDao.findByEmail(user.getEmail());
+                if (entity != null) {
+                    entity.setName(user.getName());
+                    entity.setBirth(user.getBirth());
+                    entity.setCountry(user.getCountry());
+                    entity.setPassword(user.getPassword());
+                    entity.setRegisteredTime(user.getRegisteredTime());
+                    entity.setTags(user.getTags());
+                }
     }
 
     public void deleteUserByEmail(String email) {

@@ -43,6 +43,7 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public void saveUser(User user) {
+        log("save user: " + user.toString());
         sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 

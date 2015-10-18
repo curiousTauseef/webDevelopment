@@ -29,6 +29,7 @@ public class UserTestClient {
                     log("User {'Name':'" + map.get("name") +
                         "', 'email':'" + map.get("email") +
                         "', 'country':'" + map.get("country") +
+                        "', 'tags':'" + map.get("tags") +
                         "', 'password':'" + map.get("password") +
                         "', 'registeredtime':'" + map.get("registeredtime") +
                         "', 'birth':'" + map.get("birth") + "'}");
@@ -58,7 +59,9 @@ public class UserTestClient {
             if (tagsMap != null) {
                 for (LinkedHashMap<String, Object> map : tagsMap) {
                     log("Tag :  Label=" + map.get("label") +
-                        ", id=" + map.get("id"));
+                        ", id=" + map.get("id") +
+                        ", users=" + map.get("user")
+                       );
                 }
             } else {
                 log("No user exist----------");
@@ -209,31 +212,44 @@ public class UserTestClient {
     }
 
     public static void main(String args[]) {
-        createUser(new User("Ola", "ola@a.a", "ola's password"));
-        createUser(new User("Johan", "johan@gmail.com", "johan's password"));
+        //        createUser(new User("Ola", "ola@a.a", "ola's password"));
+        User u = new User("Johan", "johan@gmail.com", "johan's password");
+        u.addTagLabel("new");
         createTag("lucky");
-        createTag("NTNU");
-        createTag("CS");
-        getTagById(5);
-        getTagByLabel("fun");
-        getTagByLabel("not exit");
+        //        u.addTagLabel("lucky");
+        List<Tag> ts = u.getTags();
+        ts.add(new Tag("hei"));
+        u.setTags(ts);
+        createUser(u);
+        //        createTag("NTNU");
+        //        createTag("CS");
+        //        getTagById(5);
+        //        getTagByLabel("fun");
+        //        getTagByLabel("not exit");
         listAllTags();
         listAllUsers();
-        getUserByName("junjun");//by name
+        //        getUserByName("junjun");//by name
 
-        getUserByEmail("ola@a.a");
-        getUserByEmail("jonas@gmail.com");
-        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
-        listAllUsers();
-        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
-                getDate("03 14 " + "16:02:37 2011")));
-        updateUser(new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
-                getDate("03 14 " + "16:02:37 2011")));
-        listAllUsers();
-        listAllUsers();
-        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
-        deleteUserByEmail("sarah@a.a");
-        listAllUsers();
+        //        getUserByEmail("ola@a.a");
+        //        getUserByEmail("jonas@gmail.com");
+        //        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
+        //        listAllUsers();
+        //        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
+        //                getDate("03 14 " + "16:02:37 2011")));
+        //        listAllUsers();
+                User jj = new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
+                        getDate("03 14 " + "16:02:37 2011"));
+                createUser(jj);
+                listAllUsers();
+                listAllTags();
+                jj.addTagLabel("mac");
+                jj.addTagLabel("win");
+                updateUser(jj);
+                listAllTags();
+                listAllUsers();
+        //        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
+        //        deleteUserByEmail("sarah@a.a");
+        //        listAllUsers();
     }
 
 
