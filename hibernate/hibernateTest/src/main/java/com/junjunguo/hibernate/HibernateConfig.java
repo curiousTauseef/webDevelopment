@@ -28,13 +28,9 @@ public class HibernateConfig {
     }
 
     public SessionFactory getSessionFactory() {
-        System.out.println("get session factory");
         try {
-
             Configuration cfg = new Configuration();
-            System.out.println("cfg");
             cfg.setProperties(getHibernateProperties());
-            System.out.println("get properties");
             cfg.addAnnotatedClass(Tag.class);
             cfg.addAnnotatedClass(User.class);
             return cfg.buildSessionFactory();
