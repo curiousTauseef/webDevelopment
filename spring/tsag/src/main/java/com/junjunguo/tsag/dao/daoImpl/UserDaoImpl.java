@@ -32,12 +32,15 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public List<User> findAllUsers() {
+        log("find all users: ++");
         @SuppressWarnings("unchecked")
         List<User> listUser = (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class)
                                                          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        log("initialize users: ");
         for (User u : listUser) {
             Hibernate.initialize(u.getTags());
         }
+        log("users: " + listUser);
         return listUser;
     }
 
@@ -49,8 +52,6 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public void deleteUserByEmail(String email) {
-        //        User userToDelete = new User();
-        //        userToDelete.setEmail(email);
         log("delete user by email");
         sessionFactory.getCurrentSession().delete(findByEmail(email));
     }
@@ -66,7 +67,6 @@ public class UserDaoImpl implements UserDao {
             Hibernate.initialize(user.getTags());
             return user;
         }
-        //        return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
 
     @Transactional
@@ -82,7 +82,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public void log(String s) {
-        System.out.print("----------" + this.getClass().getSimpleName() + " " + s);
+        System.out.print("\n----------" + this.getClass().getSimpleName() + " " + s);
     }
 
 }

@@ -17,5 +17,7 @@ public interface TagDao {
 
     void saveTag(String tag);
 
+    void saveTag(Tag tag);
+
     void deleteTag(String tag);
 }

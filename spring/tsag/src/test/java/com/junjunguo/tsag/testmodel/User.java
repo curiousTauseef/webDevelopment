@@ -1,23 +1,19 @@
 package com.junjunguo.tsag.testmodel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class User {
-    private int id;
+
     private String name;
-    //    @Id
     private String email;
-    //    @Size(min = 3, max = 100)
-    //    @Column(name = "COUNTRY", nullable = true)
-    private String country;
-    //    @Size(min = 3, max = 255)
-    //    @Column(name = "NAME", nullable = false)
     private String password;
-    //    @Column(name = "BIRTH", nullable = true)
-    private Date birth;
-    //    @Column(name = "REGISTERED_TIME", nullable = false)
-    private Date registeredTime;
+    private String country;
+    private Date   birth;
+    private Date   registeredTime;
+    private List<Tag> tags = new ArrayList<Tag>();
 
     public User(String name, String email, String country, String password) {
         this(name, email, country, password, Calendar.getInstance().getTime(),
@@ -33,7 +29,7 @@ public class User {
     }
 
     public User(String name, String email, String country, String password, Date birth,
-                Date registeredtime) {
+            Date registeredtime) {
         this.name = name;
         this.email = email;
         this.country = country;
@@ -45,12 +41,21 @@ public class User {
     public User() {
     }
 
-    public int getId() {
-        return id;
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+    }
+
+    public void addTagLabel(String label) {
+
+        tags.add(new Tag(label));
     }
 
     public String getName() {
@@ -60,6 +65,7 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getEmail() {
         return email;
@@ -101,46 +107,41 @@ public class User {
         this.registeredTime = registeredTime;
     }
 
-    public void updateUser(User user) {
-        setName(user.getName());
-        setBirth(user.getBirth());
-        setCountry(user.getCountry());
-        setPassword(user.getPassword());
-    }
-
-    //    @Override
-    //    public int hashCode() {
-    //        final int prime = 31;
-    //        int result = 1;
-    //        result = prime * result + id;
-    //        return result;
-    //    }
-    //
-    //    @Override
-    //    public boolean equals(Object obj) {
-    //        if (this == obj) {
-    //            return true;
-    //        }
-    //        if (obj == null) {
-    //            return false;
-    //        }
-    //        if (getClass() != obj.getClass()) {
-    //            return false;
-    //        }
-    //        User other = (User) obj;
-    //        return (email.equalsIgnoreCase(other.getEmail()));
-    //    }
-
     @Override
     public String toString() {
         return "User [name=" + name +
-                ", email='" + email +
-                ", country='" + country +
-                ", password='" + password +
-                ", birth=" + birth.toString() +
-                ", registeredTime=" + registeredTime.toString() +
-                "]";
+               ", email='" + email +
+               ", country='" + country +
+               ", password='" + password +
+               ", birth=" + birth.toString() +
+               ", registeredTime=" + registeredTime.toString() +
+               ", tags=" + tags.toString() +
+               "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
 
+        User user = (User) o;
+
+        if (!getName().equals(user.getName())) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
+        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
+        return getRegisteredTime().equals(user.getRegisteredTime());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
+        return result;
+    }
 }

@@ -1,33 +1,14 @@
-package com.junjunguo.tsag.model;
+package com.junjunguo.tsag.testmodel;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by GuoJunjun <junjunguo.com> on 16/10/15.
  */
-@Entity
-@Table(name = "TAG")
-public class Tag implements Serializable {
-    /**
-     * TAG ID
-     */
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue
+public class Tag {
     private int    id;
-    @Column(name = "LABEL",
-            nullable = false,
-            columnDefinition = "VARCHAR(255)",
-            unique = true)
     private String label;
-    @ManyToMany(mappedBy = "tags",
-                fetch = FetchType.EAGER,
-                cascade = {CascadeType.ALL},
-                targetEntity = User.class
-    )
     private List<User> users = new ArrayList<User>();
 
     public Tag(String label) {
@@ -43,8 +24,8 @@ public class Tag implements Serializable {
     }
 
     public void removeUser(User user) {
-        users.remove(user);
-    }
+            users.remove(user);
+        }
 
     public List<User> getUsers() {
         return users;

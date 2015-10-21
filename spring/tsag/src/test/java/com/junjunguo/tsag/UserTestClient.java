@@ -1,7 +1,7 @@
 package com.junjunguo.tsag;
 
-import com.junjunguo.tsag.model.Tag;
-import com.junjunguo.tsag.model.User;
+import com.junjunguo.tsag.testmodel.Tag;
+import com.junjunguo.tsag.testmodel.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -148,14 +148,13 @@ public class UserTestClient {
 
     /* POST */
     private static void createUser(User user) {
-        log("Testing create User API----------");
+        log("create new user API --------");
         RestTemplate restTemplate = new RestTemplate();
         try {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "create/", user, User.class);
             log("Location : " + uri.toASCIIString() + "/");
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
-                log("user: {" + user.toString() + "} already exist !");
             } else {
                 log("oops! error occurred! " + e.getMessage());
             }
@@ -212,41 +211,46 @@ public class UserTestClient {
     }
 
     public static void main(String args[]) {
-        //        createUser(new User("Ola", "ola@a.a", "ola's password"));
+        createUser(new User("Ola", "ola@a.a", "ola's password"));
         User u = new User("Johan", "johan@gmail.com", "johan's password");
         u.addTagLabel("new");
-        createTag("lucky");
-        //        u.addTagLabel("lucky");
+        //                createTag("lucky");
+        u.addTagLabel("lucky");
         List<Tag> ts = u.getTags();
         ts.add(new Tag("hei"));
         u.setTags(ts);
+        //
+        log("user : " + u.toString());
+        log("tag: " + ts.toString());
+        //
+        //
         createUser(u);
         //        createTag("NTNU");
         //        createTag("CS");
-        //        getTagById(5);
+        //                getTagById(0);
         //        getTagByLabel("fun");
         //        getTagByLabel("not exit");
         listAllTags();
-        listAllUsers();
-        //        getUserByName("junjun");//by name
+//        listAllUsers();
+        //                getUserByName("Johan");//by name
 
-        //        getUserByEmail("ola@a.a");
+        //                getUserByEmail("johan@gmail.com");
         //        getUserByEmail("jonas@gmail.com");
         //        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
         //        listAllUsers();
         //        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
         //                getDate("03 14 " + "16:02:37 2011")));
         //        listAllUsers();
-                User jj = new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
-                        getDate("03 14 " + "16:02:37 2011"));
-                createUser(jj);
-                listAllUsers();
-                listAllTags();
-                jj.addTagLabel("mac");
-                jj.addTagLabel("win");
-                updateUser(jj);
-                listAllTags();
-                listAllUsers();
+        //                User jj = new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
+        //                        getDate("03 14 " + "16:02:37 2011"));
+        //                createUser(jj);
+        //                listAllUsers();
+        //                listAllTags();
+        //                jj.addTagLabel("mac");
+        //                jj.addTagLabel("win");
+        //                updateUser(jj);
+        //                listAllTags();
+        //                listAllUsers();
         //        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
         //        deleteUserByEmail("sarah@a.a");
         //        listAllUsers();
@@ -257,8 +261,8 @@ public class UserTestClient {
         SimpleDateFormat sdf = new SimpleDateFormat("mm dd HH:mm:ss yyyy", Locale.getDefault());
         try {
             Date date = sdf.parse(dateInString);
-            log(date.toString());
-            log(sdf.format(date));
+            //            log(date.toString());
+            //            log(sdf.format(date));
             return date;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -267,6 +271,6 @@ public class UserTestClient {
     }
 
     public static void log(String s) {
-        System.out.println("---------- User Test Client: " + s);
+        System.out.println("---------- log: " + s);
     }
 }

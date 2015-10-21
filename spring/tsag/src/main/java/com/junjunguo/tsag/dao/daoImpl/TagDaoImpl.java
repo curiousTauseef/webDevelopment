@@ -33,7 +33,7 @@ public class TagDaoImpl implements TagDao {
             return null;
         } else {
             Tag tag = (Tag) q.list().get(0);
-//            Hibernate.initialize(tag.getUsers());
+            Hibernate.initialize(tag.getUsers());
             return tag;
         }
     }
@@ -48,7 +48,7 @@ public class TagDaoImpl implements TagDao {
                 return null;
             } else {
                 Tag tag = (Tag) q.list().get(0);
-//                Hibernate.initialize(tag.getUsers());
+                Hibernate.initialize(tag.getUsers());
                 return tag;
             }
 
@@ -64,7 +64,7 @@ public class TagDaoImpl implements TagDao {
         List<Tag> tags = (List<Tag>) sessionFactory.getCurrentSession().createCriteria(Tag.class)
                                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         for (Tag tag : tags) {
-//            Hibernate.initialize(tag.getUsers());
+            Hibernate.initialize(tag.getUsers());
         }
         return tags;
     }
@@ -73,6 +73,11 @@ public class TagDaoImpl implements TagDao {
     public void saveTag(String tag) {
         System.out.println("save tag: " + tag);
         sessionFactory.getCurrentSession().saveOrUpdate(new Tag(tag));
+    }
+
+    @Transactional
+    public void saveTag(Tag tag) {
+        sessionFactory.getCurrentSession().saveOrUpdate(tag);
     }
 
     @Transactional

@@ -23,20 +23,23 @@ public class UserController {
 
     //-------------------Retrieve All Users--------------------------------------------------------
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list",
+                    method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(
                     HttpStatus.NOT_FOUND);
         }
+        log("\n retrieve all users: " + users + "\n");
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
 
     //-------------------Retrieve All tags--------------------------------------------------------
 
-    @RequestMapping(value = "/tag/list/", method = RequestMethod.GET)
+    @RequestMapping(value = "/tag/list/",
+                    method = RequestMethod.GET)
     public ResponseEntity<List<Tag>> listAllTags() {
         log("retrieve all tags !");
         List<Tag> tags = userService.findAllTags();
@@ -49,8 +52,9 @@ public class UserController {
 
     //-------------------Retrieve Single User------------------------------------------------------
 
-    @RequestMapping(value = "/name/{name}/", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/name/{name}/",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserByName(
             @PathVariable("name")
             String name) {
@@ -63,8 +67,9 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/email/{email:.+}/", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/email/{email:.+}/",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserByEmail(
             @PathVariable("email")
             String email) {
@@ -79,8 +84,9 @@ public class UserController {
 
     //-------------------Retrieve Single Tag------------------------------------------------------
 
-    @RequestMapping(value = "/tag/id/{id}/", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/tag/id/{id}/",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tag> getTagById(
             @PathVariable("id")
             int id) {
@@ -93,8 +99,9 @@ public class UserController {
         return new ResponseEntity<Tag>(tag, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tag/label/{label}/", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/tag/label/{label}/",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tag> getTagByLabel(
             @PathVariable("label")
             String label) {
@@ -109,17 +116,16 @@ public class UserController {
 
     //-------------------Create a User--------------------------------------------------------
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create",
+                    method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
-        log("Creating User " + user.toString());
         if (userService.isUserExist(user.getEmail())) {
-            log("A User with email " + user.getEmail() + " already exist");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
+        log("create user -- user controller " + user);
         userService.addUser(user);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/email/{email}").buildAndExpand(user.getEmail()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -127,7 +133,8 @@ public class UserController {
 
     //-------------------Create a Tag--------------------------------------------------------
 
-    @RequestMapping(value = "/tag/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/tag/create",
+                    method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(
             @RequestBody
             String tag, UriComponentsBuilder ucBuilder) {
@@ -146,7 +153,8 @@ public class UserController {
     }
 
     //------------------- Update a User --------------------------------------------------------
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "",
+                    method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(
             @RequestBody
             User user) {
@@ -160,7 +168,8 @@ public class UserController {
 
     //------------------- Delete a User --------------------------------------------------------
 
-    @RequestMapping(value = "{email:.+}/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{email:.+}/",
+                    method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(
             @PathVariable("email")
             String email) {
@@ -176,6 +185,6 @@ public class UserController {
     }
 
     public void log(String s) {
-        System.out.print("----------" + this.getClass().getSimpleName() + " " + s);
+        System.out.print("\n----------" + this.getClass().getSimpleName() + " " + s);
     }
 }

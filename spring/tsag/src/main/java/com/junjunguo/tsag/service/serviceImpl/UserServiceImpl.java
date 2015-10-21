@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("userService")
@@ -51,6 +52,29 @@ public class UserServiceImpl implements UserService {
     }
 
     public void addUser(User user) {
+        log("add user : " + user);
+        List<Tag> tags = user.getTags();
+        log("tags -1-: " + tags);
+        List<Tag> tg = new ArrayList<Tag>();
+        for (Tag tag : tags) {
+            Tag t = tagDao.findTagByLabel(tag.getLabel());
+            if (t == null) {
+                Tag nt = new Tag(tag.getLabel());
+                log("tag f2 nt: " + nt);
+//                nt.addUser(user);
+//                log("nt.add f3 user: " + nt);
+//                tagDao.saveTag(nt);// auto saved
+//                log("tag dao f4 find nt" + tagDao.findTagByLabel(nt.getLabel()));
+//                tg.add(tagDao.findTagByLabel(nt.getLabel()));
+                tg.add(nt);
+            } else {
+//                t.addUser(user);
+//                tagDao.saveTag(t); // auto saved
+//                log("e t: " + t);
+                tg.add(t);
+            }
+        }
+        user.setTags(tg);
         userDao.saveUser(user);
     }
 
@@ -59,16 +83,16 @@ public class UserServiceImpl implements UserService {
     }
 
     public void updateUser(User user) {
-//        userDao.saveUser(user);
-                User entity = userDao.findByEmail(user.getEmail());
-                if (entity != null) {
-                    entity.setName(user.getName());
-                    entity.setBirth(user.getBirth());
-                    entity.setCountry(user.getCountry());
-                    entity.setPassword(user.getPassword());
-                    entity.setRegisteredTime(user.getRegisteredTime());
-                    entity.setTags(user.getTags());
-                }
+        //        userDao.saveUser(user);
+        User entity = userDao.findByEmail(user.getEmail());
+        if (entity != null) {
+            entity.setName(user.getName());
+            entity.setBirth(user.getBirth());
+            entity.setCountry(user.getCountry());
+            entity.setPassword(user.getPassword());
+            entity.setRegisteredTime(user.getRegisteredTime());
+            entity.setTags(user.getTags());
+        }
     }
 
     public void deleteUserByEmail(String email) {
@@ -82,6 +106,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public void log(String s) {
-        System.out.println("----" + this.getClass().getSimpleName() + " " + s);
+        System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
     }
 }

@@ -35,22 +35,38 @@ import java.util.*;
 @Table(name = "USER")
 public class User {
 
-    @Column(name = "NAME", nullable = false, columnDefinition = "varchar(128)")
+    @Column(name = "NAME",
+            nullable = false,
+            columnDefinition = "varchar(128)")
     private String name;
     @Id
-    @Column(name = "EMAIL", nullable = false, columnDefinition = "varchar(128)")
+    @Column(name = "EMAIL",
+            nullable = false,
+            columnDefinition = "varchar(128)")
     private String email;
-    @Column(name = "PASSWORD", nullable = false, columnDefinition = "varchar(128)")
+    @Column(name = "PASSWORD",
+            nullable = false,
+            columnDefinition = "varchar(128)")
     private String password;
-    @Column(name = "COUNTRY", nullable = true, columnDefinition = "varchar(128)")
+    @Column(name = "COUNTRY",
+            nullable = true,
+            columnDefinition = "varchar(128)")
     private String country;
-    @Column(name = "BIRTH", nullable = true, columnDefinition = "date")
+    @Column(name = "BIRTH",
+            nullable = true,
+            columnDefinition = "date")
     private Date   birth;
-    @Column(name = "REGISTEREDTIME", nullable = false, columnDefinition = "datetime")
+    @Column(name = "REGISTEREDTIME",
+            nullable = false,
+            columnDefinition = "datetime")
     private Date   registeredTime;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "user_tag", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {
-            @JoinColumn(name = "tag_id")})
+    @ManyToMany(fetch = FetchType.EAGER,
+                cascade = {CascadeType.ALL},
+                targetEntity = Tag.class)
+    @JoinTable(name = "user_tag",
+               joinColumns = {@JoinColumn(name = "user_id")},
+               inverseJoinColumns = {
+                       @JoinColumn(name = "tag_id")})
     private List<Tag> tags = new ArrayList<Tag>();
 
     public User(String name, String email, String country, String password) {
