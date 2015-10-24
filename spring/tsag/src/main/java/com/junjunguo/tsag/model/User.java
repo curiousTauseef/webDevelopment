@@ -1,6 +1,10 @@
 package com.junjunguo.tsag.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 /*
@@ -60,13 +64,12 @@ public class User {
             nullable = false,
             columnDefinition = "datetime")
     private Date   registeredTime;
-    @ManyToMany(fetch = FetchType.EAGER,
-                cascade = {CascadeType.ALL},
-                targetEntity = Tag.class)
+    @Fetch(FetchMode.SELECT)
+    @ManyToMany(fetch = FetchType.LAZY,
+                cascade = {CascadeType.ALL})
     @JoinTable(name = "user_tag",
                joinColumns = {@JoinColumn(name = "user_id")},
-               inverseJoinColumns = {
-                       @JoinColumn(name = "tag_id")})
+               inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     private List<Tag> tags = new ArrayList<Tag>();
 
     public User(String name, String email, String country, String password) {

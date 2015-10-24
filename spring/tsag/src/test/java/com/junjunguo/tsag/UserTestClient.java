@@ -231,7 +231,7 @@ public class UserTestClient {
         //        getTagByLabel("fun");
         //        getTagByLabel("not exit");
         listAllTags();
-//        listAllUsers();
+        listAllUsers();
         //                getUserByName("Johan");//by name
 
         //                getUserByEmail("johan@gmail.com");

@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TAG")
-public class Tag implements Serializable {
+public class Tag {
     /**
      * TAG ID
      */
@@ -24,8 +24,8 @@ public class Tag implements Serializable {
             unique = true)
     private String label;
     @ManyToMany(mappedBy = "tags",
-                fetch = FetchType.EAGER,
-                cascade = {CascadeType.ALL},
+                fetch = FetchType.LAZY,
+                //                cascade = {CascadeType.ALL},
                 targetEntity = User.class
     )
     private List<User> users = new ArrayList<User>();
