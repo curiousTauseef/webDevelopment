@@ -85,7 +85,7 @@ spring/tsag/
 │                       └── VideoTestClient.java
 ├── target
 └── tsag.iml
-```
+``` 
 ####[How To Solve JSON infinite recursion Stackoverflow (with Spring and Jackson annotations)](http://keenformatics.blogspot.it/2013/08/how-to-solve-json-infinite-recursion.html)
 
 ####[Infinite Recursion with Jackson JSON and Hibernate JPA issue](http://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue)

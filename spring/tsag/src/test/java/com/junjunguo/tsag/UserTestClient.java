@@ -211,13 +211,13 @@ public class UserTestClient {
     }
 
     public static void main(String args[]) {
-        createUser(new User("Ola", "ola@a.a", "ola's password"));
-        User u = new User("Johan", "johan@gmail.com", "johan's password");
-        u.addTagLabel("new");
+//        createUser(new User("Ola", "ola@a.a", "ola's password"));
+        User u = new User("Lee", "lee@gmail.com", "lee's password");
+        u.addTagLabel("NTNU");
         //                createTag("lucky");
         u.addTagLabel("lucky");
         List<Tag> ts = u.getTags();
-        ts.add(new Tag("hei"));
+        ts.add(new Tag("CS"));
         u.setTags(ts);
         //
         log("user : " + u.toString());
@@ -225,13 +225,13 @@ public class UserTestClient {
         //
         //
         createUser(u);
-        //        createTag("NTNU");
+//                createTag("NTNU");
         //        createTag("CS");
         //                getTagById(0);
         //        getTagByLabel("fun");
         //        getTagByLabel("not exit");
-        listAllTags();
-        listAllUsers();
+//        listAllTags();
+//        listAllUsers();
         //                getUserByName("Johan");//by name
 
         //                getUserByEmail("johan@gmail.com");

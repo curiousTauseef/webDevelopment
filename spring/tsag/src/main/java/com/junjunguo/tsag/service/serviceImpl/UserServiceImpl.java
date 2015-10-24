@@ -55,9 +55,9 @@ public class UserServiceImpl implements UserService {
 
     public void addUser(User user) {
         log("add user : " + user);
-        Set<Tag> tags = user.getTags();
+        List<Tag> tags = user.getTags();
         log("tags -1-: " + tags);
-        Set<Tag> tg = new LinkedHashSet<Tag>();
+        List<Tag> tg = new ArrayList<Tag>();
         for (Tag tag : tags) {
             Tag t = tagDao.findTagByLabel(tag.getLabel());
             if (t == null) {

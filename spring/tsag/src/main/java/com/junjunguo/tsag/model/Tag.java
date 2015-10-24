@@ -1,7 +1,6 @@
 package com.junjunguo.tsag.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,26 +13,32 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "TAG")
-public class Tag implements Serializable{
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+//                  property = "@ID")
+public class Tag {
     /**
      * TAG ID
      */
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    private int       id;
+    private int        id;
     @Column(name = "LABEL",
             nullable = false,
             columnDefinition = "VARCHAR(255)",
             unique = true)
-    private String    label;
+    private String     label;
     @ManyToMany(mappedBy = "tags",
                 fetch = FetchType.LAZY,
                 cascade = {CascadeType.ALL},
                 targetEntity = User.class
     )
-    @JsonManagedReference
-    private Set<User> users;
+    //    @JsonManagedReference
+    //        @JsonBackReference
+    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+    //                      property = "@id")
+        @JsonIgnore
+    private List<User> users;
 
     public Tag(String label) {
         this.label = label;
@@ -51,11 +56,11 @@ public class Tag implements Serializable{
         users.remove(user);
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

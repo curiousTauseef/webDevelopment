@@ -1,11 +1,12 @@
 package com.junjunguo.tsag.testmodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     private String name;
     private String email;

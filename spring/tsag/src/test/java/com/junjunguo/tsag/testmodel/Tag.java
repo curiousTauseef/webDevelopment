@@ -1,12 +1,13 @@
 package com.junjunguo.tsag.testmodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by GuoJunjun <junjunguo.com> on 16/10/15.
  */
-public class Tag {
+public class Tag implements Serializable{
     private int    id;
     private String label;
     private List<User> users = new ArrayList<User>();

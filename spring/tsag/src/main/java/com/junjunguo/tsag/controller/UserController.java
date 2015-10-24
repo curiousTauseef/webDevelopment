@@ -117,15 +117,17 @@ public class UserController {
     //-------------------Create a User--------------------------------------------------------
 
     @RequestMapping(value = "/create",
-                    method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(
+                    method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
+        log("create user -- " + user);
         if (userService.isUserExist(user.getEmail())) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-        log("create user -- user controller " + user);
         userService.addUser(user);
+        log("create user -- " + user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/email/{email}").buildAndExpand(user.getEmail()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -134,7 +136,9 @@ public class UserController {
     //-------------------Create a Tag--------------------------------------------------------
 
     @RequestMapping(value = "/tag/create",
-                    method = RequestMethod.POST)
+                    method = RequestMethod.POST,
+                    consumes = MediaType.APPLICATION_JSON_VALUE,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createUser(
             @RequestBody
             String tag, UriComponentsBuilder ucBuilder) {
