@@ -33,7 +33,7 @@ public class TagDaoImpl implements TagDao {
             return null;
         } else {
             Tag tag = (Tag) q.list().get(0);
-                        Hibernate.initialize(tag.getUsers());
+            Hibernate.initialize(tag.getUsers());
             return tag;
         }
     }
@@ -48,7 +48,7 @@ public class TagDaoImpl implements TagDao {
                 return null;
             } else {
                 Tag tag = (Tag) q.list().get(0);
-                                Hibernate.initialize(tag.getUsers());
+                Hibernate.initialize(tag.getUsers());
                 return tag;
             }
 
@@ -63,15 +63,16 @@ public class TagDaoImpl implements TagDao {
         @SuppressWarnings("unchecked")
         List<Tag> tags = (List<Tag>) sessionFactory.getCurrentSession().createCriteria(Tag.class)
                                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-                for (Tag tag : tags) {
-                    Hibernate.initialize(tag.getUsers());
-                }
+        for (Tag tag : tags) {
+            //                    Hibernate.initialize(tag.getUsers());
+        }
+        log("tags:-- " + tags);
         return tags;
     }
 
     @Transactional
     public void saveTag(String tag) {
-        System.out.println("save tag: " + tag);
+        log("save tag: " + tag);
         sessionFactory.getCurrentSession().saveOrUpdate(new Tag(tag));
     }
 
@@ -85,8 +86,9 @@ public class TagDaoImpl implements TagDao {
         sessionFactory.getCurrentSession().delete(tag);
     }
 
-    //    private void System.out.println(String s) {
-    //        System.out.println(" #----" + this.getClass().getSimpleName() + " " + s);
-    //    }
+    public void log(String s) {
+        System.out.print("\n----------" + this.getClass().getSimpleName() + " " + s);
+    }
+
 
 }

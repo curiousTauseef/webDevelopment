@@ -2,10 +2,7 @@ package com.junjunguo.tsag.dao.daoImpl;
 
 import com.junjunguo.tsag.dao.UserDao;
 import com.junjunguo.tsag.model.User;
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,18 +34,13 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllUsers() {
         log("find all users: ++");
         @SuppressWarnings("unchecked")
-                List<User> listUser = (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class)
-                                                                         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                                                                         .list();
-
-//                Collection result = new LinkedHashSet<User>(sessionFactory.getCurrentSession().createCriteria(
-//                User.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list());
-//        log("result: ++2 ++" + result.toString());
-//        @SuppressWarnings("unchecked")
-//        List<User> listUser = new ArrayList<User>(result);
+        List<User> listUser = (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class)
+                                                         .setResultTransformer(
+                                                                 Criteria.DISTINCT_ROOT_ENTITY)
+                                                         .list();
         log("initialize users: ");
         for (User u : listUser) {
-            Hibernate.initialize(u.getTags());
+            //            Hibernate.initialize(u.getTags());
         }
         log("users: " + listUser);
         return listUser;

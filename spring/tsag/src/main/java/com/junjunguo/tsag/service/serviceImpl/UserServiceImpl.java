@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("userService")
 @Transactional
@@ -53,24 +55,24 @@ public class UserServiceImpl implements UserService {
 
     public void addUser(User user) {
         log("add user : " + user);
-        List<Tag> tags = user.getTags();
+        Set<Tag> tags = user.getTags();
         log("tags -1-: " + tags);
-        List<Tag> tg = new ArrayList<Tag>();
+        Set<Tag> tg = new LinkedHashSet<Tag>();
         for (Tag tag : tags) {
             Tag t = tagDao.findTagByLabel(tag.getLabel());
             if (t == null) {
                 Tag nt = new Tag(tag.getLabel());
                 log("tag f2 nt: " + nt);
-//                nt.addUser(user);
-//                log("nt.add f3 user: " + nt);
-//                tagDao.saveTag(nt);// auto saved
-//                log("tag dao f4 find nt" + tagDao.findTagByLabel(nt.getLabel()));
-//                tg.add(tagDao.findTagByLabel(nt.getLabel()));
+                //                nt.addUser(user);
+                //                log("nt.add f3 user: " + nt);
+                //                tagDao.saveTag(nt);// auto saved
+                //                log("tag dao f4 find nt" + tagDao.findTagByLabel(nt.getLabel()));
+                //                tg.add(tagDao.findTagByLabel(nt.getLabel()));
                 tg.add(nt);
             } else {
-//                t.addUser(user);
-//                tagDao.saveTag(t); // auto saved
-//                log("e t: " + t);
+                //                t.addUser(user);
+                //                tagDao.saveTag(t); // auto saved
+                //                log("e t: " + t);
                 tg.add(t);
             }
         }

@@ -1,5 +1,8 @@
 package com.junjunguo.tsag.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -37,40 +40,40 @@ import java.util.*;
 
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements Serializable {
 
     @Column(name = "NAME",
             nullable = false,
             columnDefinition = "varchar(128)")
-    private String name;
+    private String   name;
     @Id
     @Column(name = "EMAIL",
             nullable = false,
             columnDefinition = "varchar(128)")
-    private String email;
+    private String   email;
     @Column(name = "PASSWORD",
             nullable = false,
             columnDefinition = "varchar(128)")
-    private String password;
+    private String   password;
     @Column(name = "COUNTRY",
             nullable = true,
             columnDefinition = "varchar(128)")
-    private String country;
+    private String   country;
     @Column(name = "BIRTH",
             nullable = true,
             columnDefinition = "date")
-    private Date   birth;
+    private Date     birth;
     @Column(name = "REGISTEREDTIME",
             nullable = false,
             columnDefinition = "datetime")
-    private Date   registeredTime;
-    @Fetch(FetchMode.SELECT)
+    private Date     registeredTime;
     @ManyToMany(fetch = FetchType.LAZY,
                 cascade = {CascadeType.ALL})
     @JoinTable(name = "user_tag",
                joinColumns = {@JoinColumn(name = "user_id")},
                inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-    private List<Tag> tags = new ArrayList<Tag>();
+    @JsonBackReference
+    private Set<Tag> tags;
 
     public User(String name, String email, String country, String password) {
         this(name, email, country, password, Calendar.getInstance().getTime(),
@@ -98,11 +101,12 @@ public class User {
     public User() {
     }
 
-    public List<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 

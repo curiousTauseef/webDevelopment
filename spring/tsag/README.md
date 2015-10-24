@@ -86,3 +86,23 @@ spring/tsag/
 ├── target
 └── tsag.iml
 ```
+####[How To Solve JSON infinite recursion Stackoverflow (with Spring and Jackson annotations)](http://keenformatics.blogspot.it/2013/08/how-to-solve-json-infinite-recursion.html)
+
+####[Infinite Recursion with Jackson JSON and Hibernate JPA issue](http://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue)
+
+####[Handle bi-directional references using declarative method](http://wiki.fasterxml.com/JacksonFeatureBiDirReferences)
+
+Annotations are:
+
+- @JsonManagedReference is the "forward" part of reference: one that gets serialized normally, and handling of which triggers back-linkage for the other reference
+    - Annotated property can be a bean, array, Collection (List, Set) or Map type, and it must be a bean property (handled by a property of type serialized using BeanSerializer
+- @JsonBackReference is the "back" part of reference: it will be omitted from serialization, and re-constructed during deserialization of forward reference.
+    - Annotated property must be of bean type
+
+These annotations can be used for:
+
+- Methods (getters and setters)  Fields
+
+- but not for types (classes) or constructor arguments.
+
+- Annotations take optional "name" parameter; if omitted default name is used. Name is needed to allow multiple reference pairs for one bean type.
