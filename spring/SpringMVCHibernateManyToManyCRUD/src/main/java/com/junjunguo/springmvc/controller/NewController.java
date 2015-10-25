@@ -40,30 +40,30 @@ public class NewController {
     /**
      * This method will list all existing users.
      */
-    //    @RequestMapping(value = {"/list"},
-    //                    method = RequestMethod.GET)
-    //    public ResponseEntity<List<User>> listUsers() {
-    //        System.out.println("new/ list all users -----");
-    //        List<User> users = userService.findAllUsers();
-    //        if (users.isEmpty()) {
-    //            return new ResponseEntity<List<User>>(
-    //                    HttpStatus.NOT_FOUND);
-    //        }
-    //        System.out.println("users: " + users);
-    //        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
-    //    }
     @RequestMapping(value = {"/list"},
                     method = RequestMethod.GET)
-    public String listUsers() {
+    public ResponseEntity<List<User>> listUsers() {
         System.out.println("new/ list all users -----");
         List<User> users = userService.findAllUsers();
-        //        if (users.isEmpty()) {
-        //            return new ResponseEntity<List<User>>(
-        //                    HttpStatus.NOT_FOUND);
-        //        }
+        if (users.isEmpty()) {
+            return new ResponseEntity<List<User>>(
+                    HttpStatus.NOT_FOUND);
+        }
         System.out.println("users: " + users);
-        return users.toString();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
+    //    @RequestMapping(value = {"/list"},
+    //                    method = RequestMethod.GET)
+    //    public String listUsers() {
+    //        System.out.println("new/ list all users -----");
+    //        List<User> users = userService.findAllUsers();
+    //        //        if (users.isEmpty()) {
+    //        //            return new ResponseEntity<List<User>>(
+    //        //                    HttpStatus.NOT_FOUND);
+    //        //        }
+    //        System.out.println("users: " + users);
+    //        return users.toString();
+    //    }
 
 
     @RequestMapping(value = "/id/{id}/",
@@ -81,6 +81,22 @@ public class NewController {
         return user.toString();
     }
 
+
+    @RequestMapping(value = "/sso/{sso}/",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUserByEmail(
+            @PathVariable("sso")
+            String sso) {
+        System.out.println("Fetching User with sso  " + sso);
+        User user = userService.findBySSO(sso);
+        if (user == null) {
+            System.out.println("User with sso " + sso + " not found");
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
     //-------------------Create a User--------------------------------------------------------
 
     @RequestMapping(value = "/create",
@@ -88,103 +104,17 @@ public class NewController {
     public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
+        System.out.println("####1# create user -- user controller " + user);
         if (userService.findBySSO(user.getSsoId()) != null) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
-        System.out.println("create user -- user controller " + user);
+        System.out.println("####2# create user -- user controller " + user);
         userService.saveUser(user);
+        System.out.println("####3# create user -- user controller " + user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/id/{id}").buildAndExpand(user.getSsoId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
-
-
-    ////@RestController
-    ////@RequestMapping(value = "/user")
-    ////public class UserController {
-    ////    @Autowired
-    ////    UserService userService;//Service which will do all data retrieval/manipulation work
-    //
-    //
-    //    //-------------------Retrieve All Users--------------------------------------------------------
-    //
-    //    @RequestMapping(value = "/list",
-    //                    method = RequestMethod.GET)
-    //    public ResponseEntity<List<User>> listAllUsers() {
-    //        List<User> users = userService.findAllUsers();
-    //        if (users.isEmpty()) {
-    //            return new ResponseEntity<List<User>>(
-    //                    HttpStatus.NOT_FOUND);
-    //        }
-    //        log("\n retrieve all users: " + users + "\n");
-    //        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
-    //    }
-    ////
-
-    //    /**
-    //     * This method will provide the medium to add a new user.
-    //     */
-    //    @RequestMapping(value = {"/newuser"},
-    //                    method = RequestMethod.GET)
-    //    public String newUser(ModelMap model) {
-    //        User user = new User();
-    //        model.addAttribute("user", user);
-    //        model.addAttribute("edit", false);
-    //        return "registration";
-    //    }
-
-    //    /**
-    //     * This method will be called on form submission, handling POST request for saving user in database. It also
-    //     * validates the user input
-    //     */
-    //    @RequestMapping(value = {"/newuser"},
-    //                    method = RequestMethod.POST)
-    //    public String saveUser(
-    //            @Valid
-    //            User user, BindingResult result,
-    //            ModelMap model) {
-    //
-    //        if (result.hasErrors()) {
-    //            return "registration";
-    //        }
-    //
-    //		/*
-    //         * Preferred way to achieve uniqueness of field [sso] should be implementing custom @Unique annotation
-    //		 * and applying it on field [sso] of Model class [User].
-    //		 *
-    //		 * Below mentioned peace of code [if block] is to demonstrate that you can fill custom errors outside the validation
-    //		 * framework as well while still using internationalized messages.
-    //		 *
-    //		 */
-    //        if (!userService.isUserSSOUnique(user.getId(), user.getSsoId())) {
-    //            FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId",
-    //                    new String[]{user.getSsoId()}, Locale.getDefault()));
-    //            result.addError(ssoError);
-    //            return "registration";
-    //        }
-    //
-    //        userService.saveUser(user);
-    //
-    //        model.addAttribute("success",
-    //                "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
-    //        //return "success";
-    //        return "registrationsuccess";
-    //    }
-
-
-    //    /**
-    //     * This method will provide the medium to update an existing user.
-    //     */
-    //    @RequestMapping(value = {"/edit-user-{ssoId}"},
-    //                    method = RequestMethod.GET)
-    //    public String editUser(
-    //            @PathVariable
-    //            String ssoId, ModelMap model) {
-    //        User user = userService.findBySSO(ssoId);
-    //        model.addAttribute("user", user);
-    //        model.addAttribute("edit", true);
-    //        return "registration";
-    //    }
 
     /**
      * This method will be called on form submission, handling POST request for updating user in database. It also

@@ -39,7 +39,7 @@ import java.util.*;
 @Entity
 @Table(name = "USER")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-//                  property = "@EMAIL")
+//                  property = "@ID")
 public class User {
 
     @Column(name = "NAME",
@@ -74,8 +74,6 @@ public class User {
                inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     //    @JsonBackReference
     //        @JsonManagedReference
-    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-    //                      property = "@id")
 //    @JsonIgnore
     private List<Tag> tags;
 

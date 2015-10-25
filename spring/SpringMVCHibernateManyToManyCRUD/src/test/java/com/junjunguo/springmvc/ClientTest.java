@@ -37,11 +37,12 @@ public class ClientTest {
         User u = new User();
         u.setEmail("ola@gmail.com");
         u.setFirstName("Ola");
-        u.setSsoId("12345");
+        u.setLastName("Kari");
+        u.setSsoId("11");
+        u.setPassword("1111"); u.setId(1);
         createUser(u);
 
         log("user : " + u.toString());
-        createUser(u);
 
     }
 
