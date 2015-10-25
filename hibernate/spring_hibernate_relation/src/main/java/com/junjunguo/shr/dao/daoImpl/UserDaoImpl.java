@@ -39,6 +39,7 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     public void saveUser(User user) {
+        log("save user: " + user);
         sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 
@@ -59,4 +60,9 @@ public class UserDaoImpl implements UserDao {
         Query q = sessionFactory.getCurrentSession().createQuery("from User where name = '" + name + "'");
         return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
+
+    public void log(String s) {
+        System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
+    }
+
 }

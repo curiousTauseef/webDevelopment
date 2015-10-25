@@ -3,10 +3,12 @@ package com.junjunguo.shr.controller;
 import com.junjunguo.shr.model.Video;
 import com.junjunguo.shr.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -37,7 +39,8 @@ public class VideoController {
 
     //    -------------------Retrieve Video----------------------------------------------------
 
-    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET,
+    @RequestMapping(value = "/id/{id}",
+                    method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Video> getVideoById(
             @PathVariable("id")
@@ -51,7 +54,8 @@ public class VideoController {
         return new ResponseEntity<Video>(Video, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/title/{title}", method = RequestMethod.GET,
+    @RequestMapping(value = "/title/{title}",
+                    method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Video>> getVideoByTitle(
             @PathVariable("title")
@@ -65,7 +69,8 @@ public class VideoController {
         return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tags/{tags}", method = RequestMethod.GET,
+    @RequestMapping(value = "/tags/{tags}",
+                    method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Video>> getVideoByTags(
             @PathVariable("tags")
@@ -79,7 +84,8 @@ public class VideoController {
         return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET,
+    @RequestMapping(value = "/email/{email:.+}",
+                    method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Video>> getVideoByEmail(
             @PathVariable("email")
@@ -95,39 +101,38 @@ public class VideoController {
 
     //-------------------Create a Video------------------------------------------------------
 
-    //    @RequestMapping(value = "", method = RequestMethod.POST)
-    //    public ResponseEntity<Void> createVideo(
-    //            @RequestBody
-    //            Video video, UriComponentsBuilder ucBuilder) {
-    //        System.out.println("Creating Video " + video.getId());
-    //
-    //        if (videoService.hasVideo(video.getId())) {
-    //            System.out.println("A Video with id " + video.getId() + " already exist");
-    //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-    //        }
-    //
-    //        videoService.addVideo(video);
-    //
-    //        HttpHeaders headers = new HttpHeaders();
-    //        headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
-    //        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-    //    }
+        @RequestMapping(value = "", method = RequestMethod.POST)
+        public ResponseEntity<Void> createVideo(
+                @RequestBody
+                Video video, UriComponentsBuilder ucBuilder) {
+            System.out.println("Creating Video " + video.getId());
+
+            if (videoService.hasVideo(video.getId())) {
+                System.out.println("A Video with id " + video.getId() + " already exist");
+                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            }
+
+            videoService.addVideo(video);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
+            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        }
 
 
     //------------------- Update a Video -----------------------------------------------------
 
-    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "",
+                    method = RequestMethod.PUT)
     public ResponseEntity<Video> updateVideo(
-            @PathVariable("id")
-            int id,
             @RequestBody
-            Video Video) {
-        System.out.println("Updating Video " + id);
+            Video video) {
+        System.out.println("Updating Video " + video);
 
-        Video currentVideo = videoService.findById(id);
+        Video currentVideo = videoService.findById(video.getId());
 
         if (currentVideo == null) {
-            System.out.println("Video with id " + id + " not found");
+            System.out.println("Video with id " + video.getId() + " not found");
             return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
         }
 
@@ -139,7 +144,8 @@ public class VideoController {
 
     //------------------- Delete a Video --------------------------------------------------------
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{id}",
+                    method = RequestMethod.DELETE)
     public ResponseEntity<Video> deleteVideo(
             @PathVariable("id")
             int id) {

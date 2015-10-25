@@ -87,4 +87,25 @@ public class Tag {
      * @param videos New value of videos.
      */
     public void setVideos(List<Video> videos) { this.videos = videos; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tag)) return false;
+
+        Tag tag = (Tag) o;
+
+        if (getId() != tag.getId()) return false;
+        if (!getTitle().equals(tag.getTitle())) return false;
+        return !(getVideos() != null ? !getVideos().equals(tag.getVideos()) : tag.getVideos() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getTitle().hashCode();
+        result = 31 * result + (getVideos() != null ? getVideos().hashCode() : 0);
+        return result;
+    }
 }

@@ -48,7 +48,8 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/email/{email:.+}/", method = RequestMethod.GET,
+    @RequestMapping(value = "/email/{email:.+}/",
+                    method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserByEmail(
             @PathVariable("email")
@@ -60,10 +61,12 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "",
+                    method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
+        log("create user: " + user);
         if (userService.isUserExist(user.getEmail())) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
@@ -74,7 +77,8 @@ public class UserController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "",
+                    method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(
             @RequestBody
             User user) {
@@ -87,7 +91,8 @@ public class UserController {
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{email:.+}/", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{email:.+}/",
+                    method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(
             @PathVariable("email")
             String email) {
@@ -98,4 +103,9 @@ public class UserController {
         userService.deleteUserByEmail(email);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
+
+    public void log(String s) {
+        System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
+    }
+
 }

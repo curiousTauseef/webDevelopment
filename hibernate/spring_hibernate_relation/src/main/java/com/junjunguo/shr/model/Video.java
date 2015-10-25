@@ -331,4 +331,46 @@ public class Video {
     public boolean isHasVideo() {
         return hasVideo;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Video)) return false;
+
+        Video video = (Video) o;
+
+        if (getId() != video.getId()) return false;
+        if (isHasVideo() != video.isHasVideo()) return false;
+        if (getTitle() != null ? !getTitle().equals(video.getTitle()) : video.getTitle() != null) return false;
+        if (getDescription() != null ? !getDescription().equals(video.getDescription()) :
+                video.getDescription() != null)
+            return false;
+        if (!getUploadTime().equals(video.getUploadTime())) return false;
+        if (getFilePath() != null ? !getFilePath().equals(video.getFilePath()) : video.getFilePath() != null)
+            return false;
+        if (getFileName() != null ? !getFileName().equals(video.getFileName()) : video.getFileName() != null)
+            return false;
+        if (getFileExtension() != null ? !getFileExtension().equals(video.getFileExtension()) :
+                video.getFileExtension() != null) return false;
+        if (!getOwner().equals(video.getOwner())) return false;
+        if (getTags() != null ? !getTags().equals(video.getTags()) : video.getTags() != null) return false;
+        return getLocation().equals(video.getLocation());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getUploadTime().hashCode();
+        result = 31 * result + (isHasVideo() ? 1 : 0);
+        result = 31 * result + (getFilePath() != null ? getFilePath().hashCode() : 0);
+        result = 31 * result + (getFileName() != null ? getFileName().hashCode() : 0);
+        result = 31 * result + (getFileExtension() != null ? getFileExtension().hashCode() : 0);
+        result = 31 * result + getOwner().hashCode();
+        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
+        result = 31 * result + getLocation().hashCode();
+        return result;
+    }
 }

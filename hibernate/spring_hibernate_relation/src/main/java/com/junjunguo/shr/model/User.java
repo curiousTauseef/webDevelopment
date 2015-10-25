@@ -1,11 +1,13 @@
 package com.junjunguo.shr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.junjunguo.shr.util.MyDate;
 
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -16,7 +18,7 @@ import java.util.List;
 @Table(name = "USER")
 public class User {
     @Column(name = "NAME",
-            nullable = false,
+            nullable = true,
             columnDefinition = "VARCHAR(128)")
     private String      name;
     @Id
@@ -44,7 +46,7 @@ public class User {
             nullable = false,
             columnDefinition = "DATETIME")
     private Date        registeredtime;
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
                cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_EMAIL")
@@ -92,14 +94,8 @@ public class User {
 
     /**
      * auto generate registered time
-     *
-     * @param philip
-     * @param s
-     * @param norway
-     * @param s1
-     * @param date
      */
-    public User(String philip, String s, String norway, String s1, Date date) {
+    public User() {
         this.registeredtime = Calendar.getInstance().getTime();
     }
 
@@ -218,6 +214,37 @@ public class User {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
+        if (getGender() != null ? !getGender().equals(user.getGender()) : user.getGender() != null) return false;
+        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
+        if (!getRegisteredtime().equals(user.getRegisteredtime())) return false;
+        return !(getVideos() != null ? !getVideos().equals(user.getVideos()) : user.getVideos() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName() != null ? getName().hashCode() : 0;
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
+        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
+        result = 31 * result + getRegisteredtime().hashCode();
+        result = 31 * result + (getVideos() != null ? getVideos().hashCode() : 0);
+        return result;
     }
 
     /**
