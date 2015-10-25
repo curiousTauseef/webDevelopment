@@ -47,7 +47,7 @@ public class HibernateConfiguration {
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.show_sql", "true");
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.dialect", "com.junjunguo.shr.util.CustomMysqlDialect");
         return properties;
     }
