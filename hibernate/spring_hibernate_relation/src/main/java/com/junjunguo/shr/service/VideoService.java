@@ -16,10 +16,6 @@ public interface VideoService {
 
     List<Video> findByTitle(String title);
 
-    List<Video> findByTag(String tag);
-
-    List<Video> findByTags(List<String> tags);
-
     void addVideo(Video video);
 
     void updateVideo(Video video);

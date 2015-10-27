@@ -1,55 +1,24 @@
-package com.junjunguo.shr.model;
+package com.junjunguo.shr.service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.junjunguo.shr.util.MyDate;
 
-import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This file is part of spring_hibernate_relation.
  * <p/>
- * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
+ * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 27/10/15.
  */
-@Entity
-@Table(name = "USER")
 public class User {
-    @Column(name = "NAME",
-            nullable = true,
-            columnDefinition = "VARCHAR(128)")
     private String      name;
-    @Id
-    @Column(name = "EMAIL",
-            nullable = false,
-            columnDefinition = "VARCHAR(128)")
     private String      email;
-    @Column(name = "PASSWORD",
-            nullable = false,
-            columnDefinition = "VARCHAR(128)")
     private String      password;
-    @Column(name = "COUNTRY",
-            nullable = true,
-            columnDefinition = "VARCHAR(128)")
     private String      country;
-    @Column(name = "GENDER",
-            nullable = true,
-            columnDefinition = "VARCHAR(10)")
     private String      gender;
-    @Column(name = "BIRTH",
-            nullable = true,
-            columnDefinition = "DATE")
     private Date        birth;
-    @Column(name = "REGISTEREDTIME",
-            nullable = false,
-            columnDefinition = "DATETIME")
     private Date        registeredtime;
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY,
-               cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_EMAIL")
     private List<Video> videos;
 
     /**

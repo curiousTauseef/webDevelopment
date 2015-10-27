@@ -1,4 +1,4 @@
-package com.junjunguo.shr.model;
+package com.junjunguo.shr.service.model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,24 +8,12 @@ import java.util.List;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
-@Entity
-@Table(name = "TAG")
 public class Tag {
     /**
      * tag id
      */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID")
     private int         id;
-    @Column(name = "TITLE",
-            nullable = false,
-            columnDefinition = "VARCHAR(128)")
     private String      label;
-    @ManyToMany(mappedBy = "tags",
-                fetch = FetchType.LAZY,
-                cascade = CascadeType.ALL,
-                targetEntity = Video.class)
     private List<Video> videos;
 
     public Tag(String label) {
@@ -89,25 +77,4 @@ public class Tag {
      * @param videos New value of videos.
      */
     public void setVideos(List<Video> videos) { this.videos = videos; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Tag)) return false;
-
-        Tag tag = (Tag) o;
-
-        if (getId() != tag.getId()) return false;
-        if (!getLabel().equals(tag.getLabel())) return false;
-        return !(getVideos() != null ? !getVideos().equals(tag.getVideos()) : tag.getVideos() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getLabel().hashCode();
-        result = 31 * result + (getVideos() != null ? getVideos().hashCode() : 0);
-        return result;
-    }
 }

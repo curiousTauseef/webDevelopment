@@ -57,7 +57,7 @@ public class VideoController {
     @RequestMapping(value = "/title/{title}",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Video>> getVideoByTitle(
+    public ResponseEntity<List<Video>> getVideosByTitle(
             @PathVariable("title")
             String title) {
         System.out.println("Fetching Video with title " + title);
@@ -69,25 +69,11 @@ public class VideoController {
         return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/tags/{tags}",
-                    method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Video>> getVideoByTags(
-            @PathVariable("tags")
-            List<String> tags) {
-        System.out.println("Fetching Video with tags " + tags);
-        List<Video> videos = videoService.findByTags(tags);
-        if (videos == null || videos.isEmpty()) {
-            System.out.println("Video with tags " + tags + " not found");
-            return new ResponseEntity<List<Video>>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
-    }
 
     @RequestMapping(value = "/email/{email:.+}",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Video>> getVideoByEmail(
+    public ResponseEntity<List<Video>> getVideosByEmail(
             @PathVariable("email")
             String email) {
         System.out.println("Fetching Video with email " + email);
@@ -101,23 +87,24 @@ public class VideoController {
 
     //-------------------Create a Video------------------------------------------------------
 
-        @RequestMapping(value = "", method = RequestMethod.POST)
-        public ResponseEntity<Void> createVideo(
-                @RequestBody
-                Video video, UriComponentsBuilder ucBuilder) {
-            System.out.println("Creating Video " + video.getId());
+    @RequestMapping(value = "",
+                    method = RequestMethod.POST)
+    public ResponseEntity<Void> createVideo(
+            @RequestBody
+            Video video, UriComponentsBuilder ucBuilder) {
+        System.out.println("Creating Video " + video.getId());
 
-            if (videoService.hasVideo(video.getId())) {
-                System.out.println("A Video with id " + video.getId() + " already exist");
-                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-            }
-
-            videoService.addVideo(video);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
-            return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        if (videoService.hasVideo(video.getId())) {
+            System.out.println("A Video with id " + video.getId() + " already exist");
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
+
+        videoService.addVideo(video);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
 
 
     //------------------- Update a Video -----------------------------------------------------
@@ -135,9 +122,6 @@ public class VideoController {
             System.out.println("Video with id " + video.getId() + " not found");
             return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
         }
-
-        //        currentVideo.updateVideo(Video);
-
         videoService.updateVideo(currentVideo);
         return new ResponseEntity<Video>(currentVideo, HttpStatus.OK);
     }

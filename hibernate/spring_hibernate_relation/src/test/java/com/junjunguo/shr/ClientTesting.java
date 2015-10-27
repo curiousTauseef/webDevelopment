@@ -1,6 +1,14 @@
 package com.junjunguo.shr;
 
-import com.junjunguo.shr.model.Video;
+import com.junjunguo.shr.service.model.Location;
+import com.junjunguo.shr.service.model.Tag;
+import com.junjunguo.shr.service.model.User;
+import com.junjunguo.shr.service.model.Video;
+import com.junjunguo.shr.service.servicesImpl.UserServicesImpl;
+import com.junjunguo.shr.service.servicesImpl.VideoServicesImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -9,26 +17,27 @@ import com.junjunguo.shr.model.Video;
  */
 public class ClientTesting {
     public static void main(String[] args) {
-//        Video v = new Video("filepath","new","mp4","lee@gmail.com",);
-        ClientVideo.listAllVideos();
+        //        VideoServicesImpl.listAllVideos();
         //        getVideoById();//by name
         //        getVideosByTitle();
         //        getVideosByEmail();
         //        createVideo();
-//        listAllVideos();
+        //        listAllVideos();
         //        updateVideo();
-//        listAllVideos();
-//        deleteVideo();
-//        listAllVideos();
-//        listAllVideos();
+        //        listAllVideos();
+        //        deleteVideo();
+        //        listAllVideos();
+        //        listAllVideos();
 
 
-        //        User u = new User("Lee", "lee@gmail.com", "lee's password");
-        //
-        //        List<Tag> ts = new ArrayList<Tag>();
-        //        ts.add(new Tag("CS"));
-        //        ts.add(new Tag("JPA"));
-
+//        User u = new User("Lee", "lee@gmail.com", "lee's password");
+//        System.out.println(new UserServicesImpl().createUser(u));
+//        List<Tag> ts = new ArrayList<Tag>();
+//        ts.add(new Tag("CS"));
+//        ts.add(new Tag("JPA"));
+//        Video v = new Video("title", ts, "new", "path", "name", "mp4", u, new Location(60.10, 10.3));
+//
+//        System.out.println(new VideoServicesImpl().createVideo(v));
         //        createUser(new User("Matilde", "ola@tsag.com", "matilde's password"));
         //        createUser(new User("Eva", "eva@yahoo.com", "eva's password"));
         //        listAllUsers();

@@ -31,24 +31,6 @@ public interface VideoDao {
     List<Video> findByTitle(String name);
 
     /**
-     * @param tag video tag
-     * @return List of Video object
-     */
-    List<Video> findByTag(String tag);
-
-    /**
-     * @param tags video tags
-     * @return List of Video object
-     */
-    List<Video> findByTags(List<String> tags);
-
-    /**
-     * @param location video Location
-     * @return List of Video object
-     */
-    List<Video> findByLocation(Location location);
-
-    /**
      * @param video object: save or update this video
      */
     void saveVideo(Video video);

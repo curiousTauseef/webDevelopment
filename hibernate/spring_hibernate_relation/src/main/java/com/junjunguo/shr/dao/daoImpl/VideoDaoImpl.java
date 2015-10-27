@@ -47,23 +47,6 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     @Transactional
-    public List<Video> findByTag(String tag) {
-        //        Query q = sessionFactory.getCurrentSession().createQuery("from VIDEO where TITLE = '" + title + "'");
-        //        return !q.list().isEmpty() ? (Video) q.list().get(0) : null;
-        return null;
-    }
-
-    @Transactional
-    public List<Video> findByTags(List<String> tags) {
-        return null;
-    }
-
-    @Transactional
-    public List<Video> findByLocation(Location location) {
-        return null;
-    }
-
-    @Transactional
     public void saveVideo(Video video) {
         sessionFactory.getCurrentSession().saveOrUpdate(video);
     }

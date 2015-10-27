@@ -33,14 +33,6 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findByTitle(title);
     }
 
-    public List<Video> findByTag(String tag) {
-        return videoDao.findByTag(tag);
-    }
-
-    public List<Video> findByTags(List<String> tags) {
-        return videoDao.findByTags(tags);
-    }
-
     public void addVideo(Video video) {
         videoDao.saveVideo(video);
     }

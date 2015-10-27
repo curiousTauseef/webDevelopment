@@ -107,5 +107,4 @@ public class UserController {
     public void log(String s) {
         System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
     }
-
 }
