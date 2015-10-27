@@ -211,49 +211,51 @@ public class UserTestClient {
     }
 
     public static void main(String args[]) {
-//        createUser(new User("Ola", "ola@a.a", "ola's password"));
+        createUser(new User("Ola", "ola@a.a", "ola's password"));
         User u = new User("Lee", "lee@gmail.com", "lee's password");
         u.addTagLabel("NTNU");
-        //                createTag("lucky");
+                        createTag("lucky");
         u.addTagLabel("lucky");
         List<Tag> ts = u.getTags();
+//        List<Tag> ts = new ArrayList<Tag>();
         ts.add(new Tag("CS"));
+        ts.add(new Tag("TSAG"));
         u.setTags(ts);
-        //
-        log("user : " + u.toString());
-        log("tag: " + ts.toString());
-        //
-        //
+//        //
+//        log("user : " + u.toString());
+//        log("tag: " + ts.toString());
+//        //
+//        //
         createUser(u);
-//                createTag("NTNU");
-        //        createTag("CS");
-        //                getTagById(0);
-        //        getTagByLabel("fun");
-        //        getTagByLabel("not exit");
-//        listAllTags();
-//        listAllUsers();
-        //                getUserByName("Johan");//by name
+                createTag("NTNU");
+                createTag("CS");
+                        getTagById(0);
+                getTagByLabel("fun");
+                getTagByLabel("not exit");
+        listAllTags();
+        listAllUsers();
+                        getUserByName("Johan");//by name
 
-        //                getUserByEmail("johan@gmail.com");
-        //        getUserByEmail("jonas@gmail.com");
-        //        createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
-        //        listAllUsers();
-        //        updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
-        //                getDate("03 14 " + "16:02:37 2011")));
-        //        listAllUsers();
-        //                User jj = new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
-        //                        getDate("03 14 " + "16:02:37 2011"));
-        //                createUser(jj);
-        //                listAllUsers();
-        //                listAllTags();
-        //                jj.addTagLabel("mac");
-        //                jj.addTagLabel("win");
-        //                updateUser(jj);
-        //                listAllTags();
-        //                listAllUsers();
-        //        createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
-        //        deleteUserByEmail("sarah@a.a");
-        //        listAllUsers();
+                        getUserByEmail("johan@gmail.com");
+                getUserByEmail("jonas@gmail.com");
+                createUser(new User("Sarah", "sarah@a.a", "sarah's password"));
+                listAllUsers();
+                updateUser(new User("Sarah", "sarah@a.a", "Norway", "sarah's password updated",
+                        getDate("03 14 " + "16:02:37 2011")));
+                listAllUsers();
+                        User jj = new User("JJ", "jj@gmail.com", "Norway", "jj's password updated",
+                                getDate("03 14 " + "16:02:37 2011"));
+                        createUser(jj);
+                        listAllUsers();
+                        listAllTags();
+                        jj.addTagLabel("mac");
+                        jj.addTagLabel("win");
+                        updateUser(jj);
+                        listAllTags();
+                        listAllUsers();
+                createUser(new User("Jonas", "jonas@gmail.co", "jo's password"));
+                deleteUserByEmail("sarah@a.a");
+                listAllUsers();
     }
 
 

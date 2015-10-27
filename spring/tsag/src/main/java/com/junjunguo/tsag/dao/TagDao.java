@@ -1,5 +1,6 @@
 package com.junjunguo.tsag.dao;
 
+import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface TagDao {
     Tag findTagById(int id);
 
     Tag findTagByLabel(String label);
+
+    TU findByLabelInitialized(String label);
 
     List<Tag> findAllTags();
 

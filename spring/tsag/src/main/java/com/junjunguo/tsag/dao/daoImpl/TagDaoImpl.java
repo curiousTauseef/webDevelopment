@@ -1,9 +1,10 @@
 package com.junjunguo.tsag.dao.daoImpl;
 
 import com.junjunguo.tsag.dao.TagDao;
+import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
-import com.junjunguo.tsag.model.User;
 import org.hibernate.*;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,28 @@ public class TagDaoImpl implements TagDao {
         }
     }
 
+    public TU findByLabelInitialized(String label) {
+        log("find by label initialized: ");
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
+        criteria.add(Restrictions.eq("label", label));
+        Tag tag = (Tag) criteria.uniqueResult();
+        log("find by label initialized: tag= " + tag);
+        if (tag != null) {
+            log("get user: " + tag.getUsers());
+            Hibernate.initialize(tag.getUsers());
+            log("get user(after init ..): " + tag.getUsers());
+//            List<User> u = new ArrayList<User>();
+//            for (User user : tag.getUsers()) {
+//                user.setTags(null);
+//                u.add(user);
+//            }
+//            tag.setUsers(u);
+            log("get user(after init .. new ..): " + tag.getUsers());
+        }
+
+        return new TU(tag);
+    }
+
     @Transactional
     public Tag findTagByLabel(String label) {
         try {
@@ -64,7 +87,7 @@ public class TagDaoImpl implements TagDao {
         List<Tag> tags = (List<Tag>) sessionFactory.getCurrentSession().createCriteria(Tag.class)
                                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         for (Tag tag : tags) {
-            //                    Hibernate.initialize(tag.getUsers());
+            Hibernate.initialize(tag.getUsers());
         }
         log("tags:-- " + tags);
         return tags;

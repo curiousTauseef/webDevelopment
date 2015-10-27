@@ -45,37 +45,39 @@ public class User {
     @Column(name = "NAME",
             nullable = false,
             columnDefinition = "varchar(128)")
-    private String    name;
+    private String name;
     @Id
     @Column(name = "EMAIL",
             nullable = false,
             columnDefinition = "varchar(128)")
-    private String    email;
+    private String email;
     @Column(name = "PASSWORD",
             nullable = false,
             columnDefinition = "varchar(128)")
-    private String    password;
+    private String password;
     @Column(name = "COUNTRY",
             nullable = true,
             columnDefinition = "varchar(128)")
-    private String    country;
+    private String country;
     @Column(name = "BIRTH",
             nullable = true,
             columnDefinition = "date")
-    private Date      birth;
+    private Date   birth;
     @Column(name = "REGISTEREDTIME",
             nullable = false,
             columnDefinition = "datetime")
-    private Date      registeredTime;
-    @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {CascadeType.ALL})
+    private Date   registeredTime;
+    @ManyToMany(fetch = FetchType.LAZY
+//                cascade = CascadeType.PERSIST
+                                ,cascade = {CascadeType.ALL}
+    )
     @JoinTable(name = "user_tag",
                joinColumns = {@JoinColumn(name = "user_id")},
                inverseJoinColumns = {@JoinColumn(name = "tag_id")})
     //    @JsonBackReference
     //        @JsonManagedReference
-//    @JsonIgnore
-    private List<Tag> tags;
+//        @JsonIgnore
+    private List<Tag> tags = new ArrayList<Tag>();
 
     public User(String name, String email, String country, String password) {
         this(name, email, country, password, Calendar.getInstance().getTime(),

@@ -1,5 +1,6 @@
 package com.junjunguo.tsag.controller;
 
+import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import com.junjunguo.tsag.service.UserService;
@@ -99,6 +100,21 @@ public class UserController {
         return new ResponseEntity<Tag>(tag, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/tag/labelwithuser/{label}/",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TU> getTagByInitLabel(
+            @PathVariable("label")
+            String label) {
+        log("Fetching Tag with id " + label);
+        TU tag = userService.findByLabelInitialized(label);
+        if (tag == null) {
+            log("Tag with id " + label + " not found");
+            return new ResponseEntity<TU>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<TU>(tag, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/tag/label/{label}/",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -114,12 +130,16 @@ public class UserController {
         return new ResponseEntity<Tag>(tag, HttpStatus.OK);
     }
 
+
     //-------------------Create a User--------------------------------------------------------
 
     @RequestMapping(value = "/create",
-                    method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody public ResponseEntity<Void> createUser(
+                    method = RequestMethod.POST
+//                    ,consumes = MediaType.APPLICATION_JSON_VALUE,
+//                    produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
         log("create user -- " + user);
@@ -136,9 +156,7 @@ public class UserController {
     //-------------------Create a Tag--------------------------------------------------------
 
     @RequestMapping(value = "/tag/create",
-                    method = RequestMethod.POST,
-                    consumes = MediaType.APPLICATION_JSON_VALUE,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+                    method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(
             @RequestBody
             String tag, UriComponentsBuilder ucBuilder) {

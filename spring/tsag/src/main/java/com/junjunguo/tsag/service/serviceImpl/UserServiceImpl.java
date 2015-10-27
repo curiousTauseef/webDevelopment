@@ -2,6 +2,7 @@ package com.junjunguo.tsag.service.serviceImpl;
 
 import com.junjunguo.tsag.dao.TagDao;
 import com.junjunguo.tsag.dao.UserDao;
+import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import com.junjunguo.tsag.service.UserService;
@@ -10,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service("userService")
 @Transactional
@@ -48,6 +47,10 @@ public class UserServiceImpl implements UserService {
         return tagDao.findTagById(id);
     }
 
+    public TU findByLabelInitialized(String label) {
+        return tagDao.findByLabelInitialized(label);
+    }
+
     public void addTag(String label) {
         log("add tag: " + label);
         tagDao.saveTag(label);
@@ -77,6 +80,9 @@ public class UserServiceImpl implements UserService {
             }
         }
         user.setTags(tg);
+//        for (Tag tag : tg) {
+//            tagDao.saveTag(tag.getLabel());
+//        }
         userDao.saveUser(user);
     }
 

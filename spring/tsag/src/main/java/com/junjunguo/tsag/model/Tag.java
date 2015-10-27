@@ -22,23 +22,24 @@ public class Tag {
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    private int        id;
+    private int    id;
     @Column(name = "LABEL",
             nullable = false,
             columnDefinition = "VARCHAR(255)",
             unique = true)
-    private String     label;
-    @ManyToMany(mappedBy = "tags",
+    private String label;
+    @ManyToMany(mappedBy = "tags"
+            ,
                 fetch = FetchType.LAZY,
-                cascade = {CascadeType.ALL},
+//                cascade = {CascadeType.ALL},
                 targetEntity = User.class
     )
     //    @JsonManagedReference
     //        @JsonBackReference
     //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
     //                      property = "@id")
-        @JsonIgnore
-    private List<User> users;
+    @JsonIgnore
+    private List<User> users = new ArrayList<User>();
 
     public Tag(String label) {
         this.label = label;

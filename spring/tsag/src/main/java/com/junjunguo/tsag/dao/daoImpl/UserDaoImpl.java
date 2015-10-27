@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
                                                          .list();
         log("initialize users: ");
         for (User u : listUser) {
-            //            Hibernate.initialize(u.getTags());
+                        Hibernate.initialize(u.getTags());
         }
         log("users: " + listUser);
         return listUser;

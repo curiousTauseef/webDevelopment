@@ -58,7 +58,7 @@ public class HibernateConfiguration {
      */
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.hbm2ddl.auto", "create-drop");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.enable_lazy_load_no_trans", "true");
         properties.put("hibernate.connection.charSet", "UTF-8");
