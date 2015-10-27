@@ -2,7 +2,6 @@ package com.junjunguo.tsag.service.serviceImpl;
 
 import com.junjunguo.tsag.dao.TagDao;
 import com.junjunguo.tsag.dao.UserDao;
-import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import com.junjunguo.tsag.service.UserService;
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService {
         return tagDao.findTagById(id);
     }
 
-    public TU findByLabelInitialized(String label) {
+    public Tag findByLabelInitialized(String label) {
         return tagDao.findByLabelInitialized(label);
     }
 

@@ -31,7 +31,7 @@ public class Tag {
     @ManyToMany(mappedBy = "tags"
             ,
                 fetch = FetchType.LAZY,
-//                cascade = {CascadeType.ALL},
+                //                cascade = {CascadeType.ALL},
                 targetEntity = User.class
     )
     //    @JsonManagedReference
@@ -40,6 +40,11 @@ public class Tag {
     //                      property = "@id")
     @JsonIgnore
     private List<User> users = new ArrayList<User>();
+
+    public Tag(int id, String label) {
+        this.id = id;
+        this.label = label;
+    }
 
     public Tag(String label) {
         this.label = label;

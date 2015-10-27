@@ -14,7 +14,7 @@ public interface TagDao {
 
     Tag findTagByLabel(String label);
 
-    TU findByLabelInitialized(String label);
+    Tag findByLabelInitialized(String label);
 
     List<Tag> findAllTags();
 

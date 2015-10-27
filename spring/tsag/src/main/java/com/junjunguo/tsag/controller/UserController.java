@@ -103,16 +103,16 @@ public class UserController {
     @RequestMapping(value = "/tag/labelwithuser/{label}/",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TU> getTagByInitLabel(
+    public ResponseEntity<Tag> getTagByInitLabel(
             @PathVariable("label")
             String label) {
         log("Fetching Tag with id " + label);
-        TU tag = userService.findByLabelInitialized(label);
+        Tag tag = userService.findByLabelInitialized(label);
         if (tag == null) {
             log("Tag with id " + label + " not found");
-            return new ResponseEntity<TU>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Tag>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<TU>(tag, HttpStatus.OK);
+        return new ResponseEntity<Tag>(tag, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/tag/label/{label}/",

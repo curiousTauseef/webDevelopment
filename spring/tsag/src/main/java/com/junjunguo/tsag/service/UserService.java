@@ -17,7 +17,7 @@ public interface UserService {
 
     Tag findByTagId(int id);
 
-    TU findByLabelInitialized(String label);
+    Tag findByLabelInitialized(String label);
 
     void addTag(String label);
 

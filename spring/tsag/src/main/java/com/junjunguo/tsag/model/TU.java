@@ -7,45 +7,23 @@ import java.util.List;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 27/10/15.
  */
-public class TU {
-    private int        id;
-    private String     label;
+public class TU extends Tag {
     private List<User> users;
 
     public TU(int id, String label, List<User> users) {
-        this.id = id;
-        this.label = label;
-        this.users = users;
+        super(id, label);
+        setUsers(users);
     }
 
-    public TU() {
-    }
-
-    public TU(Tag tag) {
-        this(tag.getId(), tag.getLabel(), tag.getUsers());
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
+    @Override
     public List<User> getUsers() {
         return users;
     }
 
+    @Override
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+
 }

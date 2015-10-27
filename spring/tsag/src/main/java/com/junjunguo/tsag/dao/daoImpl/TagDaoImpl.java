@@ -39,7 +39,7 @@ public class TagDaoImpl implements TagDao {
         }
     }
 
-    public TU findByLabelInitialized(String label) {
+    public Tag findByLabelInitialized(String label) {
         log("find by label initialized: ");
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
         criteria.add(Restrictions.eq("label", label));
@@ -49,16 +49,17 @@ public class TagDaoImpl implements TagDao {
             log("get user: " + tag.getUsers());
             Hibernate.initialize(tag.getUsers());
             log("get user(after init ..): " + tag.getUsers());
-//            List<User> u = new ArrayList<User>();
-//            for (User user : tag.getUsers()) {
-//                user.setTags(null);
-//                u.add(user);
-//            }
-//            tag.setUsers(u);
+            //            List<User> u = new ArrayList<User>();
+            //            for (User user : tag.getUsers()) {
+            //                user.setTags(null);
+            //                u.add(user);
+            //            }
+            //            tag.setUsers(u);
             log("get user(after init .. new ..): " + tag.getUsers());
         }
+        ;
 
-        return new TU(tag);
+        return new TU(tag.getId(), tag.getLabel(), tag.getUsers());
     }
 
     @Transactional
