@@ -26,4 +26,6 @@ public interface TagService {
      * @return a list of tags
      */
     List<Tag> findAllTags();
+
+    void addTag(String label);
 }

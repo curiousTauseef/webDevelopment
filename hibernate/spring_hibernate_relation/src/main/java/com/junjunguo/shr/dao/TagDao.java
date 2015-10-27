@@ -15,4 +15,6 @@ public interface TagDao {
     Tag findById(int id);
 
     List<Tag> findAllTags();
+
+    void saveTag(Tag tag);
 }

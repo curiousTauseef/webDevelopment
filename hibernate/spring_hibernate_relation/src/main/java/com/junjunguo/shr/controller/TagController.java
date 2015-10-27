@@ -1,16 +1,14 @@
 package com.junjunguo.shr.controller;
 
 import com.junjunguo.shr.model.Tag;
-import com.junjunguo.shr.model.User;
 import com.junjunguo.shr.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -25,9 +23,9 @@ import java.util.List;
 public class TagController {
 
     @Autowired
-     TagService tagService;
+    TagService tagService;
 
-    @RequestMapping(value = {"/{label}/", "/{label}"},
+    @RequestMapping(value = {"/label/{label}/", "/label/{label}"},
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tag> getTagByLabel(
@@ -43,16 +41,16 @@ public class TagController {
     }
 
 
-    @RequestMapping(value = {"/{id}/", "/{id}"},
+    @RequestMapping(value = {"/id/{id}/", "/id/{id}"},
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Tag> getTagById(
             @PathVariable("id")
             int id) {
-        System.out.println("Fetching Video with id " + id);
+        System.out.println("Fetching tag with id " + id);
         Tag tag = tagService.findByTagId(id);
         if (tag == null) {
-            System.out.println("Video with id " + id + " not found");
+            System.out.println("tag with id " + id + " not found");
             return new ResponseEntity<Tag>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Tag>(tag, HttpStatus.OK);
@@ -68,4 +66,20 @@ public class TagController {
         }
         return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "",
+                    method = RequestMethod.POST)
+    public ResponseEntity<Void> createTag(
+            @RequestBody
+            String label, UriComponentsBuilder ucBuilder) {
+        System.out.println("--------------------label " + label);
+        //        if (tagService.findByLabel(label) != null) {
+        //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        //        }
+        tagService.addTag(label);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/tag/label/{label}").buildAndExpand(label).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
 }

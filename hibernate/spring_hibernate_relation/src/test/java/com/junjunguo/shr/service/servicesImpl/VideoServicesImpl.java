@@ -1,7 +1,6 @@
 package com.junjunguo.shr.service.servicesImpl;
 
 import com.junjunguo.shr.service.VideoServices;
-import com.junjunguo.shr.service.model.User;
 import com.junjunguo.shr.service.model.Video;
 import com.junjunguo.shr.service.util.Constant;
 import org.springframework.http.HttpStatus;
@@ -66,6 +65,7 @@ public class VideoServicesImpl implements VideoServices {
 
 
     /* GET */
+    @SuppressWarnings("unchecked")
     public List<Video> getVideosByEmail(String email) {
         List<Video>  videos       = null;
         RestTemplate restTemplate = new RestTemplate();
@@ -83,6 +83,7 @@ public class VideoServicesImpl implements VideoServices {
     }
 
     /* GET */
+    @SuppressWarnings("unchecked")
     public List<Video> getVideosByTitle(String title) {
         List<Video>  videos       = null;
         RestTemplate restTemplate = new RestTemplate();

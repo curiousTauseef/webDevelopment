@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/location/")
 public class LocationController {
-    @Autowired  LocationService locationService;
+    @Autowired LocationService locationService;
 
     @RequestMapping(value = {"/list/", "/list"},
                     method = RequestMethod.GET)
@@ -34,7 +34,7 @@ public class LocationController {
         return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/{id}/", "/{id}"},
+    @RequestMapping(value = {"/id/{id}/", "/id/{id}"},
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Location> getLocationById(

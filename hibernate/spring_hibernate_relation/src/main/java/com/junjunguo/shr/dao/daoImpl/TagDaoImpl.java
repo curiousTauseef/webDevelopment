@@ -3,7 +3,6 @@ package com.junjunguo.shr.dao.daoImpl;
 import com.junjunguo.shr.dao.TagDao;
 import com.junjunguo.shr.model.TU;
 import com.junjunguo.shr.model.Tag;
-import com.junjunguo.shr.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -53,5 +52,9 @@ public class TagDaoImpl implements TagDao {
                                                    .createCriteria(Tag.class)
                                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         return tags;
+    }
+
+    public void saveTag(Tag tag) {
+        sessionFactory.getCurrentSession().saveOrUpdate(tag);
     }
 }

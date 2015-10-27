@@ -17,8 +17,10 @@ public class Tag {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int         id;
-    @Column(name = "TITLE",
+    private int id;
+
+    @Column(name = "LABEL",
+            unique = true,
             nullable = false,
             columnDefinition = "VARCHAR(128)")
     private String      label;

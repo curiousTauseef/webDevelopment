@@ -9,7 +9,9 @@ import java.util.List;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 @Entity
-@Table(name = "LOCATION")
+@Table(name = "LOCATION"
+        //       ,uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE, LONGITUDE, ALTITUDE"})}
+)
 public class Location {
     /**
      * location id
@@ -17,19 +19,19 @@ public class Location {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int         id;
+    private int    id;
     @Column(name = "LATITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double      latitude;
+    private double latitude;
     @Column(name = "LONGITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double      longitude;
+    private double longitude;
     @Column(name = "ALTITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double      altitude;
+    private double altitude;
 
     @OneToMany(mappedBy = "location")
     private List<Video> videos;
