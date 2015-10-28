@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
+@Repository
 public class TagDaoImpl implements TagDao {
     @Autowired private SessionFactory sessionFactory;
 
@@ -35,14 +37,35 @@ public class TagDaoImpl implements TagDao {
         Tag tag = (Tag) criteria.uniqueResult();
         if (tag != null) {
             Hibernate.initialize(tag.getVideos());
+            return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
         }
-        return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
+        return null;
     }
 
     @Transactional
     public Tag findById(int id) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from TAG where ID = '" + id + "'");
-        return !q.list().isEmpty() ? (Tag) q.list().get(0) : null;
+        //        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
+        //        criteria.add(Restrictions.eq("id", id));
+        //        Tag tag = (Tag) criteria.uniqueResult();
+        //        if (tag != null) {
+        //            Hibernate.initialize(tag.getVideos());
+        //            return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
+        //        }
+        //        return null;
+
+
+        System.out.println("findby id tag dao : " + id);
+        System.out.println("get current session: " + sessionFactory.getCurrentSession());
+        try {
+            Query q = sessionFactory.getCurrentSession().createQuery("from Tag where ID = '" + id + "'");
+            System.out.println("q: " + q);
+            System.out.println("q.list: " + q.list());
+
+            return !q.list().isEmpty() ? (Tag) q.list().get(0) : null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Transactional

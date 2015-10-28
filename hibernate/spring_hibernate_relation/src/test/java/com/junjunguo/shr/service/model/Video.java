@@ -1,6 +1,5 @@
 package com.junjunguo.shr.service.model;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +55,9 @@ public class Video {
         this.location = location;
     }
 
+    public Video() {
+
+    }
 
     public void addTag(String tag) {
         Tag t = new Tag(tag);

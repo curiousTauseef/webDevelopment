@@ -31,23 +31,24 @@ public class VideoDaoImpl implements VideoDao {
 
     @Transactional
     public Video findById(int id) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from VIDEO where ID = '" + id + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery("from Video where ID = '" + id + "'");
         return !q.list().isEmpty() ? (Video) q.list().get(0) : null;
     }
 
     public List<Video> findByEmail(String email) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from VIDEO where EMAIL = '" + email + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery("from Video where EMAIL = '" + email + "'");
         return !q.list().isEmpty() ? (List<Video>) q.list() : null;
     }
 
     @Transactional
     public List<Video> findByTitle(String title) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from VIDEO where TITLE = '" + title + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery("from Video where TITLE = '" + title + "'");
         return !q.list().isEmpty() ? (List<Video>) q.list() : null;
     }
 
     @Transactional
     public void saveVideo(Video video) {
+
         sessionFactory.getCurrentSession().saveOrUpdate(video);
     }
 
@@ -66,7 +67,7 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     public boolean hasVideo(int id) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from VIDEO where id = '" + id + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery("from Video where id = '" + id + "'");
         return !q.list().isEmpty() ? ((Video) q.list().get(0)).isHasVideo() : false;
     }
 }

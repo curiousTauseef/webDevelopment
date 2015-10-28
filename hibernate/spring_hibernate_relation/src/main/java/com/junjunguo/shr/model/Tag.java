@@ -1,6 +1,9 @@
 package com.junjunguo.shr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TAG")
-public class Tag {
+public class Tag implements Serializable {
     /**
      * tag id
      */
@@ -24,10 +27,13 @@ public class Tag {
             nullable = false,
             columnDefinition = "VARCHAR(128)")
     private String      label;
-    @ManyToMany(mappedBy = "tags",
-                fetch = FetchType.LAZY,
-                cascade = CascadeType.ALL,
-                targetEntity = Video.class)
+    @JsonIgnore
+//    @JsonBackReference
+    @ManyToMany(
+            mappedBy = "tags",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            targetEntity = Video.class)
     private List<Video> videos;
 
     public Tag(String label) {

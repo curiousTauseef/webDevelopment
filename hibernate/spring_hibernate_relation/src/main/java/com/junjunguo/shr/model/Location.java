@@ -1,5 +1,7 @@
 package com.junjunguo.shr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,7 +12,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "LOCATION"
-        //       ,uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE, LONGITUDE, ALTITUDE"})}
+       //        ,
+       //       uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE, LONGITUDE, ALTITUDE"})}
 )
 public class Location {
     /**
@@ -19,20 +22,21 @@ public class Location {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int    id;
+    private int         id;
     @Column(name = "LATITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double latitude;
+    private double      latitude;
     @Column(name = "LONGITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double longitude;
+    private double      longitude;
     @Column(name = "ALTITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double altitude;
-
+    private double      altitude;
+        @JsonIgnore
+//    @JsonBackReference
     @OneToMany(mappedBy = "location")
     private List<Video> videos;
 
@@ -123,4 +127,17 @@ public class Location {
     }
 
 
+    /**
+     * Gets videos.
+     *
+     * @return Value of videos.
+     */
+    public List<Video> getVideos() { return videos; }
+
+    /**
+     * Sets new videos.
+     *
+     * @param videos New value of videos.
+     */
+    public void setVideos(List<Video> videos) { this.videos = videos; }
 }

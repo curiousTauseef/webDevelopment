@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.junjunguo.shr.util.MyDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "USER")
-public class User {
+public class User implements Serializable {
     @Column(name = "NAME",
             nullable = true,
             columnDefinition = "VARCHAR(128)")
@@ -47,9 +47,8 @@ public class User {
             columnDefinition = "DATETIME")
     private Date        registeredtime;
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY,
-               cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_EMAIL")
+//    @JsonBackReference
+    @OneToMany(mappedBy = "owner")
     private List<Video> videos;
 
     /**

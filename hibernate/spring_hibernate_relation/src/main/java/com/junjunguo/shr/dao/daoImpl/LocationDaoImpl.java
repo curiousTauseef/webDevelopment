@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
+@Repository
 public class LocationDaoImpl implements LocationDao {
     @Autowired
     private SessionFactory sessionFactory;
@@ -39,7 +41,7 @@ public class LocationDaoImpl implements LocationDao {
 
     @Transactional
     public Location findById(int id) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from LOCATION where ID = '" + id + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery("from Location where ID = '" + id + "'");
         return !q.list().isEmpty() ? (Location) q.list().get(0) : null;
     }
 }

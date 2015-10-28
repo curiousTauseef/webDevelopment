@@ -92,12 +92,12 @@ public class VideoController {
     public ResponseEntity<Void> createVideo(
             @RequestBody
             Video video, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating Video " + video.getId());
+        System.out.println("Creating Video " + video);
 
-        if (videoService.hasVideo(video.getId())) {
-            System.out.println("A Video with id " + video.getId() + " already exist");
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
+//        if (videoService.hasVideo(video.getId())) {
+//            System.out.println("A Video with id " + video.getId() + " already exist");
+//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//        }
 
         videoService.addVideo(video);
 

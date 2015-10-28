@@ -1,9 +1,8 @@
 package com.junjunguo.shr.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "VIDEO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Video {
     /**
      * video id
@@ -31,31 +31,28 @@ public class Video {
     @Column(name = "DESCRIPTION",
             nullable = true,
             columnDefinition = "TEXT")
-    private String  description;
+    private String    description;
     @Column(name = "UPLOADTIME",
             nullable = false,
             columnDefinition = "DATETIME")
-    private Date    uploadTime;
+    private Date      uploadTime;
     @Column(name = "HASVIDEO",
             nullable = true,
             columnDefinition = "BOOLEAN")
-    private boolean hasVideo;
+    private boolean   hasVideo;
     @Column(name = "FILEPATH",
             nullable = true,
             columnDefinition = "VARCHAR(2083)")
-    private String  filePath;
+    private String    filePath;
     @Column(name = "FILENAME",
             nullable = true,
             columnDefinition = "VARCHAR(255)")
-    private String  fileName;
+    private String    fileName;
     @Column(name = "FILEEXTENSION",
             nullable = true,
             columnDefinition = "VARCHAR(64)")
-    private String  fileExtension;
-
-    @ManyToOne()
-    private User owner;
-
+    private String    fileExtension;
+    //    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY,
                 targetEntity = Tag.class,
                 cascade = {CascadeType.ALL})
@@ -63,10 +60,19 @@ public class Video {
                joinColumns = {@JoinColumn(name = "VIDEO_ID")},
                inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
     private List<Tag> tags;
+    //    @JsonManagedReference
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            targetEntity = User.class,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "OWNER_EMAIL")
+    private User      owner;
 
     @ManyToOne(fetch = FetchType.LAZY,
                targetEntity = Location.class,
-               cascade = CascadeType.ALL)
+               cascade = CascadeType.ALL
+    )
+    //    @JsonManagedReference
     @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
@@ -95,22 +101,26 @@ public class Video {
         this.location = location;
     }
 
+    public Video() {
+
+    }
+
     public void addTag(String tag) {
         Tag t = new Tag(tag);
         tags.add(t);
     }
 
-//    /**
-//     * @param stags List of string tag
-//     * @return List of Tag object
-//     */
-//    public List<Tag> getTags(List<String> stags) {
-//        List<Tag> t = new ArrayList<Tag>();
-//        for (String stag : stags) {
-//            t.add(new Tag(stag));
-//        }
-//        return t;
-//    }
+    //    /**
+    //     * @param stags List of string tag
+    //     * @return List of Tag object
+    //     */
+    //    public List<Tag> getTags(List<String> stags) {
+    //        List<Tag> t = new ArrayList<Tag>();
+    //        for (String stag : stags) {
+    //            t.add(new Tag(stag));
+    //        }
+    //        return t;
+    //    }
 
     @Override
     public String toString() {
