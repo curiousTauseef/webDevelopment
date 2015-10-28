@@ -1,12 +1,10 @@
 package com.junjunguo.tsag.model;
 
-import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /*
 (https://docs.jboss.org/hibernate/stable/annotations/reference/en/html_single/)
@@ -68,15 +66,11 @@ public class User {
             columnDefinition = "datetime")
     private Date   registeredTime;
     @ManyToMany(fetch = FetchType.LAZY
-//                cascade = CascadeType.PERSIST
                                 ,cascade = {CascadeType.ALL}
     )
     @JoinTable(name = "user_tag",
                joinColumns = {@JoinColumn(name = "user_id")},
                inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-    //    @JsonBackReference
-    //        @JsonManagedReference
-//        @JsonIgnore
     private List<Tag> tags = new ArrayList<Tag>();
 
     public User(String name, String email, String country, String password) {

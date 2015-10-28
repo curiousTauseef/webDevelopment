@@ -1,12 +1,10 @@
 package com.junjunguo.tsag.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by GuoJunjun <junjunguo.com> on 16/10/15.
@@ -34,10 +32,6 @@ public class Tag {
                 //                cascade = {CascadeType.ALL},
                 targetEntity = User.class
     )
-    //    @JsonManagedReference
-    //        @JsonBackReference
-    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-    //                      property = "@id")
     @JsonIgnore
     private List<User> users = new ArrayList<User>();
 
