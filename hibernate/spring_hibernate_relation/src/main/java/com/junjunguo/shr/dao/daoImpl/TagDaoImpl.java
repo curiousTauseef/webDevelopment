@@ -35,11 +35,11 @@ public class TagDaoImpl implements TagDao {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
         criteria.add(Restrictions.eq("label", label));
         Tag tag = (Tag) criteria.uniqueResult();
-        if (tag != null) {
-            Hibernate.initialize(tag.getVideos());
-            return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
-        }
-        return null;
+//        if (tag != null) {
+//            Hibernate.initialize(tag.getVideos());
+//            return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
+//        }
+        return tag;
     }
 
     @Transactional

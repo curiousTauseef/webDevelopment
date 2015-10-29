@@ -1,10 +1,7 @@
 package com.junjunguo.shr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -26,15 +23,7 @@ public class Tag implements Serializable {
             unique = true,
             nullable = false,
             columnDefinition = "VARCHAR(128)")
-    private String      label;
-    @JsonIgnore
-//    @JsonBackReference
-    @ManyToMany(
-            mappedBy = "tags",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            targetEntity = Video.class)
-    private List<Video> videos;
+    private String label;
 
     public Tag(String label) {
         this.label = label;
@@ -84,19 +73,6 @@ public class Tag implements Serializable {
         this.label = label;
     }
 
-    /**
-     * Gets videos.
-     *
-     * @return Value of videos.
-     */
-    public List<Video> getVideos() { return videos; }
-
-    /**
-     * Sets new videos.
-     *
-     * @param videos New value of videos.
-     */
-    public void setVideos(List<Video> videos) { this.videos = videos; }
 
     @Override
     public boolean equals(Object o) {
@@ -106,8 +82,7 @@ public class Tag implements Serializable {
         Tag tag = (Tag) o;
 
         if (getId() != tag.getId()) return false;
-        if (!getLabel().equals(tag.getLabel())) return false;
-        return !(getVideos() != null ? !getVideos().equals(tag.getVideos()) : tag.getVideos() != null);
+        return getLabel().equals(tag.getLabel());
 
     }
 
@@ -115,7 +90,6 @@ public class Tag implements Serializable {
     public int hashCode() {
         int result = getId();
         result = 31 * result + getLabel().hashCode();
-        result = 31 * result + (getVideos() != null ? getVideos().hashCode() : 0);
         return result;
     }
 }

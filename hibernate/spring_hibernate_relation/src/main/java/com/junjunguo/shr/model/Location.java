@@ -1,9 +1,8 @@
 package com.junjunguo.shr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -15,6 +14,7 @@ import java.util.List;
        //        ,
        //       uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE, LONGITUDE, ALTITUDE"})}
 )
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Location {
     /**
      * location id
@@ -35,10 +35,10 @@ public class Location {
             nullable = false,
             columnDefinition = "DOUBLE")
     private double      altitude;
-        @JsonIgnore
+//        @JsonIgnore
 //    @JsonBackReference
-    @OneToMany(mappedBy = "location")
-    private List<Video> videos;
+//    @OneToMany(mappedBy = "location")
+//    private List<Video> videos;
 
     public Location(double latitude, double logitude, double altitude) {
         this.latitude = latitude;
@@ -127,17 +127,17 @@ public class Location {
     }
 
 
-    /**
-     * Gets videos.
-     *
-     * @return Value of videos.
-     */
-    public List<Video> getVideos() { return videos; }
-
-    /**
-     * Sets new videos.
-     *
-     * @param videos New value of videos.
-     */
-    public void setVideos(List<Video> videos) { this.videos = videos; }
+//    /**
+//     * Gets videos.
+//     *
+//     * @return Value of videos.
+//     */
+//    public List<Video> getVideos() { return videos; }
+//
+//    /**
+//     * Sets new videos.
+//     *
+//     * @param videos New value of videos.
+//     */
+//    public void setVideos(List<Video> videos) { this.videos = videos; }
 }

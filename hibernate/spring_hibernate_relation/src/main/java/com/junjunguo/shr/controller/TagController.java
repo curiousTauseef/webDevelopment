@@ -72,10 +72,6 @@ public class TagController {
     public ResponseEntity<Void> createTag(
             @RequestBody
             String label, UriComponentsBuilder ucBuilder) {
-        System.out.println("--------------------label " + label);
-        //        if (tagService.findByLabel(label) != null) {
-        //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        //        }
         tagService.addTag(label);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/tag/label/{label}").buildAndExpand(label).toUri());

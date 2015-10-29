@@ -4,6 +4,7 @@ import com.junjunguo.shr.dao.VideoDao;
 import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,13 @@ public class VideoDaoImpl implements VideoDao {
     @Transactional
     public Video findById(int id) {
         Query q = sessionFactory.getCurrentSession().createQuery("from Video where ID = '" + id + "'");
-        return !q.list().isEmpty() ? (Video) q.list().get(0) : null;
+        if (q.list().isEmpty()) {
+            return null;
+        } else {
+            Video video = (Video) q.list().get(0);
+            Hibernate.initialize(video.getOwner());
+            return video;
+        }
     }
 
     public List<Video> findByEmail(String email) {
@@ -49,7 +56,7 @@ public class VideoDaoImpl implements VideoDao {
     @Transactional
     public void saveVideo(Video video) {
 
-        sessionFactory.getCurrentSession().saveOrUpdate(video);
+        sessionFactory.getCurrentSession().persist(video);
     }
 
     @Transactional
@@ -63,6 +70,13 @@ public class VideoDaoImpl implements VideoDao {
         List<Video> videos = (List<Video>) sessionFactory.getCurrentSession()
                                                          .createCriteria(Video.class)
                                                          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+
+
+        System.out.println("video video DaoImpl: " + videos);
+        for (Video video : videos) {
+            Hibernate.initialize(video.getOwner());
+            System.out.println("video video DaoImpl: " + video);
+        }
         return videos;
     }
 

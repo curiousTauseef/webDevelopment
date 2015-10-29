@@ -1,7 +1,5 @@
 package com.junjunguo.shr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +12,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "VIDEO")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Video {
     /**
      * video id
@@ -52,7 +49,7 @@ public class Video {
             nullable = true,
             columnDefinition = "VARCHAR(64)")
     private String    fileExtension;
-    //    @JsonManagedReference
+
     @ManyToMany(fetch = FetchType.LAZY,
                 targetEntity = Tag.class,
                 cascade = {CascadeType.ALL})
@@ -60,21 +57,22 @@ public class Video {
                joinColumns = {@JoinColumn(name = "VIDEO_ID")},
                inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
     private List<Tag> tags;
-    //    @JsonManagedReference
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            targetEntity = User.class,
-            cascade = CascadeType.ALL)
-    @JoinColumn(name = "OWNER_EMAIL")
-    private User      owner;
+
 
     @ManyToOne(fetch = FetchType.LAZY,
                targetEntity = Location.class,
                cascade = CascadeType.ALL
     )
-    //    @JsonManagedReference
     @JoinColumn(name = "LOCATION_ID")
     private Location location;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            targetEntity = User.class,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "OWNER_EMAIL")
+    private User      owner;
 
     public Video(String title, String description, String filePath, String fileName, String fileExtension, User owner,
             Location location) {

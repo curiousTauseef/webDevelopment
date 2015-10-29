@@ -1,13 +1,14 @@
 package com.junjunguo.shr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.junjunguo.shr.util.MyDate;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -15,8 +16,8 @@ import java.util.List;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 @Entity
-@Table(name = "USER")
-public class User implements Serializable {
+@Table(name = "USER") @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class User {
     @Column(name = "NAME",
             nullable = true,
             columnDefinition = "VARCHAR(128)")
@@ -46,10 +47,9 @@ public class User implements Serializable {
             nullable = false,
             columnDefinition = "DATETIME")
     private Date        registeredtime;
-    @JsonIgnore
-//    @JsonBackReference
-    @OneToMany(mappedBy = "owner")
-    private List<Video> videos;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "user")
+//    private List<Video> videos;
 
     /**
      * @param name     user name
@@ -228,8 +228,8 @@ public class User implements Serializable {
         if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
         if (getGender() != null ? !getGender().equals(user.getGender()) : user.getGender() != null) return false;
         if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
-        if (!getRegisteredtime().equals(user.getRegisteredtime())) return false;
-        return !(getVideos() != null ? !getVideos().equals(user.getVideos()) : user.getVideos() != null);
+        return !(getRegisteredtime() != null ? !getRegisteredtime().equals(user.getRegisteredtime()) :
+                user.getRegisteredtime() != null);
 
     }
 
@@ -241,8 +241,7 @@ public class User implements Serializable {
         result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
         result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
         result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
-        result = 31 * result + getRegisteredtime().hashCode();
-        result = 31 * result + (getVideos() != null ? getVideos().hashCode() : 0);
+        result = 31 * result + (getRegisteredtime() != null ? getRegisteredtime().hashCode() : 0);
         return result;
     }
 
@@ -267,25 +266,25 @@ public class User implements Serializable {
                ']';
     }
 
-
-    /**
-     * add a new video to video list.
-     *
-     * @param video New value of videos.
-     */
-    public void addVideos(Video video) { this.videos.add(video); }
-
-    /**
-     * Sets new videos.
-     *
-     * @param videos New value of videos.
-     */
-    public void setVideos(List<Video> videos) { this.videos = videos; }
-
-    /**
-     * Gets videos.
-     *
-     * @return Value of videos.
-     */
-    public List<Video> getVideos() { return videos; }
+//
+//    /**
+//     * add a new video to video list.
+//     *
+//     * @param video New value of videos.
+//     */
+//    public void addVideos(Video video) { this.videos.add(video); }
+//
+//    /**
+//     * Sets new videos.
+//     *
+//     * @param videos New value of videos.
+//     */
+//    public void setVideos(List<Video> videos) { this.videos = videos; }
+//
+//    /**
+//     * Gets videos.
+//     *
+//     * @return Value of videos.
+//     */
+//    public List<Video> getVideos() { return videos; }
 }

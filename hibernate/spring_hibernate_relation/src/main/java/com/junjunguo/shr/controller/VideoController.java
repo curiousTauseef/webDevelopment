@@ -40,8 +40,7 @@ public class VideoController {
     //    -------------------Retrieve Video----------------------------------------------------
 
     @RequestMapping(value = "/id/{id}",
-                    method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+                    method = RequestMethod.GET)
     public ResponseEntity<Video> getVideoById(
             @PathVariable("id")
             int id) {
@@ -55,8 +54,7 @@ public class VideoController {
     }
 
     @RequestMapping(value = "/title/{title}",
-                    method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+                    method = RequestMethod.GET)
     public ResponseEntity<List<Video>> getVideosByTitle(
             @PathVariable("title")
             String title) {
@@ -93,12 +91,6 @@ public class VideoController {
             @RequestBody
             Video video, UriComponentsBuilder ucBuilder) {
         System.out.println("Creating Video " + video);
-
-//        if (videoService.hasVideo(video.getId())) {
-//            System.out.println("A Video with id " + video.getId() + " already exist");
-//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//        }
-
         videoService.addVideo(video);
 
         HttpHeaders headers = new HttpHeaders();
