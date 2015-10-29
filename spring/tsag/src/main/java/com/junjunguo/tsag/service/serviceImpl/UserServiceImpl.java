@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserService {
             }
         }
         user.setTags(tg);
-//        for (Tag tag : tg) {
-//            tagDao.saveTag(tag.getLabel());
-//        }
+        //        for (Tag tag : tg) {
+        //            tagDao.saveTag(tag.getLabel());
+        //        }
         userDao.saveUser(user);
     }
 
@@ -110,6 +110,10 @@ public class UserServiceImpl implements UserService {
     public boolean isUserExist(String email) {
         log("is user exist with email " + email);
         return findByEmail(email) != null;
+    }
+
+    public List<User> findUsersByTag(int id) {
+        return tagDao.findUsersByTag(id);
     }
 
     public void log(String s) {

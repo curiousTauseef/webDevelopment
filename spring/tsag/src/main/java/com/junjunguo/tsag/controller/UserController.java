@@ -1,6 +1,5 @@
 package com.junjunguo.tsag.controller;
 
-import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import com.junjunguo.tsag.service.UserService;
@@ -50,6 +49,20 @@ public class UserController {
         }
         return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/tag/users/{id}",
+                    method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getUsersByTag(
+            @PathVariable("id")
+            int id) {
+        List<User> users = userService.findUsersByTag(id);
+        if (users.isEmpty()) {
+            return new ResponseEntity<List<User>>(
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+    }
+
 
     //-------------------Retrieve Single User------------------------------------------------------
 
@@ -135,8 +148,8 @@ public class UserController {
 
     @RequestMapping(value = "/create",
                     method = RequestMethod.POST
-//                    ,consumes = MediaType.APPLICATION_JSON_VALUE,
-//                    produces = MediaType.APPLICATION_JSON_VALUE
+                    //                    ,consumes = MediaType.APPLICATION_JSON_VALUE,
+                    //                    produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
     public ResponseEntity<Void> createUser(

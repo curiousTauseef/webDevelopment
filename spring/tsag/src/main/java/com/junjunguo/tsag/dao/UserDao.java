@@ -19,4 +19,6 @@ public interface UserDao {
     void deleteUserByEmail(String email);
 
     List<User> findAllUsers();
+
+//    List<Tag> findUsersByTag(int id);
 }

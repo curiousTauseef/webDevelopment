@@ -36,8 +36,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "USER")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-//                  property = "@ID")
 public class User {
 
     @Column(name = "NAME",
@@ -65,8 +63,8 @@ public class User {
             nullable = false,
             columnDefinition = "datetime")
     private Date   registeredTime;
-    @ManyToMany(fetch = FetchType.LAZY
-                                ,cascade = {CascadeType.ALL}
+    @ManyToMany(fetch = FetchType.LAZY,
+                cascade = {CascadeType.ALL}
     )
     @JoinTable(name = "user_tag",
                joinColumns = {@JoinColumn(name = "user_id")},

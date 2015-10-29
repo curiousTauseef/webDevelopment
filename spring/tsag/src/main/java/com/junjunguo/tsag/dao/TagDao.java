@@ -1,7 +1,7 @@
 package com.junjunguo.tsag.dao;
 
-import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
+import com.junjunguo.tsag.model.User;
 
 import java.util.List;
 
@@ -23,4 +23,6 @@ public interface TagDao {
     void saveTag(Tag tag);
 
     void deleteTag(String tag);
+
+    List<User> findUsersByTag(int id);
 }

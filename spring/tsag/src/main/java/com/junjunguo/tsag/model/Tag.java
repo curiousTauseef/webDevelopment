@@ -1,18 +1,12 @@
 package com.junjunguo.tsag.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by GuoJunjun <junjunguo.com> on 16/10/15.
  */
 @Entity
 @Table(name = "TAG")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-//                  property = "@ID")
 public class Tag {
     /**
      * TAG ID
@@ -26,14 +20,12 @@ public class Tag {
             columnDefinition = "VARCHAR(255)",
             unique = true)
     private String label;
-    @ManyToMany(mappedBy = "tags"
-            ,
-                fetch = FetchType.LAZY,
-                //                cascade = {CascadeType.ALL},
-                targetEntity = User.class
-    )
-    @JsonIgnore
-    private List<User> users = new ArrayList<User>();
+    //    @ManyToMany(mappedBy = "tags",
+    //                fetch = FetchType.LAZY,
+    //                targetEntity = User.class
+    //    )
+    //    @JsonIgnore
+    //    private List<UT> users = new ArrayList<UT>();
 
     public Tag(int id, String label) {
         this.id = id;
@@ -48,21 +40,21 @@ public class Tag {
 
     }
 
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public void removeUser(User user) {
-        users.remove(user);
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+    //    public void addUser(UT user) {
+    //        users.add(user);
+    //    }
+    //
+    //    public void removeUser(UT user) {
+    //        users.remove(user);
+    //    }
+    //
+    //    public List<UT> getUsers() {
+    //        return users;
+    //    }
+    //
+    //    public void setUsers(List<UT> users) {
+    //        this.users = users;
+    //    }
 
     /**
      * Gets TAG ID.

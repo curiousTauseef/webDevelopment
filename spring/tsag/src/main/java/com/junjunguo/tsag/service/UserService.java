@@ -1,6 +1,5 @@
 package com.junjunguo.tsag.service;
 
-import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 
@@ -35,4 +34,5 @@ public interface UserService {
 
     boolean isUserExist(String email);
 
+    List<User> findUsersByTag(int id);
 }

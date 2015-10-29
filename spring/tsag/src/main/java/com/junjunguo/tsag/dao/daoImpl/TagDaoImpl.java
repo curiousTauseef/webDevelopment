@@ -1,9 +1,12 @@
 package com.junjunguo.tsag.dao.daoImpl;
 
 import com.junjunguo.tsag.dao.TagDao;
-import com.junjunguo.tsag.model.TU;
 import com.junjunguo.tsag.model.Tag;
-import org.hibernate.*;
+import com.junjunguo.tsag.model.User;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,32 +37,33 @@ public class TagDaoImpl implements TagDao {
             return null;
         } else {
             Tag tag = (Tag) q.list().get(0);
-            Hibernate.initialize(tag.getUsers());
+            //            Hibernate.initialize(tag.getUsers());
             return tag;
         }
     }
 
     public Tag findByLabelInitialized(String label) {
-        log("find by label initialized: ");
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
-        criteria.add(Restrictions.eq("label", label));
-        Tag tag = (Tag) criteria.uniqueResult();
-        log("find by label initialized: tag= " + tag);
-        if (tag != null) {
-            log("get user: " + tag.getUsers());
-            Hibernate.initialize(tag.getUsers());
-            log("get user(after init ..): " + tag.getUsers());
-            //            List<User> u = new ArrayList<User>();
-            //            for (User user : tag.getUsers()) {
-            //                user.setTags(null);
-            //                u.add(user);
-            //            }
-            //            tag.setUsers(u);
-            log("get user(after init .. new ..): " + tag.getUsers());
-        }
-        ;
-
-        return new TU(tag.getId(), tag.getLabel(), tag.getUsers());
+        //        log("find by label initialized: ");
+        //        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
+        //        criteria.add(Restrictions.eq("label", label));
+        //        Tag tag = (Tag) criteria.uniqueResult();
+        //        log("find by label initialized: tag= " + tag);
+        //        if (tag != null) {
+        //            log("get user: " + tag.getUsers());
+        //            Hibernate.initialize(tag.getUsers());
+        //            log("get user(after init ..): " + tag.getUsers());
+        //            //            List<User> u = new ArrayList<User>();
+        //            //            for (User user : tag.getUsers()) {
+        //            //                user.setTags(null);
+        //            //                u.add(user);
+        //            //            }
+        //            //            tag.setUsers(u);
+        //            log("get user(after init .. new ..): " + tag.getUsers());
+        //        }
+        //        ;
+        //
+        //        return new TU(tag.getId(), tag.getLabel(), tag.getUsers());
+        return null;
     }
 
     @Transactional
@@ -72,7 +76,7 @@ public class TagDaoImpl implements TagDao {
                 return null;
             } else {
                 Tag tag = (Tag) q.list().get(0);
-                Hibernate.initialize(tag.getUsers());
+                //                Hibernate.initialize(tag.getUsers());
                 return tag;
             }
 
@@ -88,7 +92,7 @@ public class TagDaoImpl implements TagDao {
         List<Tag> tags = (List<Tag>) sessionFactory.getCurrentSession().createCriteria(Tag.class)
                                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
         for (Tag tag : tags) {
-            Hibernate.initialize(tag.getUsers());
+            //            Hibernate.initialize(tag.getUsers());
         }
         log("tags:-- " + tags);
         return tags;
@@ -108,6 +112,18 @@ public class TagDaoImpl implements TagDao {
     @Transactional
     public void deleteTag(String tag) {
         sessionFactory.getCurrentSession().delete(tag);
+    }
+
+    public List<User> findUsersByTag(int id) {
+        Query q = sessionFactory.getCurrentSession().createSQLQuery(
+                "select user.* from user inner join user_tag on user.email = user_tag.user_id where tag_id = '" + id +
+                "'");
+        if (q.list().isEmpty()) {
+            return null;
+        } else {
+            //            user = (User) q.list().get(0);
+            return (List<User>) q.list();
+        }
     }
 
     public void log(String s) {

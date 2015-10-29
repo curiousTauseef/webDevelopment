@@ -1,6 +1,7 @@
 package com.junjunguo.tsag.dao.daoImpl;
 
 import com.junjunguo.tsag.dao.UserDao;
+import com.junjunguo.tsag.model.Tag;
 import com.junjunguo.tsag.model.User;
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +41,20 @@ public class UserDaoImpl implements UserDao {
                                                          .list();
         log("initialize users: ");
         for (User u : listUser) {
-                        Hibernate.initialize(u.getTags());
+            Hibernate.initialize(u.getTags());
         }
         log("users: " + listUser);
-        return listUser;
+        return null;
     }
+//
+//    public List<Tag> findUsersByTag(int id) {
+//        return null;
+//    }
 
     @Transactional
     public void saveUser(User user) {
         log("save user: " + user.toString());
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+        sessionFactory.getCurrentSession().persist(user);
     }
 
     @Transactional
