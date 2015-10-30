@@ -1,7 +1,4 @@
-package com.junjunguo.shr.service.model;
-
-import javax.persistence.*;
-import java.util.List;
+package com.junjunguo.shr.client.model;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -12,15 +9,14 @@ public class Tag {
     /**
      * tag id
      */
-    private int         id;
-    private String      label;
-    private List<Video> videos;
+    private long   id;
+    private String label;
 
     public Tag(String label) {
         this.label = label;
     }
 
-    public Tag(int id, String label) {
+    public Tag(long id, String label) {
         this.id = id;
         this.label = label;
     }
@@ -33,7 +29,7 @@ public class Tag {
      *
      * @param id New value of tag id.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -42,7 +38,7 @@ public class Tag {
      *
      * @return Value of tag id.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -64,17 +60,4 @@ public class Tag {
         this.label = label;
     }
 
-    /**
-     * Gets videos.
-     *
-     * @return Value of videos.
-     */
-    public List<Video> getVideos() { return videos; }
-
-    /**
-     * Sets new videos.
-     *
-     * @param videos New value of videos.
-     */
-    public void setVideos(List<Video> videos) { this.videos = videos; }
 }

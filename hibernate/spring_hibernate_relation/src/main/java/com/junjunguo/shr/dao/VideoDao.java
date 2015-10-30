@@ -1,6 +1,5 @@
 package com.junjunguo.shr.dao;
 
-import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public interface VideoDao {
      * @param id video id
      * @return Video object
      */
-    Video findById(int id);
+    Video findById(long id);
 
     /**
      * @param email video email
@@ -38,7 +37,7 @@ public interface VideoDao {
     /**
      * @param id delete video by the given id
      */
-    void deleteVideoById(int id);
+    void deleteVideoById(long id);
 
     /**
      * @return a List of videos
@@ -48,5 +47,11 @@ public interface VideoDao {
     /**
      * @return boolean has video or not
      */
-    boolean hasVideo(int id);
+    boolean hasVideo(long id);
+
+    /**
+     * @param id tag id
+     * @return list of video with given tag
+     */
+    List<Video> findByTag(long id);
 }

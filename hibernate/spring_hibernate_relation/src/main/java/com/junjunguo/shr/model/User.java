@@ -16,40 +16,38 @@ import java.util.Date;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 @Entity
-@Table(name = "USER") @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "USER")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Column(name = "NAME",
             nullable = true,
             columnDefinition = "VARCHAR(128)")
-    private String      name;
+    private String name;
     @Id
     @Column(name = "EMAIL",
             nullable = false,
             columnDefinition = "VARCHAR(128)")
-    private String      email;
+    private String email;
     @Column(name = "PASSWORD",
             nullable = false,
             columnDefinition = "VARCHAR(128)")
-    private String      password;
+    private String password;
     @Column(name = "COUNTRY",
             nullable = true,
             columnDefinition = "VARCHAR(128)")
-    private String      country;
+    private String country;
     @Column(name = "GENDER",
             nullable = true,
             columnDefinition = "VARCHAR(10)")
-    private String      gender;
+    private Gender gender;
     @Column(name = "BIRTH",
             nullable = true,
             columnDefinition = "DATE")
-    private Date        birth;
+    private Date   birth;
     @Column(name = "REGISTEREDTIME",
             nullable = false,
             columnDefinition = "DATETIME")
-    private Date        registeredtime;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "user")
-//    private List<Video> videos;
+    private Date   registeredtime;
 
     /**
      * @param name     user name
@@ -57,7 +55,7 @@ public class User {
      * @param password user password
      */
     public User(String name, String email, String password) {
-        this(name, email, password, "", "", Calendar.getInstance().getTime());
+        this(name, email, password, "", Gender.UNKNOWN, Calendar.getInstance().getTime());
     }
 
     /**
@@ -68,7 +66,7 @@ public class User {
      * @param gender   user gender MALE,FEMALE
      * @param birth    user birthday
      */
-    public User(String name, String email, String password, String country, String gender, Date birth) {
+    public User(String name, String email, String password, String country, Gender gender, Date birth) {
         this(name, email, password, country, gender, birth, Calendar.getInstance().getTime());
     }
 
@@ -81,12 +79,13 @@ public class User {
      * @param birth          user birthday
      * @param registeredtime registered time cannot be set, auto generate
      */
-    private User(String name, String email, String password, String country, String gender, Date birth,
+    private User(String name, String email, String password, String country, Gender gender, Date birth,
             Date registeredtime) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.country = country;
+        this.gender = gender;
         this.birth = birth;
         this.registeredtime = registeredtime;
     }
@@ -184,7 +183,7 @@ public class User {
      *
      * @param gender New value of gender.
      */
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -193,7 +192,7 @@ public class User {
      *
      * @return Value of gender.
      */
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -259,32 +258,10 @@ public class User {
         return "User [name=" + name +
                ", email='" + email +
                ", country='" + country +
-               ", gender='" + gender +
+               ", gender='" + gender.toString() +
                ", password='" + password +
                ", birth=" + new MyDate().getDateString(birth) +
                ", registeredtime=" + new MyDate().getDateString(registeredtime) +
                ']';
     }
-
-//
-//    /**
-//     * add a new video to video list.
-//     *
-//     * @param video New value of videos.
-//     */
-//    public void addVideos(Video video) { this.videos.add(video); }
-//
-//    /**
-//     * Sets new videos.
-//     *
-//     * @param videos New value of videos.
-//     */
-//    public void setVideos(List<Video> videos) { this.videos = videos; }
-//
-//    /**
-//     * Gets videos.
-//     *
-//     * @return Value of videos.
-//     */
-//    public List<Video> getVideos() { return videos; }
 }

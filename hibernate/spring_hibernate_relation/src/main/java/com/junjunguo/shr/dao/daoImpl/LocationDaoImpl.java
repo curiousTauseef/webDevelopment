@@ -40,7 +40,7 @@ public class LocationDaoImpl implements LocationDao {
     }
 
     @Transactional
-    public Location findById(int id) {
+    public Location findById(long id) {
         Query q = sessionFactory.getCurrentSession().createQuery("from Location where ID = '" + id + "'");
         return !q.list().isEmpty() ? (Location) q.list().get(0) : null;
     }

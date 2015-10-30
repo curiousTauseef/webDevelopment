@@ -1,13 +1,12 @@
-package com.junjunguo.shr.service.servicesImpl;
+package com.junjunguo.shr.client.services.servicesImpl;
 
-import com.junjunguo.shr.service.VideoServices;
-import com.junjunguo.shr.service.model.Video;
-import com.junjunguo.shr.service.util.Constant;
+import com.junjunguo.shr.client.services.VideoServices;
+import com.junjunguo.shr.client.util.Constant;
+import com.junjunguo.shr.client.model.Video;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -20,35 +19,23 @@ public class VideoServicesImpl implements VideoServices {
 
     /* GET */
     @SuppressWarnings("unchecked")
-    public void listAllVideos() {
-        //        System.out.println("Testing listAllVideos API-----------");
-
+    public List<Video> listAllVideos() {
+        List<Video>  videos       = null;
         RestTemplate restTemplate = new RestTemplate();
-        List<LinkedHashMap<String, Object>> videosMap = restTemplate
-                .getForObject(REST_SERVICE_URI + "/list/", List.class);
-
-        if (videosMap != null) {
-            for (LinkedHashMap<String, Object> map : videosMap) {
-                System.out.println("Video :  title=" + map.get("title") +
-                                   ", tags=" + map.get("tags") +
-                                   ", id=" + map.get("id") +
-                                   ", description=" + map.get("description") +
-                                   ", timeStamp=" + map.get("timeStamp") +
-                                   ", fileName=" + map.get("fileName") +
-                                   ", timeStamp=" + map.get("timeStamp") +
-                                   ", fileExtension=" + map.get("fileExtension") +
-                                   ", ownerEmail=" + map.get("ownerEmail") +
-                                   ", location=" + map.get("location") +
-                                   ", filePath=" + map.get("filePath"));
-                ;
+        try {
+            videos = restTemplate
+                    .getForObject(REST_SERVICE_URI + "/list/", List.class);
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+            } else {
+                System.out.println("oops! error occurred! " + e.getMessage());
             }
-        } else {
-            System.out.println("No video exist----------");
         }
+        return videos;
     }
 
     /* GET */
-    public Video getVideoById(int id) {
+    public Video getVideoById(long id) {
         Video        video        = null;
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -103,18 +90,16 @@ public class VideoServicesImpl implements VideoServices {
     /* POST */
     public String createVideo(Video video) {
         RestTemplate restTemplate = new RestTemplate();
-        String       message      = "";
+        String       message;
 
         try {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
             System.out.println("Location : " + uri.toASCIIString());
-            message = "succeed";
-            //            System.out.println("Location : " + uri.toASCIIString() + "/");
+            message = "create video: " + video + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
                 message = "video: {" + video.toString() + "} already exist !";
             } else {
-                //                System.out.println("oops! error occurred! " + e.getMessage());
                 message = "oops! error occurred! " + e.getMessage();
             }
         }
@@ -124,16 +109,15 @@ public class VideoServicesImpl implements VideoServices {
 
     /* PUT */
     public String updateVideo(Video video) {
-        String       message      = "";
+        String       message;
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.put(REST_SERVICE_URI, video);
-            message = "succeed";
+            message = "update video: " + video + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
                 message = "user: {" + video + "} not found !";
             } else {
-                //                System.out.println("oops! error occurred! " + e.getMessage());
                 message = "oops! error occurred! " + e.getMessage();
             }
         }
@@ -141,23 +125,19 @@ public class VideoServicesImpl implements VideoServices {
     }
 
     /* DELETE */
-    public String deleteVideoById(int id) {
-        String       message      = "";
+    public String deleteVideoById(long id) {
+        String       message;
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.delete(REST_SERVICE_URI + id + "/");
-            //            System.out.println("user with email: " + email + " deleted");
-            message = "succeed";
+            message = "delete video with id: " + id + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                //                System.out.println("user with email: {" + email + "} not found !");
                 message = "video with id: {" + id + "} not found !";
             } else {
-                //                System.out.println("oops! error occurred! " + e.getMessage());
-                message = "\"oops! error occurred! \" + e.getMessage()";
+                message = "oops! error occurred! " + e.getMessage();
             }
         }
         return message;
     }
-
 }

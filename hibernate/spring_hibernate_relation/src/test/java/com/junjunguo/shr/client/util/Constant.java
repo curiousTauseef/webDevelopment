@@ -1,4 +1,4 @@
-package com.junjunguo.shr.service.util;
+package com.junjunguo.shr.client.util;
 
 /**
  * This file is part of spring_hibernate_relation.

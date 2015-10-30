@@ -12,7 +12,7 @@ import java.util.List;
 public interface TagDao {
     Tag findByLabel(String label);
 
-    Tag findById(int id);
+    Tag findById(long id);
 
     List<Tag> findAllTags();
 

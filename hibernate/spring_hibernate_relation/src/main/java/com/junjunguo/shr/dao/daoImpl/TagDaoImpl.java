@@ -1,10 +1,8 @@
 package com.junjunguo.shr.dao.daoImpl;
 
 import com.junjunguo.shr.dao.TagDao;
-import com.junjunguo.shr.model.TU;
 import com.junjunguo.shr.model.Tag;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -35,27 +33,11 @@ public class TagDaoImpl implements TagDao {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
         criteria.add(Restrictions.eq("label", label));
         Tag tag = (Tag) criteria.uniqueResult();
-//        if (tag != null) {
-//            Hibernate.initialize(tag.getVideos());
-//            return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
-//        }
         return tag;
     }
 
     @Transactional
-    public Tag findById(int id) {
-        //        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Tag.class);
-        //        criteria.add(Restrictions.eq("id", id));
-        //        Tag tag = (Tag) criteria.uniqueResult();
-        //        if (tag != null) {
-        //            Hibernate.initialize(tag.getVideos());
-        //            return new TU(tag.getId(), tag.getLabel(), tag.getVideos());
-        //        }
-        //        return null;
-
-
-        System.out.println("findby id tag dao : " + id);
-        System.out.println("get current session: " + sessionFactory.getCurrentSession());
+    public Tag findById(long id) {
         try {
             Query q = sessionFactory.getCurrentSession().createQuery("from Tag where ID = '" + id + "'");
             System.out.println("q: " + q);

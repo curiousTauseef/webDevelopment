@@ -1,4 +1,4 @@
-package com.junjunguo.shr.service.model;
+package com.junjunguo.shr.client.model;
 
 import com.junjunguo.shr.util.MyDate;
 
@@ -16,7 +16,7 @@ public class User {
     private String      email;
     private String      password;
     private String      country;
-    private String      gender;
+    private Gender      gender;
     private Date        birth;
     private Date        registeredtime;
     private List<Video> videos;
@@ -27,7 +27,7 @@ public class User {
      * @param password user password
      */
     public User(String name, String email, String password) {
-        this(name, email, password, "", "", Calendar.getInstance().getTime());
+        this(name, email, password, "", Gender.UNKNOWN, Calendar.getInstance().getTime());
     }
 
     /**
@@ -38,7 +38,7 @@ public class User {
      * @param gender   user gender MALE,FEMALE
      * @param birth    user birthday
      */
-    public User(String name, String email, String password, String country, String gender, Date birth) {
+    public User(String name, String email, String password, String country, Gender gender, Date birth) {
         this(name, email, password, country, gender, birth, Calendar.getInstance().getTime());
     }
 
@@ -51,12 +51,13 @@ public class User {
      * @param birth          user birthday
      * @param registeredtime registered time cannot be set, auto generate
      */
-    private User(String name, String email, String password, String country, String gender, Date birth,
+    private User(String name, String email, String password, String country, Gender gender, Date birth,
             Date registeredtime) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.country = country;
+        this.gender = gender;
         this.birth = birth;
         this.registeredtime = registeredtime;
     }
@@ -154,7 +155,7 @@ public class User {
      *
      * @param gender New value of gender.
      */
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -163,7 +164,7 @@ public class User {
      *
      * @return Value of gender.
      */
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -183,37 +184,6 @@ public class User {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-
-        User user = (User) o;
-
-        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
-        if (getGender() != null ? !getGender().equals(user.getGender()) : user.getGender() != null) return false;
-        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
-        if (!getRegisteredtime().equals(user.getRegisteredtime())) return false;
-        return !(getVideos() != null ? !getVideos().equals(user.getVideos()) : user.getVideos() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + getEmail().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
-        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
-        result = 31 * result + getRegisteredtime().hashCode();
-        result = 31 * result + (getVideos() != null ? getVideos().hashCode() : 0);
-        return result;
     }
 
     /**

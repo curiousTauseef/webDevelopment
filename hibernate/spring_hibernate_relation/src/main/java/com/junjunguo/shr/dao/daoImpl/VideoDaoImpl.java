@@ -31,19 +31,18 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     @Transactional
-    public Video findById(int id) {
+    public Video findById(long id) {
         Query q = sessionFactory.getCurrentSession().createQuery("from Video where ID = '" + id + "'");
         if (q.list().isEmpty()) {
             return null;
         } else {
             Video video = (Video) q.list().get(0);
-            Hibernate.initialize(video.getOwner());
             return video;
         }
     }
 
     public List<Video> findByEmail(String email) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from Video where EMAIL = '" + email + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery("from Video where OWNER_EMAIL = '" + email + "'");
         return !q.list().isEmpty() ? (List<Video>) q.list() : null;
     }
 
@@ -53,6 +52,13 @@ public class VideoDaoImpl implements VideoDao {
         return !q.list().isEmpty() ? (List<Video>) q.list() : null;
     }
 
+    public List<Video> findByTag(long id) {
+        Query q = sessionFactory.getCurrentSession().createSQLQuery(
+                "select VIDEO.* from Video inner join VIDEO_TAG on VIDEO.ID = VIDEO_TAG.VIDEO_ID where TAG_ID = '" +
+                id + "'");
+        return q.list().isEmpty() ? null : (List<Video>) q.list();
+    }
+
     @Transactional
     public void saveVideo(Video video) {
 
@@ -60,7 +66,7 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     @Transactional
-    public void deleteVideoById(int id) {
+    public void deleteVideoById(long id) {
         sessionFactory.getCurrentSession().delete(findById(id));
     }
 
@@ -70,18 +76,12 @@ public class VideoDaoImpl implements VideoDao {
         List<Video> videos = (List<Video>) sessionFactory.getCurrentSession()
                                                          .createCriteria(Video.class)
                                                          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-
-
-        System.out.println("video video DaoImpl: " + videos);
-        for (Video video : videos) {
-            Hibernate.initialize(video.getOwner());
-            System.out.println("video video DaoImpl: " + video);
-        }
         return videos;
     }
 
-    public boolean hasVideo(int id) {
+    public boolean hasVideo(long id) {
         Query q = sessionFactory.getCurrentSession().createQuery("from Video where id = '" + id + "'");
-        return !q.list().isEmpty() ? ((Video) q.list().get(0)).isHasVideo() : false;
+        return !q.list().isEmpty() && ((Video) q.list().get(0)).isHasVideo();
     }
+
 }

@@ -25,7 +25,7 @@ public class VideoController {
 
     //-------------------Retrieve All Users--------------------------------------------------------
 
-    @RequestMapping(value = "/list/",
+    @RequestMapping(value = {"/list/", "/"},
                     method = RequestMethod.GET)
     public ResponseEntity<List<Video>> listAllVideos() {
         List<Video> Videos = videoService.findAllVideos();
@@ -39,11 +39,11 @@ public class VideoController {
 
     //    -------------------Retrieve Video----------------------------------------------------
 
-    @RequestMapping(value = "/id/{id}",
+    @RequestMapping(value = {"/id/{id}/", "/id/{id}"},
                     method = RequestMethod.GET)
     public ResponseEntity<Video> getVideoById(
             @PathVariable("id")
-            int id) {
+            long id) {
         System.out.println("Fetching Video with id " + id);
         Video Video = videoService.findById(id);
         if (Video == null) {
@@ -53,7 +53,7 @@ public class VideoController {
         return new ResponseEntity<Video>(Video, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/title/{title}",
+    @RequestMapping(value = {"/title/{title}/", "/title/{title}"},
                     method = RequestMethod.GET)
     public ResponseEntity<List<Video>> getVideosByTitle(
             @PathVariable("title")
@@ -68,7 +68,7 @@ public class VideoController {
     }
 
 
-    @RequestMapping(value = "/email/{email:.+}",
+    @RequestMapping(value = "/email/{email:.+}/",
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Video>> getVideosByEmail(
@@ -78,6 +78,22 @@ public class VideoController {
         List<Video> videos = videoService.findByEmail(email);
         if (videos == null || videos.isEmpty()) {
             System.out.println("Video with email " + email + " not found");
+            return new ResponseEntity<List<Video>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = {"/tag/{id}/", "/tag/{id}"},
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Video>> getVideosByTagID(
+            @PathVariable("id")
+            long id) {
+        System.out.println("Fetching Video with email " + id);
+        List<Video> videos = videoService.findByTag(id);
+        if (videos == null || videos.isEmpty()) {
+            System.out.println("Video with tag id " + id + " not found");
             return new ResponseEntity<List<Video>>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
@@ -124,7 +140,7 @@ public class VideoController {
                     method = RequestMethod.DELETE)
     public ResponseEntity<Video> deleteVideo(
             @PathVariable("id")
-            int id) {
+            long id) {
         System.out.println("Fetching & Deleting Video with id " + id);
 
         Video Video = videoService.findById(id);

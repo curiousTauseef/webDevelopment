@@ -1,15 +1,12 @@
-package com.junjunguo.shr.service.servicesImpl;
+package com.junjunguo.shr.client.services.servicesImpl;
 
-import com.junjunguo.shr.service.UserServices;
-import com.junjunguo.shr.service.model.User;
-import com.junjunguo.shr.service.util.Constant;
-import com.junjunguo.shr.util.MyDate;
+import com.junjunguo.shr.client.util.Constant;
+import com.junjunguo.shr.client.model.User;
+import com.junjunguo.shr.client.services.UserServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -23,32 +20,20 @@ public class UserServicesImpl implements UserServices {
 
     /* GET */
     @SuppressWarnings("unchecked")
-    public void listAllUsers() {
+    public List<User> listAllUsers() {
         System.out.println("Testing listAllUsers API-----------");
 
         RestTemplate restTemplate = new RestTemplate();
         try {
-            List<LinkedHashMap<String, Object>> usersMap = restTemplate
+            return restTemplate
                     .getForObject(REST_SERVICE_URI + "/list/", List.class);
-
-            if (usersMap != null) {
-                for (LinkedHashMap<String, Object> map : usersMap) {
-                    System.out.println("User :  Name=" + map.get("name") +
-                                       ", email=" + map.get("email") +
-                                       ", country=" + map.get("country") +
-                                       ", password=" + map.get("password") +
-                                       ", registered time=" + map.get("registeredtime") +
-                                       ", birth=" + map.get("birth"));
-                }
-            } else {
-                System.out.println("No user exist----------");
-            }
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
                 System.out.println("not found !");
             } else {
                 System.out.println("oops! error occurred! " + e.getMessage());
             }
+            return null;
         }
     }
 
@@ -90,18 +75,16 @@ public class UserServicesImpl implements UserServices {
 
     /* POST */
     public String createUser(User user) {
-        String       message      = "";
+        String       message;
         RestTemplate restTemplate = new RestTemplate();
         try {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI, user, User.class);
-            message = "succeed";
-            //            System.out.println("Location : " + uri.toASCIIString() + "/");
+            message = "create user: " + user + " succeed";
+            System.out.println("Location : " + uri.toASCIIString());
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
                 message = "user: {" + user.toString() + "} already exist !";
-                //                System.out.println("user: {" + user.toString() + "} already exist !");
             } else {
-                //                System.out.println("oops! error occurred! " + e.getMessage());
                 message = "oops! error occurred! " + e.getMessage();
             }
         }
@@ -110,20 +93,15 @@ public class UserServicesImpl implements UserServices {
 
     /* PUT */
     public String updateUser(User user) {
-        //        System.out.println("Testing update User API----------");
-        String       message      = "";
+        String       message;
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.put(REST_SERVICE_URI, user);
-            //            restTemplate.put(REST_SERVICE_URI + user.getEmail() + "/", user);
-            //            System.out.println("update user: " + user);
-            message = "succeed";
+            message = "update user: " + user + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                //                System.out.println("user: {" + user + "} not found !");
                 message = "user: {" + user + "} not found !";
             } else {
-                //                System.out.println("oops! error occurred! " + e.getMessage());
                 message = "oops! error occurred! " + e.getMessage();
             }
         }
@@ -132,20 +110,18 @@ public class UserServicesImpl implements UserServices {
 
     /* DELETE */
     public String deleteUserByEmail(String email) {
-        //        System.out.println("Testing delete User API----------");
-        String       message      = "";
+        String       message;
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.delete(REST_SERVICE_URI + email + "/");
-            //            System.out.println("user with email: " + email + " deleted");
-            message = "succeed";
+            message = "delete user with email: " + email + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                //                System.out.println("user with email: {" + email + "} not found !");
                 message = "user with email: {" + email + "} not found !";
+            } else if (e.getMessage().contains(HttpStatus.NOT_ACCEPTABLE.toString())) {
+                message = "Need to delete all owned videos to complete this action! " + e.getMessage();
             } else {
-                //                System.out.println("oops! error occurred! " + e.getMessage());
-                message = "\"oops! error occurred! \" + e.getMessage()";
+                message = "oops! error occurred! " + e.getMessage();
             }
         }
         return message;

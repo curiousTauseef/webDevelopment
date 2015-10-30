@@ -12,5 +12,5 @@ import java.util.List;
 public interface LocationDao {
     List<Location> findAllLocations();
 
-    Location findById(int id);
+    Location findById(long id);
 }

@@ -2,6 +2,7 @@ package com.junjunguo.shr.controller;
 
 import com.junjunguo.shr.model.User;
 import com.junjunguo.shr.service.UserService;
+import com.junjunguo.shr.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/list/",
+    @Autowired
+    VideoService videoService;
+
+    @RequestMapping(value = {"/list/", "/"},
                     method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
@@ -35,7 +39,7 @@ public class UserController {
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/name/{name}/",
+    @RequestMapping(value = {"/name/{name}/", "/name/{name}"},
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserByName(
@@ -73,7 +77,7 @@ public class UserController {
         userService.addUser(user);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/email/{email}").buildAndExpand(user.getEmail()).toUri());
+        headers.setLocation(ucBuilder.path("/user/email/{email}/").buildAndExpand(user.getEmail()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
@@ -82,13 +86,12 @@ public class UserController {
     public ResponseEntity<User> updateUser(
             @RequestBody
             User user) {
-        User currentUser = userService.findByEmail(user.getEmail());
 
-        if (currentUser == null) {
+        if (userService.findByEmail(user.getEmail()) == null) {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
-        userService.updateUser(currentUser);
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
+        userService.updateUser(user);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{email:.+}/",
@@ -99,6 +102,10 @@ public class UserController {
         User user = userService.findByEmail(email);
         if (user == null) {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        } else if (videoService.findByEmail(user.getEmail()) != null) {
+            log("@@@@" + user);
+            log("*** " + videoService.findByEmail(user.getEmail()));
+            return new ResponseEntity<User>(HttpStatus.NOT_ACCEPTABLE);
         }
         userService.deleteUserByEmail(email);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);

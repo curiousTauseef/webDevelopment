@@ -25,6 +25,17 @@ public class TagController {
     @Autowired
     TagService tagService;
 
+    @RequestMapping(value = {"/list/", "/list", "/"},
+                    method = RequestMethod.GET)
+    public ResponseEntity<List<Tag>> listAllTags() {
+        List<Tag> tags = tagService.findAllTags();
+        if (tags.isEmpty()) {
+            return new ResponseEntity<List<Tag>>(
+                    HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
+    }
+
     @RequestMapping(value = {"/label/{label}/", "/label/{label}"},
                     method = RequestMethod.GET,
                     produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,17 +65,6 @@ public class TagController {
             return new ResponseEntity<Tag>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Tag>(tag, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = {"/list/", "/list"},
-                    method = RequestMethod.GET)
-    public ResponseEntity<List<Tag>> listAllTags() {
-        List<Tag> tags = tagService.findAllTags();
-        if (tags.isEmpty()) {
-            return new ResponseEntity<List<Tag>>(
-                    HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
     }
 
     @RequestMapping(value = "",

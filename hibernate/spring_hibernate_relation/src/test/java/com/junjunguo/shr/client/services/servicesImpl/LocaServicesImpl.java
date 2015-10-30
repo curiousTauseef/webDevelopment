@@ -1,8 +1,8 @@
-package com.junjunguo.shr.service.servicesImpl;
+package com.junjunguo.shr.client.services.servicesImpl;
 
-import com.junjunguo.shr.service.LocationServices;
-import com.junjunguo.shr.service.model.Location;
-import com.junjunguo.shr.service.util.Constant;
+import com.junjunguo.shr.client.services.LocaServices;
+import com.junjunguo.shr.client.util.Constant;
+import com.junjunguo.shr.client.model.Location;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 27/10/15.
  */
-public class LocationServicesImpl implements LocationServices {
+public class LocaServicesImpl implements LocaServices {
 
     public final String REST_SERVICE_URI = Constant.SERVER_URL + "/location/";
 
@@ -34,7 +34,7 @@ public class LocationServicesImpl implements LocationServices {
         return locations;
     }
 
-    public Location getById(int id) {
+    public Location getById(long id) {
         Location     location     = null;
         RestTemplate restTemplate = new RestTemplate();
         try {

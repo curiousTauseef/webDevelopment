@@ -10,7 +10,7 @@ import java.util.List;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 public interface VideoService {
-    Video findById(int id);
+    Video findById(long id);
 
     List<Video> findByEmail(String email);
 
@@ -20,9 +20,11 @@ public interface VideoService {
 
     void updateVideo(Video video);
 
-    void deleteVideoById(int id);
+    void deleteVideoById(long id);
 
     List<Video> findAllVideos();
 
-    boolean hasVideo(int id);
+    boolean hasVideo(long id);
+
+    List<Video> findByTag(long id);
 }

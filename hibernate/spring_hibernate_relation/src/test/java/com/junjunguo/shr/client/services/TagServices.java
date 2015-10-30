@@ -1,6 +1,6 @@
-package com.junjunguo.shr.service;
+package com.junjunguo.shr.client.services;
 
-import com.junjunguo.shr.service.model.Tag;
+import com.junjunguo.shr.client.model.Tag;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface TagServices {
 
     List<Tag> listAllTags();
 
-    Tag getByTagId(int id);
+    Tag getByTagId(long id);
 
     Tag getByTagLabel(String label);
 

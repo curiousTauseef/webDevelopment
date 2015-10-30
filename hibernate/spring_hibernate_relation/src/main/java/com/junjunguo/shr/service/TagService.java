@@ -20,7 +20,7 @@ public interface TagService {
      * @param id
      * @return Tag (only tag)
      */
-    Tag findByTagId(int id);
+    Tag findByTagId(long id);
 
     /**
      * @return a list of tags

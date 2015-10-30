@@ -31,7 +31,7 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private UserDao userDao;
 
-    public Video findById(int id) {
+    public Video findById(long id) {
         return videoDao.findById(id);
     }
 
@@ -78,7 +78,7 @@ public class VideoServiceImpl implements VideoService {
         videoDao.saveVideo(video);
     }
 
-    public void deleteVideoById(int id) {
+    public void deleteVideoById(long id) {
         videoDao.deleteVideoById(id);
     }
 
@@ -86,7 +86,11 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findAllVideos();
     }
 
-    public boolean hasVideo(int id) {
+    public boolean hasVideo(long id) {
         return videoDao.hasVideo(id);
+    }
+
+    public List<Video> findByTag(long id) {
+        return videoDao.findByTag(id);
     }
 }

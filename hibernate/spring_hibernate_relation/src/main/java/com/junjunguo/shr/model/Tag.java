@@ -17,7 +17,7 @@ public class Tag implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int id;
+    private long id;
 
     @Column(name = "LABEL",
             unique = true,
@@ -29,7 +29,7 @@ public class Tag implements Serializable {
         this.label = label;
     }
 
-    public Tag(int id, String label) {
+    public Tag(long id, String label) {
         this.id = id;
         this.label = label;
     }
@@ -42,7 +42,7 @@ public class Tag implements Serializable {
      *
      * @param id New value of tag id.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -51,7 +51,7 @@ public class Tag implements Serializable {
      *
      * @return Value of tag id.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -73,7 +73,6 @@ public class Tag implements Serializable {
         this.label = label;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +87,7 @@ public class Tag implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = getId();
+        int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + getLabel().hashCode();
         return result;
     }

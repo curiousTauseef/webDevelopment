@@ -1,4 +1,4 @@
-package com.junjunguo.shr.service.model;
+package com.junjunguo.shr.client.model;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +13,7 @@ public class Video {
     /**
      * video id
      */
-    private int    id;
+    private long    id;
     private String title;
 
     private String  description;
@@ -44,7 +44,6 @@ public class Video {
     public Video(String title, List<Tag> tags, String description, Date uploadTime, String filePath, String fileName,
             String fileExtension, User owner, Location location) {
         this.title = title;
-        //        this.tags = getTags(tags);
         this.tags = tags;
         this.description = description;
         this.uploadTime = uploadTime;
@@ -63,18 +62,6 @@ public class Video {
         Tag t = new Tag(tag);
         tags.add(t);
     }
-
-    //    /**
-    //     * @param stags List of string tag
-    //     * @return List of Tag object
-    //     */
-    //    public List<Tag> getTags(List<String> stags) {
-    //        List<Tag> t = new ArrayList<Tag>();
-    //        for (String stag : stags) {
-    //            t.add(new Tag(stag));
-    //        }
-    //        return t;
-    //    }
 
     @Override
     public String toString() {
@@ -115,7 +102,7 @@ public class Video {
      *
      * @return Value of video id.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -196,7 +183,7 @@ public class Video {
      *
      * @param id New value of video id.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package com.junjunguo.shr.service.model;
+package com.junjunguo.shr.client.model;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class Location {
     /**
      * location id
      */
-    private int    id;
+    private long    id;
     private double latitude;
     private double longitude;
     private double altitude;
@@ -37,7 +37,7 @@ public class Location {
      *
      * @return Value of location id.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -46,7 +46,7 @@ public class Location {
      *
      * @param id New value of location id.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

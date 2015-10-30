@@ -1,6 +1,6 @@
-package com.junjunguo.shr.service;
+package com.junjunguo.shr.client.services;
 
-import com.junjunguo.shr.service.model.Video;
+import com.junjunguo.shr.client.model.Video;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface VideoServices {
 
-    void listAllVideos();
+    List<Video> listAllVideos();
 
-    Video getVideoById(int id);
+    Video getVideoById(long id);
 
     List<Video> getVideosByEmail(String email);
 
@@ -23,5 +23,5 @@ public interface VideoServices {
 
     String updateVideo(Video video);
 
-    String deleteVideoById(int id);
+    String deleteVideoById(long id);
 }

@@ -10,9 +10,8 @@ import javax.persistence.*;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 @Entity
-@Table(name = "LOCATION"
-       //        ,
-       //       uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE, LONGITUDE, ALTITUDE"})}
+@Table(name = "LOCATION",
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE", "LONGITUDE", "ALTITUDE"})}
 )
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Location {
@@ -22,23 +21,19 @@ public class Location {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int         id;
+    private long    id;
     @Column(name = "LATITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double      latitude;
+    private double latitude;
     @Column(name = "LONGITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
-    private double      longitude;
+    private double longitude;
     @Column(name = "ALTITUDE",
-            nullable = false,
+            nullable = true,
             columnDefinition = "DOUBLE")
-    private double      altitude;
-//        @JsonIgnore
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "location")
-//    private List<Video> videos;
+    private double altitude;
 
     public Location(double latitude, double logitude, double altitude) {
         this.latitude = latitude;
@@ -59,7 +54,7 @@ public class Location {
      *
      * @return Value of location id.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -68,7 +63,7 @@ public class Location {
      *
      * @param id New value of location id.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -125,19 +120,4 @@ public class Location {
     public double getLongitude() {
         return longitude;
     }
-
-
-//    /**
-//     * Gets videos.
-//     *
-//     * @return Value of videos.
-//     */
-//    public List<Video> getVideos() { return videos; }
-//
-//    /**
-//     * Sets new videos.
-//     *
-//     * @param videos New value of videos.
-//     */
-//    public void setVideos(List<Video> videos) { this.videos = videos; }
 }

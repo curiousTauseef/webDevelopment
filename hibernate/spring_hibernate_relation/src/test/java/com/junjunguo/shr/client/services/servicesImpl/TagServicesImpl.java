@@ -1,8 +1,8 @@
-package com.junjunguo.shr.service.servicesImpl;
+package com.junjunguo.shr.client.services.servicesImpl;
 
-import com.junjunguo.shr.service.TagServices;
-import com.junjunguo.shr.service.model.Tag;
-import com.junjunguo.shr.service.util.Constant;
+import com.junjunguo.shr.client.services.TagServices;
+import com.junjunguo.shr.client.util.Constant;
+import com.junjunguo.shr.client.model.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,7 +34,7 @@ public class TagServicesImpl implements TagServices {
         return tags;
     }
 
-    public Tag getByTagId(int id) {
+    public Tag getByTagId(long id) {
         Tag          tag          = null;
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -65,7 +65,7 @@ public class TagServicesImpl implements TagServices {
     }
 
     public String createTag(String label) {
-        String       message      = "";
+        String       message;
         RestTemplate restTemplate = new RestTemplate();
         try {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI, label);

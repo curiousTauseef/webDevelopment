@@ -1,6 +1,8 @@
-package com.junjunguo.shr.service;
+package com.junjunguo.shr.client.services;
 
-import com.junjunguo.shr.service.model.User;
+import com.junjunguo.shr.client.model.User;
+
+import java.util.List;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -12,7 +14,7 @@ public interface UserServices {
     /**
      * this method is for test only
      */
-    void listAllUsers();
+    List<User> listAllUsers();
 
     /**
      * @param name

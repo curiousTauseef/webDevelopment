@@ -19,7 +19,7 @@ public class Video {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private int    id;
+    private long    id;
     @Column(name = "TITLE",
             nullable = true,
             columnDefinition = "VARCHAR(255)")
@@ -28,27 +28,27 @@ public class Video {
     @Column(name = "DESCRIPTION",
             nullable = true,
             columnDefinition = "TEXT")
-    private String    description;
+    private String  description;
     @Column(name = "UPLOADTIME",
             nullable = false,
             columnDefinition = "DATETIME")
-    private Date      uploadTime;
+    private Date    uploadTime;
     @Column(name = "HASVIDEO",
             nullable = true,
             columnDefinition = "BOOLEAN")
-    private boolean   hasVideo;
+    private boolean hasVideo;
     @Column(name = "FILEPATH",
             nullable = true,
             columnDefinition = "VARCHAR(2083)")
-    private String    filePath;
+    private String  filePath;
     @Column(name = "FILENAME",
             nullable = true,
             columnDefinition = "VARCHAR(255)")
-    private String    fileName;
+    private String  fileName;
     @Column(name = "FILEEXTENSION",
             nullable = true,
             columnDefinition = "VARCHAR(64)")
-    private String    fileExtension;
+    private String  fileExtension;
 
     @ManyToMany(fetch = FetchType.LAZY,
                 targetEntity = Tag.class,
@@ -72,7 +72,7 @@ public class Video {
             cascade = CascadeType.ALL
     )
     @JoinColumn(name = "OWNER_EMAIL")
-    private User      owner;
+    private User owner;
 
     public Video(String title, String description, String filePath, String fileName, String fileExtension, User owner,
             Location location) {
@@ -107,18 +107,6 @@ public class Video {
         Tag t = new Tag(tag);
         tags.add(t);
     }
-
-    //    /**
-    //     * @param stags List of string tag
-    //     * @return List of Tag object
-    //     */
-    //    public List<Tag> getTags(List<String> stags) {
-    //        List<Tag> t = new ArrayList<Tag>();
-    //        for (String stag : stags) {
-    //            t.add(new Tag(stag));
-    //        }
-    //        return t;
-    //    }
 
     @Override
     public String toString() {
@@ -159,7 +147,7 @@ public class Video {
      *
      * @return Value of video id.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -240,7 +228,7 @@ public class Video {
      *
      * @param id New value of video id.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -348,32 +336,31 @@ public class Video {
         if (getDescription() != null ? !getDescription().equals(video.getDescription()) :
                 video.getDescription() != null)
             return false;
-        if (!getUploadTime().equals(video.getUploadTime())) return false;
-        if (getFilePath() != null ? !getFilePath().equals(video.getFilePath()) : video.getFilePath() != null)
+        if (getUploadTime() != null ? !getUploadTime().equals(video.getUploadTime()) : video.getUploadTime() != null)
             return false;
+        if (!getFilePath().equals(video.getFilePath())) return false;
         if (getFileName() != null ? !getFileName().equals(video.getFileName()) : video.getFileName() != null)
             return false;
-        if (getFileExtension() != null ? !getFileExtension().equals(video.getFileExtension()) :
-                video.getFileExtension() != null) return false;
-        if (!getOwner().equals(video.getOwner())) return false;
+        if (!getFileExtension().equals(video.getFileExtension())) return false;
         if (getTags() != null ? !getTags().equals(video.getTags()) : video.getTags() != null) return false;
-        return getLocation().equals(video.getLocation());
+        if (!getLocation().equals(video.getLocation())) return false;
+        return getOwner().equals(video.getOwner());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
+        int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + getUploadTime().hashCode();
+        result = 31 * result + (getUploadTime() != null ? getUploadTime().hashCode() : 0);
         result = 31 * result + (isHasVideo() ? 1 : 0);
-        result = 31 * result + (getFilePath() != null ? getFilePath().hashCode() : 0);
+        result = 31 * result + getFilePath().hashCode();
         result = 31 * result + (getFileName() != null ? getFileName().hashCode() : 0);
-        result = 31 * result + (getFileExtension() != null ? getFileExtension().hashCode() : 0);
-        result = 31 * result + getOwner().hashCode();
+        result = 31 * result + getFileExtension().hashCode();
         result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
         result = 31 * result + getLocation().hashCode();
+        result = 31 * result + getOwner().hashCode();
         return result;
     }
 }

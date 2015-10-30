@@ -1,8 +1,8 @@
 package com.junjunguo.shr.service.serviceImpl;
 
+import com.junjunguo.shr.service.LocationService;
 import com.junjunguo.shr.dao.LocationDao;
 import com.junjunguo.shr.model.Location;
-import com.junjunguo.shr.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service("locationService")
 @Transactional
-public class LocationServiceImpl implements LocationService{
+public class LocationServiceImpl implements LocationService {
     @Autowired
     private LocationDao locationDao;
 
@@ -24,7 +24,7 @@ public class LocationServiceImpl implements LocationService{
         return locationDao.findAllLocations();
     }
 
-    public Location findById(int id) {
+    public Location findById(long id) {
         return locationDao.findById(id);
     }
 }

@@ -25,7 +25,7 @@ public class TagServiceImpl implements TagService {
         return tagDao.findByLabel(label);
     }
 
-    public Tag findByTagId(int id) {
+    public Tag findByTagId(long id) {
         return tagDao.findById(id);
     }
 
