@@ -53,15 +53,13 @@ public class VideoDaoImpl implements VideoDao {
     }
 
     public List<Video> findByTag(long id) {
-        Query q = sessionFactory.getCurrentSession().createSQLQuery(
-                "select VIDEO.* from Video inner join VIDEO_TAG on VIDEO.ID = VIDEO_TAG.VIDEO_ID where TAG_ID = '" +
-                id + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery(
+                "from Video v inner join v.tags t where t.id = '" + id + "'");
         return q.list().isEmpty() ? null : (List<Video>) q.list();
     }
 
     @Transactional
     public void saveVideo(Video video) {
-
         sessionFactory.getCurrentSession().persist(video);
     }
 
@@ -75,7 +73,8 @@ public class VideoDaoImpl implements VideoDao {
         @SuppressWarnings("unchecked")
         List<Video> videos = (List<Video>) sessionFactory.getCurrentSession()
                                                          .createCriteria(Video.class)
-                                                         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                                                         .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                                         .list();
         return videos;
     }
 
@@ -83,5 +82,4 @@ public class VideoDaoImpl implements VideoDao {
         Query q = sessionFactory.getCurrentSession().createQuery("from Video where id = '" + id + "'");
         return !q.list().isEmpty() && ((Video) q.list().get(0)).isHasVideo();
     }
-
 }
