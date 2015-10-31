@@ -1,5 +1,6 @@
 package com.junjunguo.shr.service;
 
+import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 
 import java.util.List;
@@ -10,21 +11,54 @@ import java.util.List;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 public interface VideoService {
+
+    /**
+     * @param id video id
+     * @return Video object
+     */
     Video findById(long id);
 
+    /**
+     * @param email video email
+     * @return List of Video object
+     */
     List<Video> findByEmail(String email);
 
-    List<Video> findByTitle(String title);
+    /**
+     * @param name video name
+     * @return Video object
+     */
+    List<Video> findByTitle(String name);
 
+    /**
+     * @param video object: save or update this video
+     */
     void addVideo(Video video);
 
     void updateVideo(Video video);
 
-    void deleteVideoById(long id);
-
-    List<Video> findAllVideos();
-
     boolean isVideoExist(long id);
 
+    /**
+     * @param id delete video by the given id
+     */
+    void deleteVideoById(long id);
+
+    /**
+     * @return a List of videos
+     */
+    List<Video> findAllVideos();
+
+    /**
+     * @param id tag id
+     * @return list of video with given tag
+     */
     List<Video> findByTag(long id);
+
+    /**
+     * @param location the center location
+     * @param boundary the boundary: length of 1 degree of latitude on the sphere is 111.2 km
+     * @return videos near by given boundary
+     */
+    List<Video> findNearBy(Location location, double boundary);
 }

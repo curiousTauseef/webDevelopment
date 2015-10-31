@@ -27,7 +27,14 @@ public interface TagService {
      */
     List<Tag> findAllTags();
 
+    /**
+     * @param label create a new Tag by given label
+     */
     void addTag(String label);
 
+    /**
+     * @param label tag label
+     * @return true if exist
+     */
     boolean isLabelExist(String label);
 }

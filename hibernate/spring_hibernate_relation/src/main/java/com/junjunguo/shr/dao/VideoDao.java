@@ -1,5 +1,6 @@
 package com.junjunguo.shr.dao;
 
+import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 
 import java.util.List;
@@ -49,4 +50,11 @@ public interface VideoDao {
      * @return list of video with given tag
      */
     List<Video> findByTag(long id);
+
+    /**
+     * @param location the center location
+     * @param boundary the boundary: length of 1 degree of latitude on the sphere is 111.2 km
+     * @return videos near by given boundary
+     */
+    List<Video> findNearBy(Location location, double boundary);
 }

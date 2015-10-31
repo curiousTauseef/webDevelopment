@@ -345,7 +345,6 @@ public class Video {
         if (getTags() != null ? !getTags().equals(video.getTags()) : video.getTags() != null) return false;
         if (!getLocation().equals(video.getLocation())) return false;
         return getOwner().equals(video.getOwner());
-
     }
 
     @Override

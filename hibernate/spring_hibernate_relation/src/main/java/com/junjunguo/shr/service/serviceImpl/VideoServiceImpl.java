@@ -47,9 +47,9 @@ public class VideoServiceImpl implements VideoService {
     }
 
     public void addVideo(Video video) {
-        System.out.println("\n@@video service : " + video + "@@\n");
+        log("\n@@video service : " + video + "@@\n");
         List<Tag> gTags = video.getTags();
-        System.out.println("\n@@video service g tags: " + gTags + "@@\n");
+        log("\n@@video service g tags: " + gTags + "@@\n");
         List<Tag> aTags = new ArrayList<Tag>();
         for (Tag tg : gTags) {
             Tag t = tagDao.findByLabel(tg.getLabel());
@@ -63,7 +63,7 @@ public class VideoServiceImpl implements VideoService {
         video.setTags(aTags);
 
         User user = video.getOwner();
-        System.out.println("\n@@video service user: " + user + " video: " + video + "@@\n");
+        log("\n@@video service user: " + user + " video: " + video + "@@\n");
         if (user != null) {
             User u = userDao.findByEmail(user.getEmail());
             if (u == null) {
@@ -75,17 +75,17 @@ public class VideoServiceImpl implements VideoService {
         }
 
         Location lo = video.getLocation();
-        System.out.println("\n@@video service lo: " + lo + " video: " + video + "@@\n");
+        log("\n@@video service lo: " + lo + " video: " + video + "@@\n");
         if (lo != null) {
             Location l = locationDao.findByLocation(lo);
-            System.out.println("\n@@video service lo: " + lo + " find l: " + l + "@@\n");
+            log("\n@@video service lo: " + lo + " find l: " + l + "@@\n");
             if (l == null) {
                 video.setLocation(new Location(lo.getLatitude(), lo.getLongitude(), lo.getAltitude()));
             } else {
                 video.setLocation(l);
             }
         }
-        System.out.println("\n@@video service video: " + video + "@@\n");
+        log("\n@@video service video: " + video + "@@\n");
         try {
             videoDao.saveVideo(video);
         } catch (Exception e) {
@@ -111,5 +111,14 @@ public class VideoServiceImpl implements VideoService {
 
     public List<Video> findByTag(long id) {
         return videoDao.findByTag(id);
+    }
+
+    public List<Video> findNearBy(Location location, double boundary) {
+        return videoDao.findNearBy(location, boundary);
+    }
+
+
+    public void log(String s) {
+        //        log(this.getClass().getSimpleName() + "- - - - - - " + s);
     }
 }

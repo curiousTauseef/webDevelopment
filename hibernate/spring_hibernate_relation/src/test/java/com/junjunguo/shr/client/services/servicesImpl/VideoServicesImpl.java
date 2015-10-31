@@ -1,8 +1,9 @@
 package com.junjunguo.shr.client.services.servicesImpl;
 
+import com.junjunguo.shr.client.model.Location;
+import com.junjunguo.shr.client.model.Video;
 import com.junjunguo.shr.client.services.VideoServices;
 import com.junjunguo.shr.client.util.Constant;
-import com.junjunguo.shr.client.model.Video;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -88,6 +89,28 @@ public class VideoServicesImpl implements VideoServices {
         return videos;
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Video> findNearBy(Location location, double boundary) {
+        List<Video>  videos       = null;
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            videos = restTemplate
+                    .getForObject(REST_SERVICE_URI +
+                                  "/location/nearby/" +
+                                  location.getLatitude() + "/" +
+                                  location.getLongitude() + "/" +
+                                  location.getAltitude() + "/" +
+                                  boundary, List.class);
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("no videos found !");
+            } else {
+                System.out.println("oops! error occurred (findNearBy)! " + e.getMessage());
+            }
+        }
+        return videos;
+    }
+
     /* POST */
     public String createVideo(Video video) {
         RestTemplate restTemplate = new RestTemplate();
@@ -140,5 +163,9 @@ public class VideoServicesImpl implements VideoServices {
             }
         }
         return message;
+    }
+
+    public void log(String s) {
+        System.out.println(this.getClass().getSimpleName() + "- - - - - - " + s);
     }
 }

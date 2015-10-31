@@ -60,14 +60,3 @@ public class LocationDaoImpl implements LocationDao {
         return !locations.isEmpty() ? locations.get(0) : null;
     }
 }
-//"from Location lo where " +
-//        "lo.latitude = '" + l.getLatitude() + "' and" +
-//        "lo.longitude = '" + l.getLongitude() + "' and" +
-//        "lo.altitude = '" + l.getAltitude() + "'"
-//        );
-
-//"from Location where " +
-//        "LATITUDE = '" + l.getLatitude() + "' and" +
-//        "LONGITUDE = '" + l.getLongitude() + "' and" +
-//        "ALTITUDE = '" + l.getAltitude() + "'"
-//        );

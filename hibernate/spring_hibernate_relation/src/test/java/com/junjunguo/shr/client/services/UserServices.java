@@ -17,27 +17,31 @@ public interface UserServices {
     List<User> listAllUsers();
 
     /**
-     * @param name
+     * @param name of the user
      * @return first user with the matching name
      */
     User getUserByName(String name);
 
+    /**
+     * @param email
+     * @return user by given email
+     */
     User getUserByEmail(String email);
 
     /**
-     * @param user
+     * @param user the user
      * @return a feedback message
      */
     String createUser(User user);
 
     /**
-     * @param user
+     * @param user the user
      * @return a feedback message
      */
     String updateUser(User user);
 
     /**
-     * @param email
+     * @param email of the user
      * @return a feedback message
      */
     String deleteUserByEmail(String email);

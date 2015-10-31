@@ -1,6 +1,7 @@
 package com.junjunguo.shr.dao.daoImpl;
 
 import com.junjunguo.shr.dao.VideoDao;
+import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -51,6 +52,21 @@ public class VideoDaoImpl implements VideoDao {
         return q.list().isEmpty() ? null : (List<Video>) q.list();
     }
 
+    //TODO: need to change later for better performance :
+    //https://en.wikipedia.org/wiki/Oracle_Spatial_and_Graph ||http://postgis.refractions.net/
+    // http://mysql.rjweb.org/doc.php/latlng
+    public List<Video> findNearBy(Location location, double boundary) {
+        log("find near by");
+        Query q = sessionFactory.getCurrentSession().createQuery(
+                "from Video v inner join v.location l " +
+                "where l.latitude < '" + (location.getLatitude() + boundary) + "'" +
+                "and l.latitude > '" + (location.getLatitude() - boundary) + "'" +
+                "and l.longitude < '" + (location.getLongitude() + boundary) + "'" +
+                "and l.longitude > '" + (location.getLongitude() - boundary) + "'");
+        log("query finished " + q);
+        return q.list().isEmpty() ? null : (List<Video>) q.list();
+    }
+
     @Transactional
     public void saveVideo(Video video) {
         sessionFactory.getCurrentSession().saveOrUpdate(video);
@@ -69,5 +85,9 @@ public class VideoDaoImpl implements VideoDao {
                                                          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                                                          .list();
         return videos;
+    }
+
+    public void log(String s) {
+        System.out.println(this.getClass().getSimpleName() + "- - - - - - " + s);
     }
 }

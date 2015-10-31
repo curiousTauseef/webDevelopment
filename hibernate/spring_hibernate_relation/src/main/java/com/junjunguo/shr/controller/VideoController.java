@@ -1,5 +1,6 @@
 package com.junjunguo.shr.controller;
 
+import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 import com.junjunguo.shr.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,25 @@ public class VideoController {
         return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = {"/location/nearby/{latitude}/{longitude}/{altitude}/{boundary}"},
+                    method = RequestMethod.GET)
+    public ResponseEntity<List<Video>> getVideosNearby(
+            @PathVariable(value = "latitude")
+            double latitude,
+            @PathVariable(value = "longitude")
+            double longitude,
+            @PathVariable(value = "altitude")
+            double altitude,
+            @PathVariable(value = "boundary")
+            double boundary) {
+        List<Video> videos = videoService.findNearBy(new Location(latitude, longitude, altitude), boundary);
+        if (videos == null || videos.isEmpty()) {
+            return new ResponseEntity<List<Video>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
+    }
+
     //-------------------Create a Video------------------------------------------------------
 
     @RequestMapping(value = "",
@@ -149,5 +169,9 @@ public class VideoController {
 
         videoService.deleteVideoById(id);
         return new ResponseEntity<Video>(HttpStatus.NO_CONTENT);
+    }
+
+    public void log(String s) {
+        System.out.println(this.getClass().getSimpleName() + "- - - - - - " + s);
     }
 }

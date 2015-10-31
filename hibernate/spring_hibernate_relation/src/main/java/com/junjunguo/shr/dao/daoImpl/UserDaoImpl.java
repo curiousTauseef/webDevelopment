@@ -54,7 +54,6 @@ public class UserDaoImpl implements UserDao {
         return !q.list().isEmpty() ? (User) q.list().get(0) : null;
     }
 
-
     @Transactional
     public User findByName(String name) {
         Query q = sessionFactory.getCurrentSession().createQuery("from User where name = '" + name + "'");
@@ -64,5 +63,4 @@ public class UserDaoImpl implements UserDao {
     public void log(String s) {
         System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
     }
-
 }

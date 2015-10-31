@@ -10,8 +10,14 @@ import java.util.List;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 27/10/15.
  */
 public interface LocaServices {
-
+    /**
+     * @return list of all locations
+     */
     List<Location> listAllLocations();
 
+    /**
+     * @param id location id (Generated from server)
+     * @return Location
+     */
     Location getById(long id);
 }
