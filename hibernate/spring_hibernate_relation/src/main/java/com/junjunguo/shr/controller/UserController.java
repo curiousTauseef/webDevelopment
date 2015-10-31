@@ -70,7 +70,6 @@ public class UserController {
     public ResponseEntity<Void> createUser(
             @RequestBody
             User user, UriComponentsBuilder ucBuilder) {
-        log("create user: " + user);
         if (userService.isUserExist(user.getEmail())) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
@@ -103,15 +102,13 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         } else if (videoService.findByEmail(user.getEmail()) != null) {
-            log("@@@@" + user);
-            log("*** " + videoService.findByEmail(user.getEmail()));
             return new ResponseEntity<User>(HttpStatus.NOT_ACCEPTABLE);
         }
         userService.deleteUserByEmail(email);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 
-    public void log(String s) {
-        System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
-    }
+    //    public void log(String s) {
+    //        System.out.println("\n----" + this.getClass().getSimpleName() + " " + s);
+    //    }
 }

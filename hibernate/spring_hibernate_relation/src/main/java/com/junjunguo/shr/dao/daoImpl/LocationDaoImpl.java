@@ -2,10 +2,11 @@ package com.junjunguo.shr.dao.daoImpl;
 
 import com.junjunguo.shr.dao.LocationDao;
 import com.junjunguo.shr.model.Location;
-import com.junjunguo.shr.model.Video;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,16 +33,41 @@ public class LocationDaoImpl implements LocationDao {
     @Transactional
     public List<Location> findAllLocations() {
         @SuppressWarnings("unchecked")
-        List<Location> locations = (List<Location>) sessionFactory.getCurrentSession()
-                                                                  .createCriteria(Location.class)
-                                                                  .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                                                                  .list();
+        List<Location> locations =
+                (List<Location>) sessionFactory.getCurrentSession()
+                                               .createCriteria(Location.class)
+                                               .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                               .list();
         return locations;
     }
 
     @Transactional
     public Location findById(long id) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from Location where ID = '" + id + "'");
+        Query q = sessionFactory.getCurrentSession().createQuery(
+                "from Location where " +
+                "ID = '" + id + "'");
         return !q.list().isEmpty() ? (Location) q.list().get(0) : null;
     }
+
+    public Location findByLocation(Location l) {
+        @SuppressWarnings("unchecked")
+        List<Location> locations =
+                sessionFactory.getCurrentSession().createCriteria(Location.class)
+                              .add(Restrictions.conjunction()
+                                               .add(Property.forName("latitude").eq(l.getLatitude()))
+                                               .add(Property.forName("longitude").eq(l.getLongitude()))
+                                               .add(Property.forName("altitude").eq(l.getAltitude()))).list();
+        return !locations.isEmpty() ? locations.get(0) : null;
+    }
 }
+//"from Location lo where " +
+//        "lo.latitude = '" + l.getLatitude() + "' and" +
+//        "lo.longitude = '" + l.getLongitude() + "' and" +
+//        "lo.altitude = '" + l.getAltitude() + "'"
+//        );
+
+//"from Location where " +
+//        "LATITUDE = '" + l.getLatitude() + "' and" +
+//        "LONGITUDE = '" + l.getLongitude() + "' and" +
+//        "ALTITUDE = '" + l.getAltitude() + "'"
+//        );

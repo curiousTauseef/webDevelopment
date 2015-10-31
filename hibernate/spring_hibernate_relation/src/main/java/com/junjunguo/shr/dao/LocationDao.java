@@ -13,4 +13,6 @@ public interface LocationDao {
     List<Location> findAllLocations();
 
     Location findById(long id);
+
+    Location findByLocation(Location location);
 }

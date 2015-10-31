@@ -11,7 +11,7 @@ public class Location {
     /**
      * location id
      */
-    private long    id;
+    private long   id;
     private double latitude;
     private double longitude;
     private double altitude;
@@ -25,11 +25,11 @@ public class Location {
     }
 
     public Location(double latitude, double logitude) {
-        this.latitude = latitude;
-        this.longitude = logitude;
+        this(latitude, logitude, 0);
     }
 
     public Location() {
+        this(0, 0, 0);
     }
 
     /**

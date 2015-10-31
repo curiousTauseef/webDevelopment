@@ -106,9 +106,11 @@ public class VideoController {
     public ResponseEntity<Void> createVideo(
             @RequestBody
             Video video, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating Video " + video);
+        //        TODO: how to indicate a video is already exist ?
+        //        if (videoService.isVideoExist(video.getId())) {
+        //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        //        }
         videoService.addVideo(video);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
@@ -122,16 +124,12 @@ public class VideoController {
     public ResponseEntity<Video> updateVideo(
             @RequestBody
             Video video) {
-        System.out.println("Updating Video " + video);
-
-        Video currentVideo = videoService.findById(video.getId());
-
-        if (currentVideo == null) {
-            System.out.println("Video with id " + video.getId() + " not found");
+        if (videoService.findById(video.getId()) == null) {
+            //            System.out.println("Video with id " + video.getId() + " not found");
             return new ResponseEntity<Video>(HttpStatus.NOT_FOUND);
         }
-        videoService.updateVideo(currentVideo);
-        return new ResponseEntity<Video>(currentVideo, HttpStatus.OK);
+        videoService.updateVideo(video);
+        return new ResponseEntity<Video>(video, HttpStatus.OK);
     }
 
     //------------------- Delete a Video --------------------------------------------------------

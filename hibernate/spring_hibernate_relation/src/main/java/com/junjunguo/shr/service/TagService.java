@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface TagService {
     /**
-     * @param label
+     * @param label tag label
      * @return Tag (contains list of videos)
      */
     Tag findByLabel(String label);
 
     /**
-     * @param id
+     * @param id tag id
      * @return Tag (only tag)
      */
     Tag findByTagId(long id);
@@ -28,4 +28,6 @@ public interface TagService {
     List<Tag> findAllTags();
 
     void addTag(String label);
+
+    boolean isLabelExist(String label);
 }

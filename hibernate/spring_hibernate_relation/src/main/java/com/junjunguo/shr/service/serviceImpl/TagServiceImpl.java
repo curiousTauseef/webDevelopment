@@ -21,7 +21,6 @@ public class TagServiceImpl implements TagService {
     private TagDao tagDao;
 
     public Tag findByLabel(String label) {
-        System.out.println("tag service impl find label: " + label);
         return tagDao.findByLabel(label);
     }
 
@@ -34,7 +33,10 @@ public class TagServiceImpl implements TagService {
     }
 
     public void addTag(String label) {
-        System.out.println("tag service impl " + label);
         tagDao.saveTag(new Tag(label));
+    }
+
+    public boolean isLabelExist(String label) {
+        return tagDao.findByLabel(label) != null;
     }
 }

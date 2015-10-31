@@ -69,7 +69,7 @@ public class TagServicesImpl implements TagServices {
         RestTemplate restTemplate = new RestTemplate();
         try {
             URI uri = restTemplate.postForLocation(REST_SERVICE_URI, label);
-            message = "succeed";
+            message = "create tag: {" + label + "} succeed";
             System.out.println("uri : " + uri.toASCIIString() + "/");
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {

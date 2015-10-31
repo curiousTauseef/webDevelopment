@@ -31,21 +31,28 @@ public class ClientTesting {
         tags.add(new Tag("JPA"));
         Video v = new Video("title", tags, "new", "path", "name", "mp4", lee, new Location(60.10, 10.3));
         log(vs.createVideo(v));
+//
+//        User matilde = new User("Matilde", "ola@tsag.com", "matilde's password");
+//        log(us.createUser(matilde));
+//        log(us.listAllUsers().toString());
+//        User jj = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
+//        log(us.createUser(jj));
+//        log(us.listAllUsers().toString());
+//        jj.setGender(Gender.MALE);
+//        log(us.updateUser(jj));
+//        log(us.listAllUsers().toString());
+//        User eva = new User("Eva", "eva@yahoo.com", "eva's password");
+//        log(us.createUser(eva));
+//        log(us.listAllUsers().toString());
+//        //        log(us.deleteUserByEmail(eva.getEmail()));
+//        log(us.listAllUsers().toString());
+//        tags.add(new Tag("NTNU"));
+//        Video v2 = new Video("title: v2", tags, "new", "path", "name", "mp4", jj, new Location(60.10, 10.3));
+//        tags.add(new Tag("TSAG"));
+//        Video v3 = new Video("title: v2", tags, "new", "path", "name", "mp4", jj, new Location(60.10, 10.3));
+//        log(vs.createVideo(v2));
 
-        User matilde = new User("Matilde", "ola@tsag.com", "matilde's password");
-        log(us.createUser(matilde));
-        log(us.listAllUsers().toString());
-        User jj = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
-        log(us.createUser(jj));
-        log(us.listAllUsers().toString());
-        jj.setGender(Gender.MALE);
-        log(us.updateUser(jj));
-        log(us.listAllUsers().toString());
-        User eva = new User("Eva", "eva@yahoo.com", "eva's password");
-        log(us.createUser(eva));
-        log(us.listAllUsers().toString());
-        log(us.deleteUserByEmail(eva.getEmail()));
-        log(us.listAllUsers().toString());
+//        log(vs.createVideo(v3));
 
 
         //        getUserByName("ol");//by name

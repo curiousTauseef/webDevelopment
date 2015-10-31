@@ -306,18 +306,18 @@ public class Video {
 
 
     /**
-     * Sets new hasVideo.
+     * Sets new isVideoExist.
      *
-     * @param hasVideo New value of hasVideo.
+     * @param hasVideo New value of isVideoExist.
      */
     public void setHasVideo(boolean hasVideo) {
         this.hasVideo = hasVideo;
     }
 
     /**
-     * Gets hasVideo.
+     * Gets isVideoExist.
      *
-     * @return Value of hasVideo.
+     * @return Value of isVideoExist.
      */
     public boolean isHasVideo() {
         return hasVideo;

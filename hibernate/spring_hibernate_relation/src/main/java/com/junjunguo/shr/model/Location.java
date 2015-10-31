@@ -21,7 +21,7 @@ public class Location {
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private long    id;
+    private long   id;
     @Column(name = "LATITUDE",
             nullable = false,
             columnDefinition = "DOUBLE")
@@ -42,11 +42,11 @@ public class Location {
     }
 
     public Location(double latitude, double logitude) {
-        this.latitude = latitude;
-        this.longitude = logitude;
+        this(latitude, logitude, 0);
     }
 
     public Location() {
+        this(0, 0, 0);
     }
 
     /**
@@ -119,5 +119,33 @@ public class Location {
      */
     public double getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Location)) return false;
+
+        Location location = (Location) o;
+
+        if (getId() != location.getId()) return false;
+        if (Double.compare(location.getLatitude(), getLatitude()) != 0) return false;
+        if (Double.compare(location.getLongitude(), getLongitude()) != 0) return false;
+        return Double.compare(location.getAltitude(), getAltitude()) == 0;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int  result;
+        long temp;
+        result = (int) (getId() ^ (getId() >>> 32));
+        temp = Double.doubleToLongBits(getLatitude());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(getLongitude());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(getAltitude());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

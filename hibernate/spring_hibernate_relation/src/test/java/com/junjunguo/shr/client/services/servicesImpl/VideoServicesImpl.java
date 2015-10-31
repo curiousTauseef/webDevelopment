@@ -27,6 +27,7 @@ public class VideoServicesImpl implements VideoServices {
                     .getForObject(REST_SERVICE_URI + "/list/", List.class);
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
+                System.out.println("no video found !");
             } else {
                 System.out.println("oops! error occurred! " + e.getMessage());
             }
@@ -42,7 +43,7 @@ public class VideoServicesImpl implements VideoServices {
             video = restTemplate.getForObject(REST_SERVICE_URI + "/id/" + id, Video.class);
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.NOT_FOUND.toString())) {
-                System.out.println("video: {" + video + "} not found !");
+                System.out.println("video with id: {" + id + "} not found !");
             } else {
                 System.out.println("oops! error occurred! " + e.getMessage());
             }

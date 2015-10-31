@@ -6,9 +6,11 @@ package com.junjunguo.shr.service.serviceImpl;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
  */
 
+import com.junjunguo.shr.dao.LocationDao;
 import com.junjunguo.shr.dao.TagDao;
 import com.junjunguo.shr.dao.UserDao;
 import com.junjunguo.shr.dao.VideoDao;
+import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Tag;
 import com.junjunguo.shr.model.User;
 import com.junjunguo.shr.model.Video;
@@ -20,16 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("videoservice")
+@Service("videoService")
 @Transactional
 public class VideoServiceImpl implements VideoService {
     @Autowired
-    private VideoDao videoDao;
+    private VideoDao    videoDao;
     @Autowired
-    private TagDao   tagDao;
-
+    private TagDao      tagDao;
     @Autowired
-    private UserDao userDao;
+    private UserDao     userDao;
+    @Autowired
+    private LocationDao locationDao;
 
     public Video findById(long id) {
         return videoDao.findById(id);
@@ -44,21 +47,23 @@ public class VideoServiceImpl implements VideoService {
     }
 
     public void addVideo(Video video) {
-        System.out.println("add video video service impl " + video);
-        List<Tag> tags = video.getTags();
-        List<Tag> tgs  = new ArrayList<Tag>();
-        for (Tag tg : tags) {
-            System.out.println("------ " + tg);
+        System.out.println("\n@@video service : " + video + "@@\n");
+        List<Tag> gTags = video.getTags();
+        System.out.println("\n@@video service g tags: " + gTags + "@@\n");
+        List<Tag> aTags = new ArrayList<Tag>();
+        for (Tag tg : gTags) {
             Tag t = tagDao.findByLabel(tg.getLabel());
-            System.out.println("------ " + t);
             if (t == null) {
                 Tag nt = new Tag(tg.getLabel());
-                tgs.add(nt);
+                aTags.add(nt);
             } else {
-                tgs.add(t);
+                aTags.add(t);
             }
         }
+        video.setTags(aTags);
+
         User user = video.getOwner();
+        System.out.println("\n@@video service user: " + user + " video: " + video + "@@\n");
         if (user != null) {
             User u = userDao.findByEmail(user.getEmail());
             if (u == null) {
@@ -67,11 +72,25 @@ public class VideoServiceImpl implements VideoService {
             } else {
                 video.setOwner(u);
             }
-
         }
-        video.setTags(tgs);
-        System.out.println("\n video set tags \n");
-        videoDao.saveVideo(video);
+
+        Location lo = video.getLocation();
+        System.out.println("\n@@video service lo: " + lo + " video: " + video + "@@\n");
+        if (lo != null) {
+            Location l = locationDao.findByLocation(lo);
+            System.out.println("\n@@video service lo: " + lo + " find l: " + l + "@@\n");
+            if (l == null) {
+                video.setLocation(new Location(lo.getLatitude(), lo.getLongitude(), lo.getAltitude()));
+            } else {
+                video.setLocation(l);
+            }
+        }
+        System.out.println("\n@@video service video: " + video + "@@\n");
+        try {
+            videoDao.saveVideo(video);
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
     }
 
     public void updateVideo(Video video) {
@@ -86,8 +105,8 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findAllVideos();
     }
 
-    public boolean hasVideo(long id) {
-        return videoDao.hasVideo(id);
+    public boolean isVideoExist(long id) {
+        return videoDao.findById(id) != null;
     }
 
     public List<Video> findByTag(long id) {

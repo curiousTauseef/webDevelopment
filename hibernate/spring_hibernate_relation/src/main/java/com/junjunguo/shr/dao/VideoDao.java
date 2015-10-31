@@ -45,11 +45,6 @@ public interface VideoDao {
     List<Video> findAllVideos();
 
     /**
-     * @return boolean has video or not
-     */
-    boolean hasVideo(long id);
-
-    /**
      * @param id tag id
      * @return list of video with given tag
      */

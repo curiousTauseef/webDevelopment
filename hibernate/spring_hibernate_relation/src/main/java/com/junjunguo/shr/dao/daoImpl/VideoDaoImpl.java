@@ -1,10 +1,8 @@
 package com.junjunguo.shr.dao.daoImpl;
 
 import com.junjunguo.shr.dao.VideoDao;
-import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +31,7 @@ public class VideoDaoImpl implements VideoDao {
     @Transactional
     public Video findById(long id) {
         Query q = sessionFactory.getCurrentSession().createQuery("from Video where ID = '" + id + "'");
-        if (q.list().isEmpty()) {
-            return null;
-        } else {
-            Video video = (Video) q.list().get(0);
-            return video;
-        }
+        return !q.list().isEmpty() ? (Video) q.list().get(0) : null;
     }
 
     public List<Video> findByEmail(String email) {
@@ -60,7 +53,7 @@ public class VideoDaoImpl implements VideoDao {
 
     @Transactional
     public void saveVideo(Video video) {
-        sessionFactory.getCurrentSession().persist(video);
+        sessionFactory.getCurrentSession().saveOrUpdate(video);
     }
 
     @Transactional
@@ -76,10 +69,5 @@ public class VideoDaoImpl implements VideoDao {
                                                          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                                                          .list();
         return videos;
-    }
-
-    public boolean hasVideo(long id) {
-        Query q = sessionFactory.getCurrentSession().createQuery("from Video where id = '" + id + "'");
-        return !q.list().isEmpty() && ((Video) q.list().get(0)).isHasVideo();
     }
 }

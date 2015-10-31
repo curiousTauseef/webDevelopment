@@ -24,7 +24,7 @@ public interface VideoService {
 
     List<Video> findAllVideos();
 
-    boolean hasVideo(long id);
+    boolean isVideoExist(long id);
 
     List<Video> findByTag(long id);
 }
