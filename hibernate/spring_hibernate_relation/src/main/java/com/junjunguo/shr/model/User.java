@@ -3,10 +3,7 @@ package com.junjunguo.shr.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.junjunguo.shr.util.MyDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,6 +16,11 @@ import java.util.Date;
 @Table(name = "USER")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
+    @GeneratedValue
+    @Column(name = "ID",
+            nullable = false)
+    private long id;
+
     @Column(name = "NAME",
             nullable = true,
             columnDefinition = "VARCHAR(128)")
@@ -214,35 +216,7 @@ public class User {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
 
-        User user = (User) o;
-
-        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
-        if (getGender() != null ? !getGender().equals(user.getGender()) : user.getGender() != null) return false;
-        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
-        return !(getRegisteredtime() != null ? !getRegisteredtime().equals(user.getRegisteredtime()) :
-                user.getRegisteredtime() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + getEmail().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
-        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
-        result = 31 * result + (getRegisteredtime() != null ? getRegisteredtime().hashCode() : 0);
-        return result;
-    }
 
     /**
      * Gets registeredtime.
@@ -251,6 +225,53 @@ public class User {
      */
     public Date getRegisteredtime() {
         return registeredtime;
+    }
+
+
+    /**
+     * Gets id.
+     *
+     * @return Value of id.
+     */
+    public long getId() { return id; }
+
+    /**
+     * Sets new id.
+     *
+     * @param id New value of id.
+     */
+    public void setId(long id) { this.id = id; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (getId() != user.getId()) return false;
+        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
+        if (!getEmail().equals(user.getEmail())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
+        if (getGender() != user.getGender()) return false;
+        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
+        return !(getRegisteredtime() != null ? !getRegisteredtime().equals(user.getRegisteredtime()) :
+                user.getRegisteredtime() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + getEmail().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
+        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
+        result = 31 * result + (getRegisteredtime() != null ? getRegisteredtime().hashCode() : 0);
+        return result;
     }
 
     @Override

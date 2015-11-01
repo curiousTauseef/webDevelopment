@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -120,21 +121,48 @@ public class VideoController {
     }
 
     //-------------------Create a Video------------------------------------------------------
-
     @RequestMapping(value = "",
                     method = RequestMethod.POST)
     public ResponseEntity<Void> createVideo(
             @RequestBody
-            Video video, UriComponentsBuilder ucBuilder) {
-        //        TODO: how to indicate a video is already exist ?
-        //        if (videoService.isVideoExist(video.getId())) {
-        //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        //        }
-        videoService.addVideo(video);
+            MultiValueMap<String, Object> map
+//                    Video video
+            , UriComponentsBuilder ucBuilder) {
+        log("create video");
+        Video video = (Video) map.get("video");
+//        videoService.addVideo(video, (MultipartFile) map.get("file"));
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
+
+    //    @RequestMapping(value = "",
+    //                    method = RequestMethod.POST)
+    //    public ResponseEntity<Void> createVideo(
+    //            @RequestBody
+    //            //            Video video, UriComponentsBuilder ucBuilder) {
+    //
+    //                    //            @RequestParam("video")
+    //                    //            Video video,
+    //                    //            @RequestParam("file")
+    //                    //            File file) {
+    //                    MultiValueMap<String, Object> map, UriComponentsBuilder ucBuilder) {
+    //        //        TODO: how to indicate a video is already exist ?
+    //        //        if (videoService.isVideoExist(video.getId())) {
+    //        //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+    //        //        }
+    //
+    //        log("create video");
+    //        Video video = (Video) map.get("video");
+    //        log("video: " + video);
+    //        videoService.addVideo(video, (MultipartFile) map.get("file"));
+    //        //        videoService.addVideo(video, null);
+    //
+    //        HttpHeaders headers = new HttpHeaders();
+    //        headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
+    //        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    //    }
 
 
     //------------------- Update a Video -----------------------------------------------------

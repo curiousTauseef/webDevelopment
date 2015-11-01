@@ -15,9 +15,11 @@ import com.junjunguo.shr.model.Tag;
 import com.junjunguo.shr.model.User;
 import com.junjunguo.shr.model.Video;
 import com.junjunguo.shr.service.VideoService;
+import com.junjunguo.shr.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,8 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private LocationDao locationDao;
 
+    private FileHandler fileHandler = new FileHandler();
+
     public Video findById(long id) {
         return videoDao.findById(id);
     }
@@ -46,7 +50,7 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findByTitle(title);
     }
 
-    public void addVideo(Video video) {
+    public void addVideo(Video video, MultipartFile multipartFile) {
         log("\n@@video service : " + video + "@@\n");
         List<Tag> gTags = video.getTags();
         log("\n@@video service g tags: " + gTags + "@@\n");
@@ -63,13 +67,18 @@ public class VideoServiceImpl implements VideoService {
         video.setTags(aTags);
 
         User user = video.getOwner();
+        User u    = new User();
         log("\n@@video service user: " + user + " video: " + video + "@@\n");
         if (user != null) {
-            User u = userDao.findByEmail(user.getEmail());
+            u = userDao.findByEmail(user.getEmail());
             if (u == null) {
-                video.setOwner(new User(user.getName(), user.getEmail(), user.getPassword(), user.getCountry(),
-                        user.getGender(), user.getBirth()));
-            } else {
+                User createU = new User(user.getName(), user.getEmail(), user.getPassword(), user.getCountry(),
+                        user.getGender(), user.getBirth());
+                userDao.saveUser(createU);
+                //                video.setOwner(new User(user.getName(), user.getEmail(), user.getPassword(), user.getCountry(),
+                //                        user.getGender(), user.getBirth()));
+                //            } else {
+                u = userDao.findByEmail(user.getEmail());
                 video.setOwner(u);
             }
         }
@@ -86,6 +95,8 @@ public class VideoServiceImpl implements VideoService {
             }
         }
         log("\n@@video service video: " + video + "@@\n");
+        String path = fileHandler.saveFile(u.getId(), multipartFile);
+        video.setFilePath(path);
         try {
             videoDao.saveVideo(video);
         } catch (Exception e) {

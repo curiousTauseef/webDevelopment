@@ -5,9 +5,14 @@ import com.junjunguo.shr.client.model.Video;
 import com.junjunguo.shr.client.services.VideoServices;
 import com.junjunguo.shr.client.util.Constant;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -112,12 +117,18 @@ public class VideoServicesImpl implements VideoServices {
     }
 
     /* POST */
-    public String createVideo(Video video) {
-        RestTemplate restTemplate = new RestTemplate();
-        String       message;
-
+    public String createVideo(Video video, String path) {
+        RestTemplate                  restTemplate = new RestTemplate();
+        String                        message;
+        MultiValueMap<String, Object> parts        = new LinkedMultiValueMap<String, Object>();
+        parts.add("video", video);
+        parts.add("file", getFileAsString(path));
         try {
-            URI uri = restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+            log("s: " + parts.toString().substring(0, 1000));
+            log("f " + parts.getFirst("file").toString().length());
+            URI uri =
+//                    restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+                                restTemplate.postForLocation(REST_SERVICE_URI, parts, MultiValueMap.class);
             System.out.println("Location : " + uri.toASCIIString());
             message = "create video: " + video + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
@@ -163,6 +174,34 @@ public class VideoServicesImpl implements VideoServices {
             }
         }
         return message;
+    }
+
+    private String getFileAsString(String path) {
+        try {
+            File file = new File(path);
+            FileInputStream in = new FileInputStream(file);
+            byte[] bytes = new byte[(int) file.length()];
+            in.read(bytes);
+            in.close();
+            return new String(bytes, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private byte[] getFileAsBytes(String path) {
+        try {
+            File file = new File(path);
+            FileInputStream in = new FileInputStream(file);
+            byte[] bytes = new byte[(int) file.length()];
+            in.read(bytes);
+            in.close();
+            return bytes;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void log(String s) {
