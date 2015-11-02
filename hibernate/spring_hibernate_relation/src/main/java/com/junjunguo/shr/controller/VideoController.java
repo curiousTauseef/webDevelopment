@@ -8,11 +8,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -125,16 +125,59 @@ public class VideoController {
                     method = RequestMethod.POST)
     public ResponseEntity<Void> createVideo(
             @RequestBody
-            MultiValueMap<String, Object> map
-//                    Video video
+            //            MultiValueMap<String, Object> map
+                    Map<String, Object> map
+            //                                Video video
             , UriComponentsBuilder ucBuilder) {
         log("create video");
         Video video = (Video) map.get("video");
-//        videoService.addVideo(video, (MultipartFile) map.get("file"));
+        log("video: " + video);
+        //                videoService.addVideo(video, (MultipartFile) map.get("file"));
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/upload",
+                    method = RequestMethod.POST)
+    public String handleFileUpload(
+            @RequestParam(value = "video",
+                          required = false)
+            String video,
+            @RequestParam(value = "file",
+                          required = false)
+            String file) {
+        log("video: " + video + " file: " + file.substring(0, 10));
+        if (!file.isEmpty()) {
+            //            try {
+            //                byte[] bytes = file.getBytes();
+            //                BufferedOutputStream stream =
+            //                        new BufferedOutputStream(new FileOutputStream(new File(name)));
+            //                stream.write(bytes);
+            //                stream.close();
+            //                return "You successfully uploaded " + name + "!";
+            //            } catch (Exception e) {
+            //                return "You failed to upload " + name + " => " + e.getMessage();
+            //            }
+            //            return videoService.addVideo();
+            return "upload file";
+        } else {
+            return "You failed to upload " + "" + " because the file was empty.";
+        }
+    }
+
+    //    @RequestMapping(value = "/upload",
+    //                    method = RequestMethod.POST)
+    //    public String save(
+    //            @RequestParam("file")
+    //            MultipartFile file) {
+    //
+    //        log("fine name : " + file.getName());
+    //        // Save it to i.e. database
+    //        // dao.save(file);
+    //        return "fileUpload";
+    //    }
 
 
     //    @RequestMapping(value = "",

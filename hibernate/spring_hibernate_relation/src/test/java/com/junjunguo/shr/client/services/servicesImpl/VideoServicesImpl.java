@@ -4,16 +4,23 @@ import com.junjunguo.shr.client.model.Location;
 import com.junjunguo.shr.client.model.Video;
 import com.junjunguo.shr.client.services.VideoServices;
 import com.junjunguo.shr.client.util.Constant;
+import com.junjunguo.shr.client.util.MultipartUtility;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.net.URI;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -117,19 +124,41 @@ public class VideoServicesImpl implements VideoServices {
     }
 
     /* POST */
-    public String createVideo(Video video, String path) {
-        RestTemplate                  restTemplate = new RestTemplate();
-        String                        message;
-        MultiValueMap<String, Object> parts        = new LinkedMultiValueMap<String, Object>();
-        parts.add("video", video);
-        parts.add("file", getFileAsString(path));
+    public String createVideo_dd(Video video, String path) {
+        RestTemplate             restTemplate  = new RestTemplate();
+        FormHttpMessageConverter formConverter = new FormHttpMessageConverter();
+        formConverter.setCharset(Charset.forName("UTF8"));
+        restTemplate.getMessageConverters().add(formConverter);
+
+
+        String message;
+        //        LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap();
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("name", video);
+
+        //        map.put("file", new FileSystemResource(path));
+
+
+        //                map.add("file", new ClassPathResource(new File(path)));
+        //        map.add("file", new File(path));
+        //        HttpHeaders headers = new HttpHeaders();
+        //        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        //
+        //        HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity =
+        //                new HttpEntity<LinkedMultiValueMap<String, Object>>(
+        //                        map, headers);
+
         try {
-            log("s: " + parts.toString().substring(0, 1000));
-            log("f " + parts.getFirst("file").toString().length());
-            URI uri =
-//                    restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
-                                restTemplate.postForLocation(REST_SERVICE_URI, parts, MultiValueMap.class);
-            System.out.println("Location : " + uri.toASCIIString());
+            String response = restTemplate.postForObject(REST_SERVICE_URI + "", map, String.class);
+
+            //            ResponseEntity<String> result = restTemplate.exchange(
+            //                    REST_SERVICE_URI + "/upload", HttpMethod.POST, requestEntity,
+            //                    String.class);
+            //                        URI uri =
+            //                                restTemplate.postForLocation(REST_SERVICE_URI + "/upload", map, String.class);
+            //                                restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+            //                        System.out.println("Location : " + uri.toASCIIString());
             message = "create video: " + video + " !succeed!";
         } catch (org.springframework.web.client.RestClientException e) {
             if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
@@ -137,6 +166,96 @@ public class VideoServicesImpl implements VideoServices {
             } else {
                 message = "oops! error occurred! " + e.getMessage();
             }
+        }
+        return message;
+
+    }
+
+    /* POST */
+    public String createVideo(Video video, String path) {
+        RestTemplate                        restTemplate = new RestTemplate();
+        String                              message;
+        LinkedMultiValueMap<String, Object> map          = new LinkedMultiValueMap();
+
+        map.add("video", "a video");
+//        map.add("file", "the file the file the file the file");
+                map.add("file", getFileAsString(path));
+
+        try {
+            // Create a new RestTemplate instance
+            ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(Constant.TIMEOUT);
+            ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(Constant.TIMEOUT);
+            // Add the gzip Accept-Encoding and Content-Encoding headers
+            HttpHeaders requestHeaders = new HttpHeaders();
+            //            requestHeaders.setAcceptEncoding(ContentCodingType.GZIP);
+            //            requestHeaders.setContentEncoding(ContentCodingType.GZIP);
+            // Support GZIP
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            // Support POST Form
+            restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+
+
+            String response = restTemplate.postForObject(REST_SERVICE_URI + "/upload", map, String.class);
+
+            //                        URI uri =
+            //                                restTemplate.postForLocation(REST_SERVICE_URI + "/upload", map, String.class);
+            //                                restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+            //                        System.out.println("Location : " + uri.toASCIIString());
+            message = "create video: " + video + " !succeed!";
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
+                message = "video: {" + video.toString() + "} already exist !";
+            } else {
+                message = "oops! error occurred! " + e.getMessage();
+            }
+        }
+        return message;
+
+    }
+
+    /* POST */
+    public String createVideo_d(Video video, String path) {
+        RestTemplate restTemplate = new RestTemplate();
+        String       message;
+        String       charset      = "UTF-8";
+        //        MultiValueMap<String, String> parts        = new LinkedMultiValueMap();
+        //        parts.add("name", "the name");
+        //        parts.add("file", "string");
+        try {
+            MultipartUtility multipart = new MultipartUtility(REST_SERVICE_URI + "/upload", charset);
+
+            multipart.addHeaderField("User-Agent", "CodeJava");
+            multipart.addHeaderField("Test-Header", "Header-Value");
+
+            multipart.addFormField("description", "Cool Pictures");
+            multipart.addFormField("keywords", "Java,upload,Spring");
+
+            multipart.addFilePart("fileUpload", new File(path));
+
+            List<String> response = multipart.finish();
+
+            System.out.println("SERVER REPLIED:");
+
+            for (String line : response) {
+                System.out.println(line);
+            }
+
+
+            //            URI uri =
+            //                    restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+            //                    restTemplate.postForLocation(REST_SERVICE_URI + "/upload", parts, String.class);
+            //            System.out.println("Location : " + uri.toASCIIString());
+            message = "create video: " + video + " !succeed!";
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
+                message = "video: {" + video.toString() + "} already exist !";
+            } else {
+                message = "oops! error occurred! " + e.getMessage();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            message = "oops! error occurred! " + e.getMessage();
+
         }
         return message;
     }
@@ -203,6 +322,7 @@ public class VideoServicesImpl implements VideoServices {
         }
         return null;
     }
+
 
     public void log(String s) {
         System.out.println(this.getClass().getSimpleName() + "- - - - - - " + s);

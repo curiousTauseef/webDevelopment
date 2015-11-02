@@ -8,5 +8,7 @@ package com.junjunguo.shr.client.util;
 public class Constant {
 
     public static final String SERVER_URL = "http://localhost:8080";
+    // Timeout in ms
+    public static final int    TIMEOUT    = 3600000;
 
 }
