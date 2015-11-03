@@ -19,7 +19,6 @@ import com.junjunguo.shr.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findByTitle(title);
     }
 
-    public void addVideo(Video video, MultipartFile multipartFile) {
+    public String addVideo(Video video, String file) {
         log("\n@@video service : " + video + "@@\n");
         List<Tag> gTags = video.getTags();
         log("\n@@video service g tags: " + gTags + "@@\n");
@@ -78,9 +77,9 @@ public class VideoServiceImpl implements VideoService {
                 //                video.setOwner(new User(user.getName(), user.getEmail(), user.getPassword(), user.getCountry(),
                 //                        user.getGender(), user.getBirth()));
                 //            } else {
-                u = userDao.findByEmail(user.getEmail());
-                video.setOwner(u);
             }
+            u = userDao.findByEmail(user.getEmail());
+            video.setOwner(u);
         }
 
         Location lo = video.getLocation();
@@ -95,12 +94,19 @@ public class VideoServiceImpl implements VideoService {
             }
         }
         log("\n@@video service video: " + video + "@@\n");
-        String path = fileHandler.saveFile(u.getId(), multipartFile);
-        video.setFilePath(path);
+        String path = fileHandler.SaveFromStr(video, file);
         try {
-            videoDao.saveVideo(video);
+            if (!path.startsWith("Error")) {
+                video.setFilePath(path);
+                video.setHasVideo(true);
+                videoDao.saveVideo(video);
+                return "add video succeed.";
+            } else {
+                return path;
+            }
         } catch (Exception e) {
             e.fillInStackTrace();
+            return e.getMessage();
         }
     }
 

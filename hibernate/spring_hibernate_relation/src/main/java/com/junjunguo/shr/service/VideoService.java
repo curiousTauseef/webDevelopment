@@ -2,7 +2,6 @@ package com.junjunguo.shr.service;
 
 import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,10 +31,10 @@ public interface VideoService {
     List<Video> findByTitle(String name);
 
     /**
-     * @param video         object: save or update this video
-     * @param multipartFile File
+     * @param video object: save or update this video
+     * @param file  File
      */
-    void addVideo(Video video, MultipartFile multipartFile);
+    String addVideo(Video video, String file);
 
     void updateVideo(Video video);
 

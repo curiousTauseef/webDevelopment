@@ -3,6 +3,7 @@ package com.junjunguo.shr.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -14,7 +15,7 @@ import javax.persistence.*;
        uniqueConstraints = {@UniqueConstraint(columnNames = {"LATITUDE", "LONGITUDE", "ALTITUDE"})}
 )
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Location {
+public class Location implements Serializable{
     /**
      * location id
      */

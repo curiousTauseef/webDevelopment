@@ -1,19 +1,22 @@
 package com.junjunguo.shr.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 import com.junjunguo.shr.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This file is part of spring_hibernate_relation.
@@ -122,103 +125,69 @@ public class VideoController {
     }
 
     //-------------------Create a Video------------------------------------------------------
+
     @RequestMapping(value = "",
                     method = RequestMethod.POST)
-    public ResponseEntity<Void> createVideo(
-            @RequestBody
-            //            MultiValueMap<String, Object> map
-                    Map<String, Object> map
-            //                                Video video
-            , UriComponentsBuilder ucBuilder) {
-        log("create video");
-        Video video = (Video) map.get("video");
-        log("video: " + video);
-        //                videoService.addVideo(video, (MultipartFile) map.get("file"));
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-    }
-
-    @RequestMapping(value = "/upload",
-                    method = RequestMethod.POST)
-    public String handleFileUpload(
+    public String createVideo(
             @RequestParam(value = "video",
                           required = false)
             String video,
             @RequestParam(value = "file",
                           required = false)
             String file) {
-        log("video: " + video + " file: " + file.substring(0, 10));
-        if (!file.isEmpty()) {
-            //            try {
-            //                byte[] bytes = file.getBytes();
-            //                BufferedOutputStream stream =
-            //                        new BufferedOutputStream(new FileOutputStream(new File(name)));
-            //                stream.write(bytes);
-            //                stream.close();
-            //                return "You successfully uploaded " + name + "!";
-            //            } catch (Exception e) {
-            //                return "You failed to upload " + name + " => " + e.getMessage();
-            //            }
-            //            return videoService.addVideo();
-            return "upload file";
-        } else {
-            return "You failed to upload " + "" + " because the file was empty.";
+        log("video: \n" + video);
+        Video vo;
+        try {
+            vo = getVideo(video);
+            log("vo to string : " + vo.toString());
+            if (!file.isEmpty()) {
+                log("file is not empty ;) " + file.substring(0, 10));
+                //            log("v to string " + vo.toString());
+                log(videoService.addVideo(vo, file));
+                return "Succeed";
+            } else {
+                return "You failed to upload " + "" + " because the file was empty.";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return e.getMessage();
         }
     }
 
-    //    @RequestMapping(value = "/upload_file",
-    //                    method = RequestMethod.POST)
-    //    public String save(
-    //            @RequestParam("file")
-    //            MultipartFile file) {
-    //
-    //        log("fine name : " + file.getName());
-    //        // Save it to i.e. database
-    //        // dao.save(file);
-    //        return "fileUpload";
-    //    }
-    @ResponseBody
-    @RequestMapping(value = "/upload_file/{id}",
-                    method = RequestMethod.POST)
-    public ResponseEntity<Void> uploadFile(
-            @RequestParam("file")
-            MultipartFile srcFile,
-            @PathVariable("id")
-            String id) {
-        log("id =" + id);
-        log("size: " + srcFile.getSize());
-
-        log("upload file");
-        return null;
+    private Video getVideo(String s) throws IOException {
+        //        Video        v      = new Video();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        //        mapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(
+        //                JsonAutoDetect.Visibility.ANY));
+        return mapper.readValue(s, Video.class);
     }
-    //    @RequestMapping(value = "",
-    //                    method = RequestMethod.POST)
-    //    public ResponseEntity<Void> createVideo(
-    //            @RequestBody
-    //            //            Video video, UriComponentsBuilder ucBuilder) {
-    //
-    //                    //            @RequestParam("video")
-    //                    //            Video video,
-    //                    //            @RequestParam("file")
-    //                    //            File file) {
-    //                    MultiValueMap<String, Object> map, UriComponentsBuilder ucBuilder) {
-    //        //        TODO: how to indicate a video is already exist ?
-    //        //        if (videoService.isVideoExist(video.getId())) {
-    //        //            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-    //        //        }
-    //
-    //        log("create video");
-    //        Video video = (Video) map.get("video");
-    //        log("video: " + video);
-    //        videoService.addVideo(video, (MultipartFile) map.get("file"));
-    //        //        videoService.addVideo(video, null);
-    //
-    //            HttpHeaders headers = new HttpHeaders();
-    //            headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
-    //            return new ResponseEntity<Void>( HttpStatus.CREATED);
-    //    }
 
+    @RequestMapping(value = "/multi",
+                    method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String handleFileUpload(
+            @RequestParam("name")
+            String name,
+            @RequestParam("file")
+            MultipartFile file) {
+        log("e . up load called");
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(new File(name)));
+                stream.write(bytes);
+                stream.close();
+                return "You successfully uploaded " + name + "!";
+            } catch (Exception e) {
+                return "You failed to upload " + name + " => " + e.getMessage();
+            }
+        } else {
+            return "You failed to upload " + name + " because the file was empty.";
+        }
+    }
 
     //------------------- Update a Video -----------------------------------------------------
 
@@ -257,4 +226,5 @@ public class VideoController {
     public void log(String s) {
         System.out.println(this.getClass().getSimpleName() + "- - - - - - " + s);
     }
+
 }

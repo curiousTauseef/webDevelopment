@@ -7,7 +7,7 @@ package com.junjunguo.shr.util;
  */
 public class Constant {
 
-    public static final String VIDEO_FILE_PATH = "/home/test/videos/";
+    public static final String VIDEO_FILE_PATH = "/Users/Junjun/home/test/videos/";
 
     public static final int BUFFER_SIZE = 8 * 1024;
 

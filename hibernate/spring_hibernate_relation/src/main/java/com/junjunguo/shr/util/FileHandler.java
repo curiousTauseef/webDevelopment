@@ -1,5 +1,6 @@
 package com.junjunguo.shr.util;
 
+import com.junjunguo.shr.model.Video;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -10,6 +11,24 @@ import java.io.*;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 01/11/15.
  */
 public class FileHandler {
+    public String SaveFromStr(Video v, String input) {
+        String path =
+                Constant.VIDEO_FILE_PATH + v.getOwner().getId() + "/";
+        String name = System.currentTimeMillis() + "." + v.getFileExtension();
+        try {
+            File file = new File(path);
+            file.mkdirs();
+            log("file: " + file.getAbsolutePath());
+            FileOutputStream out = new FileOutputStream(path + name);
+            out.write(input.getBytes());
+            out.flush();
+            out.close();
+            return path + name;
+        } catch (Exception e) {
+            return "Error You failed to upload " + path + "; exception: " + e.getMessage();
+        }
+    }
+
     //TODO: enable resume on broken upload
     public String save(long userId, MultipartFile file) {
         String path =
@@ -26,6 +45,7 @@ public class FileHandler {
         }
     }
 
+    //    public String saveFile(long userId, MultipartFile multipartFile) {
     public String saveFile(long userId, MultipartFile multipartFile) {
         String path =
                 Constant.VIDEO_FILE_PATH + "/" + userId + "/" + System.currentTimeMillis();
@@ -55,5 +75,9 @@ public class FileHandler {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void log(String s) {
+        System.out.println(this.getClass().getSimpleName() + "- - - - - - " + s);
     }
 }

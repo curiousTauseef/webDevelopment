@@ -2,6 +2,7 @@ package com.junjunguo.shr.client.model;
 
 import com.junjunguo.shr.util.MyDate;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 27/10/15.
  */
-public class User {
+public class User implements Serializable {
     private String      name;
     private String      email;
     private String      password;

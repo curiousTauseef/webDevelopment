@@ -1,6 +1,7 @@
 package com.junjunguo.shr.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,14 +13,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "VIDEO")
-public class Video {
+public class Video implements Serializable {
     /**
      * video id
      */
     @Id
     @GeneratedValue
     @Column(name = "ID")
-    private long    id;
+    private long   id;
     @Column(name = "TITLE",
             nullable = true,
             columnDefinition = "VARCHAR(255)")

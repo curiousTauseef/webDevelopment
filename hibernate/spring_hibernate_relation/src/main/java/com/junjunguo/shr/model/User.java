@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.junjunguo.shr.util.MyDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "USER")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User {
+public class User implements Serializable {
     @GeneratedValue
     @Column(name = "ID",
             nullable = false)
@@ -215,7 +216,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
 
 
     /**
