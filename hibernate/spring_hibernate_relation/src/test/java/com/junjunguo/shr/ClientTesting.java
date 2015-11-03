@@ -28,22 +28,23 @@ public class ClientTesting {
         VideoServices vs = new VideoServicesImpl();
         TagServices   ts = new TagServicesImpl();
 
+        User      jj   = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
         User      lee  = new User("Lee", "lee@gmail.com", "lee's password");
         List<Tag> tags = new ArrayList<Tag>();
-        tags.add(new Tag("CS"));
-        tags.add(new Tag("JPA"));
+        tags.add(new Tag("read"));
+        tags.add(new Tag("pdf"));
         String filePath = "/Users/Junjun/Movies/testing.f4v";
         String textPath = "/Users/Junjun/test.txt";
         String pdfPath =
                 "/Users/Junjun/GoogleDrive/documentsOnGoogleDrive/Lesing/java-persistence-developer-guide.pdf";
         String imgPath = "/Users/Junjun/Dropbox/doc/img/git.png";
-        Video  v       = new Video("text", tags, "text", textPath, "test", "txt", lee, new Location(60.10, 13.3));
+        //        Video  v       = new Video("text", tags, "text", textPath, "test", "txt", lee, new Location(60.10, 13.3));
+        Video v = new Video("text", tags, "text", textPath, "text", "text", jj, new Location(61.10, 10.3));
         //        File   file     = new File(v.getFilePath());
-        log(vs.createVideo(v, v.getFilePath()));
+        log(vs.uploadVideo(v));
         //        User matilde = new User("Matilde", "ola@tsag.com", "matilde's password");
         //        log(us.createUser(matilde));
         //        log(us.listAllUsers().toString());
-        //        User jj = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
         //        log(us.createUser(jj));
         //        log(us.listAllUsers().toString());
         //        jj.setGender(Gender.MALE);

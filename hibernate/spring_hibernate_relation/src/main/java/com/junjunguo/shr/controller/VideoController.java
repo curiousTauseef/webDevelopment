@@ -12,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -154,38 +151,30 @@ public class VideoController {
         }
     }
 
-    private Video getVideo(String s) throws IOException {
-        //        Video        v      = new Video();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        //        mapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(
-        //                JsonAutoDetect.Visibility.ANY));
-        return mapper.readValue(s, Video.class);
-    }
-
-    @RequestMapping(value = "/multi",
+    @RequestMapping(value = "/upload",
                     method = RequestMethod.POST)
     public
     @ResponseBody
     String handleFileUpload(
-            @RequestParam("name")
-            String name,
+            @RequestParam("video")
+            String video,
             @RequestParam("file")
             MultipartFile file) {
         log("e . up load called");
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(name)));
-                stream.write(bytes);
-                stream.close();
-                return "You successfully uploaded " + name + "!";
+                log("file size: " + file.getSize());
+                //                byte[] bytes = file.getBytes();
+                //                BufferedOutputStream stream =
+                //                        new BufferedOutputStream(new FileOutputStream(new File(name)));
+                //                stream.write(bytes);
+                //                stream.close();
+                return "You successfully uploaded " + "!";
             } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
+                return "You failed to upload " + " => " + e.getMessage();
             }
         } else {
-            return "You failed to upload " + name + " because the file was empty.";
+            return "You failed to upload " + " because the file was empty.";
         }
     }
 
@@ -221,6 +210,12 @@ public class VideoController {
 
         videoService.deleteVideoById(id);
         return new ResponseEntity<Video>(HttpStatus.NO_CONTENT);
+    }
+
+    private Video getVideo(String s) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        return mapper.readValue(s, Video.class);
     }
 
     public void log(String s) {

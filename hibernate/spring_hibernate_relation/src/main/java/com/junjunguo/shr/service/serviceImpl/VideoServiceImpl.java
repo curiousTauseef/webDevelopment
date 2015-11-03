@@ -64,19 +64,14 @@ public class VideoServiceImpl implements VideoService {
             }
         }
         video.setTags(aTags);
-
         User user = video.getOwner();
-        User u    = new User();
         log("\n@@video service user: " + user + " video: " + video + "@@\n");
         if (user != null) {
-            u = userDao.findByEmail(user.getEmail());
+            User u = userDao.findByEmail(user.getEmail());
             if (u == null) {
                 User createU = new User(user.getName(), user.getEmail(), user.getPassword(), user.getCountry(),
                         user.getGender(), user.getBirth());
                 userDao.saveUser(createU);
-                //                video.setOwner(new User(user.getName(), user.getEmail(), user.getPassword(), user.getCountry(),
-                //                        user.getGender(), user.getBirth()));
-                //            } else {
             }
             u = userDao.findByEmail(user.getEmail());
             video.setOwner(u);

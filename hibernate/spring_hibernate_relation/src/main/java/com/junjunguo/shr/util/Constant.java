@@ -11,7 +11,7 @@ public class Constant {
 
     public static final int BUFFER_SIZE = 8 * 1024;
 
-    public static final String LOCATION = "/home/test/temp/";
+    public static final String LOCATION = "/Users/Junjun/home/test/temp/";
 
     public static final long MAX_FILE_SIZE = 1024 * 1024 * 100;//100MB
 

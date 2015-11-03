@@ -42,6 +42,12 @@ public interface VideoServices {
     String createVideo(Video video, String path);
 
     /**
+     * @param video going to be created
+     * @return feedback message about the process
+     */
+    String uploadVideo(Video video);
+
+    /**
      * @param video the video with new information
      * @return feedback message about the process
      */
