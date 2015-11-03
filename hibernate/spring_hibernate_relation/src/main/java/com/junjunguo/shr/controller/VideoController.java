@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
@@ -138,7 +139,6 @@ public class VideoController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @ResponseBody
     @RequestMapping(value = "/upload",
                     method = RequestMethod.POST)
     public String handleFileUpload(
@@ -167,7 +167,7 @@ public class VideoController {
         }
     }
 
-    //    @RequestMapping(value = "/upload",
+    //    @RequestMapping(value = "/upload_file",
     //                    method = RequestMethod.POST)
     //    public String save(
     //            @RequestParam("file")
@@ -178,8 +178,20 @@ public class VideoController {
     //        // dao.save(file);
     //        return "fileUpload";
     //    }
+    @ResponseBody
+    @RequestMapping(value = "/upload_file/{id}",
+                    method = RequestMethod.POST)
+    public ResponseEntity<Void> uploadFile(
+            @RequestParam("file")
+            MultipartFile srcFile,
+            @PathVariable("id")
+            String id) {
+        log("id =" + id);
+        log("size: " + srcFile.getSize());
 
-
+        log("upload file");
+        return null;
+    }
     //    @RequestMapping(value = "",
     //                    method = RequestMethod.POST)
     //    public ResponseEntity<Void> createVideo(
@@ -202,9 +214,9 @@ public class VideoController {
     //        videoService.addVideo(video, (MultipartFile) map.get("file"));
     //        //        videoService.addVideo(video, null);
     //
-    //        HttpHeaders headers = new HttpHeaders();
-    //        headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
-    //        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    //            HttpHeaders headers = new HttpHeaders();
+    //            headers.setLocation(ucBuilder.path("video/id/{id}").buildAndExpand(video.getId()).toUri());
+    //            return new ResponseEntity<Void>( HttpStatus.CREATED);
     //    }
 
 

@@ -5,12 +5,14 @@ import com.junjunguo.shr.client.model.Video;
 import com.junjunguo.shr.client.services.VideoServices;
 import com.junjunguo.shr.client.util.Constant;
 import com.junjunguo.shr.client.util.MultipartUtility;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -171,29 +173,44 @@ public class VideoServicesImpl implements VideoServices {
 
     }
 
-    /* POST */
     public String createVideo(Video video, String path) {
-        RestTemplate                        restTemplate = new RestTemplate();
+        FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
+        formHttpMessageConverter.setCharset(Charset.forName("UTF8"));
+
+        RestTemplate restTemplate = new RestTemplate();
+
+
+        restTemplate.getMessageConverters().add(formHttpMessageConverter);
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+        map.add("expenseId", "1");
+        map.add("file", new FileSystemResource(path));
+
+        HttpHeaders imageHeaders = new HttpHeaders();
+        imageHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        HttpEntity<MultiValueMap<String, Object>> mapHttpEntity = new HttpEntity<MultiValueMap<String, Object>>(map,
+                imageHeaders);
+
+
+        restTemplate.exchange(REST_SERVICE_URI + "/upload_file/" + 1, HttpMethod.POST, mapHttpEntity, String.class);
+        return "su";
+    }
+
+    /* POST */
+    public String uploadFile(Video video, String path) {
         String                              message;
+        RestTemplate                        restTemplate = new RestTemplate();
         LinkedMultiValueMap<String, Object> map          = new LinkedMultiValueMap();
 
         map.add("video", "a video");
-//        map.add("file", "the file the file the file the file");
-                map.add("file", getFileAsString(path));
+        //        map.add("file", "the file the file the file the file");
+        map.add("file", getFileAsString(path));
 
         try {
-            // Create a new RestTemplate instance
-            ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(Constant.TIMEOUT);
-            ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(Constant.TIMEOUT);
-            // Add the gzip Accept-Encoding and Content-Encoding headers
-            HttpHeaders requestHeaders = new HttpHeaders();
-            //            requestHeaders.setAcceptEncoding(ContentCodingType.GZIP);
-            //            requestHeaders.setContentEncoding(ContentCodingType.GZIP);
-            // Support GZIP
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-            // Support POST Form
             restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
-
 
             String response = restTemplate.postForObject(REST_SERVICE_URI + "/upload", map, String.class);
 

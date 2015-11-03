@@ -47,4 +47,39 @@ returns a full linked List<video> object with its tags and owner information.
         - `t.id = id`
                 - tag with id = given id
    
-                    
+#MultiValueMap
+##send multi value from client side:
+- use MultiValueMap:
+
+```
+LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap();
+map.add("video", "a video");
+map.add("file", "the file the file the file the file");
+```
+
+- set up RestTemplate: 
+
+```
+RestTemplate restTemplate = new RestTemplate();
+restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+String response = restTemplate.postForObject(REST_SERVICE_URI + "/upload", map, String.class);
+```
+
+- only works with `String`
+- important to have `FormHttpMessageConverter`
+
+##get as `@RequestParam` at server side:
+
+```
+    @RequestMapping(value = "/upload",
+                    method = RequestMethod.POST)
+    public String handleFileUpload(
+            @RequestParam(value = "video",
+                          required = false)
+            String video,
+            @RequestParam(value = "file",
+                          required = false)
+            String file) {
+            ... ... todo code ... ...
+```
