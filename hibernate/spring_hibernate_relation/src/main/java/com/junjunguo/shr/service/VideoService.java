@@ -63,4 +63,10 @@ public interface VideoService {
      * @return videos near by given boundary
      */
     List<Video> findNearBy(Location location, double boundary);
+
+    /**
+     * @param videoId video id
+     * @return video file path
+     */
+    String getFileFor(long videoId);
 }

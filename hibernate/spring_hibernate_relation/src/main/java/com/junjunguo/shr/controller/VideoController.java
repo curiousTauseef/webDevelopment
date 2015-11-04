@@ -6,13 +6,16 @@ import com.junjunguo.shr.model.Location;
 import com.junjunguo.shr.model.Video;
 import com.junjunguo.shr.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -121,11 +124,69 @@ public class VideoController {
         return new ResponseEntity<List<Video>>(videos, HttpStatus.OK);
     }
 
-    //-------------------Create a Video------------------------------------------------------
+    //-------------------download a Video file------------------------------------------------------
+    //    @RequestMapping(value = "/files/{video_id}",
+    //                    method = RequestMethod.GET)
+    //    @ResponseBody
+    //    public FileSystemResource getFile(
+    //            @PathVariable("video_id")
+    //            long videoId) {
+    //        return new FileSystemResource(videoService.getFileFor(videoId));
+    //    }
 
-    @RequestMapping(value = "",
+    @RequestMapping(value = "/download/{video_id}",
+                    method = RequestMethod.GET)
+    public void download(HttpServletResponse response,
+            @PathVariable("video_id")
+            long videoId) throws IOException {
+
+        File        file = new File(videoService.getFileFor(videoId));
+        InputStream is   = new FileInputStream(file);
+
+        // MIME type of the file
+        response.setContentType("application/octet-stream");
+        // Response header
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+        // Read from the file and write into the response
+        OutputStream os     = response.getOutputStream();
+        byte[]       buffer = new byte[1024];
+        int          len;
+        while ((len = is.read(buffer)) != -1) {
+            os.write(buffer, 0, len);
+        }
+        os.flush();
+        os.close();
+        is.close();
+    }
+
+    //-------------------Create a Video------------------------------------------------------
+    // add a video to the system
+    @RequestMapping(value = "addVideo",
                     method = RequestMethod.POST)
-    public String createVideo(
+    public ResponseEntity<Void> createVideo(
+            @RequestBody
+            Video video, UriComponentsBuilder ucBuilder) {
+        if (videoService.isVideoExist(video.getId())) {
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+        //        videoService.addVideo(video);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/video/{id}/").buildAndExpand(video.getId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+
+    //    @RequestMapping(value = "",
+    //                    method = RequestMethod.POST)
+    //    public ResponseEntity<Void> createUser(
+    //            @RequestBody
+    //            User user
+
+    // small file uploading without MultipartFile a video and string file
+    @RequestMapping(value = "/upload_as_string",
+                    method = RequestMethod.POST)
+    public String uploadVideo(
             @RequestParam(value = "video",
                           required = false)
             String video,
@@ -151,6 +212,7 @@ public class VideoController {
         }
     }
 
+    // file upload with MultipartFile and a video
     @RequestMapping(value = "/upload",
                     method = RequestMethod.POST)
     public
@@ -165,12 +227,6 @@ public class VideoController {
             try {
                 log("file size: " + file.getSize());
                 videoService.addVideo(jsonToVideo(video), file);
-                //                videoService.addVideo(jsonToVideo(video, file));
-                //                byte[] bytes = file.getBytes();
-                //                BufferedOutputStream stream =
-                //                        new BufferedOutputStream(new FileOutputStream(new File(name)));
-                //                stream.write(bytes);
-                //                stream.close();
                 return "You successfully uploaded " + "!";
             } catch (Exception e) {
                 return "You failed to upload " + " => " + e.getMessage();

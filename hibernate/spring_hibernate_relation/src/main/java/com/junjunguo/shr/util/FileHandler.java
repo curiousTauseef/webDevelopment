@@ -11,6 +11,27 @@ import java.io.*;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 01/11/15.
  */
 public class FileHandler {
+
+    //TODO: enable resume on broken upload
+    public String save(Video v, MultipartFile mFile) {
+        String path =
+                Constant.VIDEO_FILE_PATH + v.getOwner().getId() + "/";
+        // video name = id + uploaded time
+        String name = v.getId() + System.currentTimeMillis() + "." + v.getFileExtension();
+        File   file = new File(path);
+        file.mkdirs();
+        try {
+            byte[] bytes = mFile.getBytes();
+            BufferedOutputStream stream =
+                    new BufferedOutputStream(new FileOutputStream(new File(path + name)));
+            stream.write(bytes);
+            stream.close();
+            return path + name;
+        } catch (Exception e) {
+            return "Error You failed to upload " + path + "; exception: " + e.getMessage();
+        }
+    }
+
     public String SaveFromStr(Video v, String input) {
         String path =
                 Constant.VIDEO_FILE_PATH + v.getOwner().getId() + "/";
@@ -23,25 +44,6 @@ public class FileHandler {
             out.write(input.getBytes());
             out.flush();
             out.close();
-            return path + name;
-        } catch (Exception e) {
-            return "Error You failed to upload " + path + "; exception: " + e.getMessage();
-        }
-    }
-
-    //TODO: enable resume on broken upload
-    public String save(Video v, MultipartFile mFile) {
-        String path =
-                Constant.VIDEO_FILE_PATH + v.getOwner().getId() + "/";
-        String name = System.currentTimeMillis() + "." + v.getFileExtension();
-        File   file = new File(path);
-        file.mkdirs();
-        try {
-            byte[] bytes = mFile.getBytes();
-            BufferedOutputStream stream =
-                    new BufferedOutputStream(new FileOutputStream(new File(path + name)));
-            stream.write(bytes);
-            stream.close();
             return path + name;
         } catch (Exception e) {
             return "Error You failed to upload " + path + "; exception: " + e.getMessage();

@@ -130,6 +130,10 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findNearBy(location, boundary);
     }
 
+    public String getFileFor(long videoId) {
+        return findById(videoId).getFilePath();
+    }
+
 
     public void log(String s) {
         //        log(this.getClass().getSimpleName() + "- - - - - - " + s);

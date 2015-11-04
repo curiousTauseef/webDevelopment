@@ -8,22 +8,25 @@ import com.junjunguo.shr.client.services.VideoServices;
 import com.junjunguo.shr.client.util.Constant;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.SourceHttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.charset.Charset;
+import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -127,6 +130,73 @@ public class VideoServicesImpl implements VideoServices {
         return videos;
     }
 
+    public String fetchVideoFile(long videoId) {
+        List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+        messageConverters.add(new ByteArrayHttpMessageConverter());
+
+        RestTemplate restTemplate = new RestTemplate(messageConverters);
+
+        restTemplate.getMessageConverters().add(
+                new ByteArrayHttpMessageConverter());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM));
+
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        try {
+            ResponseEntity<byte[]> response = restTemplate.exchange(
+                    REST_SERVICE_URI + "download/" + videoId,
+                    HttpMethod.GET, entity, byte[].class, "1");
+
+            if (response.getStatusCode() == HttpStatus.OK) {
+                String s = response.getHeaders().getFirst("Content-Disposition");
+                s = s.substring(s.indexOf("filename=") + 10, s.lastIndexOf('"'));
+                Files.write(Paths.get(Constant.SAVE_TO, s), response.getBody());
+                return "Succeed! video saved at: " + Constant.SAVE_TO + s;
+            }
+            return "Error occurred: " + response.getStatusCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    /* POST */
+
+    /**
+     * @param video video to be created
+     * @return feedback message
+     */
+    public String createVideo(Video video) {
+        String       message;
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            URI uri = restTemplate.postForLocation(REST_SERVICE_URI, video, Video.class);
+            message = "create video: " + video + " succeed";
+            System.out.println("Location : " + uri.toASCIIString());
+        } catch (org.springframework.web.client.RestClientException e) {
+            if (e.getMessage().contains(HttpStatus.CONFLICT.toString())) {
+                message = "user: {" + video.toString() + "} already exist !";
+            } else {
+                message = "oops! error occurred! " + e.getMessage();
+            }
+        }
+        return message;
+    }
+
+    /**
+     * use  MultiPartFile request to
+     * <p/>
+     * upload video file and create a video object at server side
+     * <p/>
+     * the tags, and owner in the video object will be also created if not exist
+     * <p/>
+     * if upload file fail: the system will still try to create the user if not exist in the server
+     *
+     * @param video going to be created
+     * @return feedback message
+     */
     public String uploadVideo(Video video) {
         String path = video.getFilePath();
         if (path.contains(".")) {
@@ -155,55 +225,24 @@ public class VideoServicesImpl implements VideoServices {
         }
     }
 
-    private String videoToJson(Video video) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(video);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return "Error : " + e.getMessage();
-        }
-    }
-
-    public String uploadVideo_(Video video) {
-        String                   path                     = video.getFilePath();
-        FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
-        formHttpMessageConverter.setCharset(Charset.forName("UTF8"));
-
-        RestTemplate restTemplate = new RestTemplate();
-
-
-        restTemplate.getMessageConverters().add(formHttpMessageConverter);
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        //        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(1000 * 30);
-        //        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(1000 * 30);
-        MultiValueMap<String, Object> map    = new LinkedMultiValueMap<String, Object>();
-        ObjectMapper                  mapper = new ObjectMapper();
-        try {
-            if (path.contains(".")) {
-                String extension = path.substring(path.indexOf('.') + 1);
-                video.setFileExtension(extension);
-            }
-            //            map.add("file", getFileAsString(path));
-            map.add("video", mapper.writeValueAsString(video));
-            map.add("file", new FileSystemResource(path));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        HttpHeaders imageHeaders = new HttpHeaders();
-        imageHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-        HttpEntity<MultiValueMap<String, Object>> mapHttpEntity = new HttpEntity<MultiValueMap<String, Object>>(map,
-                imageHeaders);
-
-
-        restTemplate.exchange(REST_SERVICE_URI + "/upload", HttpMethod.POST, mapHttpEntity, String.class);
-        return "su";
-    }
-
     /* POST */
-    public String createVideo(Video video, String path) {
+
+    /**
+     * this method is !test only! should not be used !
+     * <p/>
+     * use a normal request: convert file to string and upload it to server will decode the string to file
+     * <p/>
+     * upload video file and create a video object at server side
+     * <p/>
+     * the tags, and owner in the video object will be also created if not exist
+     * <p/>
+     * if upload file fail: the system will still try to create the user if not exist in the server
+     *
+     * @param video going to be created
+     * @param path  File path going to be uploaded
+     * @return feedback message
+     */
+    public String uploadVideoTest(Video video, String path) {
         String                              message;
         RestTemplate                        restTemplate = new RestTemplate();
         LinkedMultiValueMap<String, Object> map          = new LinkedMultiValueMap();
@@ -271,6 +310,24 @@ public class VideoServicesImpl implements VideoServices {
     }
 
 
+    /**
+     * @param video convert video object to Json string
+     * @return json string
+     */
+    private String videoToJson(Video video) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(video);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "Error : " + e.getMessage();
+        }
+    }
+
+    /**
+     * @param path file path
+     * @return a string constructed by decoding the array of bytes
+     */
     private String getFileAsString(String path) {
         try {
             File file = new File(path);

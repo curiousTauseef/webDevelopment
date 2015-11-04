@@ -22,6 +22,8 @@ public interface VideoServices {
      */
     Video getVideoById(long id);
 
+    String fetchVideoFile(long videoId);
+
     /**
      * @param email owners email
      * @return videos owned by the owner
@@ -36,16 +38,21 @@ public interface VideoServices {
 
     /**
      * @param video going to be created
-     * @param path  File path going to be uploaded
      * @return feedback message about the process
      */
-    String createVideo(Video video, String path);
+    String createVideo(Video video);
+
+    /**
+     * @param video going to be created and the path pointed file will be uploaded as this particular video
+     * @return feedback message about the process
+     */
+    String uploadVideo(Video video);
 
     /**
      * @param video going to be created
      * @return feedback message about the process
      */
-    String uploadVideo(Video video);
+    //    String uploadVideo(Video video);
 
     /**
      * @param video the video with new information
