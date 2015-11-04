@@ -135,12 +135,12 @@ public class VideoController {
         log("video: \n" + video);
         Video vo;
         try {
-            vo = getVideo(video);
+            vo = jsonToVideo(video);
             log("vo to string : " + vo.toString());
             if (!file.isEmpty()) {
                 log("file is not empty ;) " + file.substring(0, 10));
                 //            log("v to string " + vo.toString());
-                log(videoService.addVideo(vo, file));
+                //                log(videoService.addVideo(vo, file));
                 return "Succeed";
             } else {
                 return "You failed to upload " + "" + " because the file was empty.";
@@ -164,6 +164,8 @@ public class VideoController {
         if (!file.isEmpty()) {
             try {
                 log("file size: " + file.getSize());
+                videoService.addVideo(jsonToVideo(video), file);
+                //                videoService.addVideo(jsonToVideo(video, file));
                 //                byte[] bytes = file.getBytes();
                 //                BufferedOutputStream stream =
                 //                        new BufferedOutputStream(new FileOutputStream(new File(name)));
@@ -212,7 +214,7 @@ public class VideoController {
         return new ResponseEntity<Video>(HttpStatus.NO_CONTENT);
     }
 
-    private Video getVideo(String s) throws IOException {
+    private Video jsonToVideo(String s) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         return mapper.readValue(s, Video.class);

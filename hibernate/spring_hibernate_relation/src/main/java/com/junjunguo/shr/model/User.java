@@ -17,8 +17,10 @@ import java.util.Date;
 @Table(name = "USER")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements Serializable {
+    @Id
     @GeneratedValue
     @Column(name = "ID",
+            unique = true,
             nullable = false)
     private long id;
 
@@ -26,7 +28,7 @@ public class User implements Serializable {
             nullable = true,
             columnDefinition = "VARCHAR(128)")
     private String name;
-    @Id
+
     @Column(name = "EMAIL",
             nullable = false,
             columnDefinition = "VARCHAR(128)")

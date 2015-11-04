@@ -30,18 +30,21 @@ public class FileHandler {
     }
 
     //TODO: enable resume on broken upload
-    public String save(long userId, MultipartFile file) {
+    public String save(Video v, MultipartFile mFile) {
         String path =
-                Constant.VIDEO_FILE_PATH + "/" + userId + "/" + System.currentTimeMillis();
+                Constant.VIDEO_FILE_PATH + v.getOwner().getId() + "/";
+        String name = System.currentTimeMillis() + "." + v.getFileExtension();
+        File   file = new File(path);
+        file.mkdirs();
         try {
-            byte[] bytes = file.getBytes();
+            byte[] bytes = mFile.getBytes();
             BufferedOutputStream stream =
-                    new BufferedOutputStream(new FileOutputStream(new File(path)));
+                    new BufferedOutputStream(new FileOutputStream(new File(path + name)));
             stream.write(bytes);
             stream.close();
-            return "path:" + path;
+            return path + name;
         } catch (Exception e) {
-            return "You failed to upload " + path + " => " + e.getMessage();
+            return "Error You failed to upload " + path + "; exception: " + e.getMessage();
         }
     }
 

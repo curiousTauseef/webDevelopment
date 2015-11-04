@@ -128,140 +128,31 @@ public class VideoServicesImpl implements VideoServices {
     }
 
     public String uploadVideo(Video video) {
-        RestTemplate restTemplate = new RestTemplate();
-        String       url          = REST_SERVICE_URI + "upload";
-        String       path         = video.getFilePath();
-        String       sv           = videoToJson(video);
+        String path = video.getFilePath();
+        if (path.contains(".")) {
+            String extension = path.substring(path.lastIndexOf('.') + 1);
+            video.setFileExtension(extension);
+        }
+        String sv = videoToJson(video);
         if (sv.startsWith("Error")) {
             return sv;
         }
-
         LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap();
         map.add("file", new FileSystemResource(path));
-        map.add("video", videoToJson(video));
-
-
-//        try {
-//            HttpClient client = new DefaultHttpClient();
-//            HttpPost post = new HttpPost(url);
-//            MultipartEntity entity = new MultipartEntity();
-//            entity.addPart("file", new FileBody(new File(path)));
-//            entity.addPart("video", new StringBody(sv, "text/plain",
-//                    Charset.forName("UTF-8")));
-//            post.setEntity(entity);
-//            HttpResponse response = client.execute(post);
-//            log(" response ; " + response.toString());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-                try {
-
-                    // Message Converters
-                    List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
-                    messageConverters.add(new FormHttpMessageConverter());
-                    messageConverters.add(new SourceHttpMessageConverter());
-                    messageConverters.add(new StringHttpMessageConverter());
-                    messageConverters.add(new MappingJackson2HttpMessageConverter());
-
-                    // RestTemplate
-                    RestTemplate template = new RestTemplate();
-                    template.setMessageConverters(messageConverters);
-
-                    template.postForObject(REST_SERVICE_URI + "/upload", map, String.class);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-        //        HttpHeaders headers = new HttpHeaders();
-        //        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        //
-        //        HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity =
-        //                new HttpEntity<LinkedMultiValueMap<String, Object>>(
-        //                        map, headers);
-        //        ResponseEntity<String> result = restTemplate.exchange(
-        //                REST_SERVICE_URI + "upload", HttpMethod.POST, requestEntity,
-        //                String.class);
-
-
-        //                HttpClient httpClient = new DefaultHttpClient();
-        //                org.apache.http.HttpEntity entity = MultipartEntityBuilder
-        //                        .create()
-        //                        .addTextBody("video", sv)
-        //                        .addBinaryBody("file", new File(path), ContentType.create("application/octet-stream"),
-        //                                "filename")
-        //                        .addTextBody("tos", "agree")
-        //                        .build();
-        //
-        //                HttpPost httpPost = new HttpPost(REST_SERVICE_URI + "upload");
-        //                httpPost.setEntity(entity);
-        //                HttpResponse response = null;
-        //                try {
-        //                    response = httpClient.execute(httpPost);
-        //                } catch (IOException e) {
-        //                    e.printStackTrace();
-        //                }
-        //                org.apache.http.HttpEntity result = response.getEntity();
-        //                log("result " + result.toString());
-
-
-        //        HttpClient client = new DefaultHttpClient();
-        //        client.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-        //
-        //        HttpPost        post   = new HttpPost(REST_SERVICE_URI + "/upload");
-        //        MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-        //
-        //        // For File parameters
-        //        entity.addPart("file", new FileBody(((File) new File(path)), "application/zip"));
-        //
-        //        try {
-        //            // For usual String parameters
-        //            entity.addPart("video", new StringBody(sv, "text/plain",
-        //                    Charset.forName("UTF-8")));
-        //
-        //            post.setEntity(entity);
-        //
-        //            String response = EntityUtils.toString(client.execute(post).getEntity(), "UTF-8");
-        //        } catch (IOException e) {
-        //            e.printStackTrace();
-        //        }
-        //
-        //        client.getConnectionManager().shutdown();
-
-        //        FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
-        //        formHttpMessageConverter.setCharset(Charset.forName("UTF8"));
-        //
-        //        RestTemplate restTemplate = new RestTemplate();
-        //
-        //
-        //        restTemplate.getMessageConverters().add(formHttpMessageConverter);
-        //        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        //        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        //        //        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(1000 * 30);
-        //        //        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(1000 * 30);
-        //        MultiValueMap<String, Object> map    = new LinkedMultiValueMap<String, Object>();
-        //        ObjectMapper                  mapper = new ObjectMapper();
-        //        try {
-        //            if (path.contains(".")) {
-        //                String extension = path.substring(path.indexOf('.') + 1);
-        //                video.setFileExtension(extension);
-        //            }
-        //            //            map.add("file", getFileAsString(path));
-        //            map.add("video", mapper.writeValueAsString(video));
-        //            map.add("file", new FileSystemResource(path));
-        //        } catch (JsonProcessingException e) {
-        //            e.printStackTrace();
-        //        }
-        //        HttpHeaders imageHeaders = new HttpHeaders();
-        //        imageHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-        //
-        //        HttpEntity<MultiValueMap<String, Object>> mapHttpEntity = new HttpEntity<MultiValueMap<String, Object>>(map,
-        //                imageHeaders);
-        //
-        //
-        //        restTemplate.exchange(REST_SERVICE_URI + "/upload", HttpMethod.POST, mapHttpEntity, String.class);
-        return "su";
+        map.add("video", sv);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+            messageConverters.add(new FormHttpMessageConverter());
+            messageConverters.add(new SourceHttpMessageConverter());
+            messageConverters.add(new StringHttpMessageConverter());
+            messageConverters.add(new MappingJackson2HttpMessageConverter());
+            restTemplate.setMessageConverters(messageConverters);
+            return restTemplate.postForObject(REST_SERVICE_URI + "/upload", map, String.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error: " + e.getMessage();
+        }
     }
 
     private String videoToJson(Video video) {

@@ -19,6 +19,7 @@ import com.junjunguo.shr.util.FileHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class VideoServiceImpl implements VideoService {
         return videoDao.findByTitle(title);
     }
 
-    public String addVideo(Video video, String file) {
+    public String addVideo(Video video, MultipartFile mFile) {
         log("\n@@video service : " + video + "@@\n");
         List<Tag> gTags = video.getTags();
         log("\n@@video service g tags: " + gTags + "@@\n");
@@ -89,7 +90,7 @@ public class VideoServiceImpl implements VideoService {
             }
         }
         log("\n@@video service video: " + video + "@@\n");
-        String path = fileHandler.SaveFromStr(video, file);
+        String path = fileHandler.save(video, mFile);
         try {
             if (!path.startsWith("Error")) {
                 video.setFilePath(path);
