@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="img/ico" media="screen">
+    <title>NTNU CSSA</title>
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <!-- scripts-->
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/cssa-login.js"></script>
+    <script src="js/cssa-socialmedia.js"></script>
+</head>
+<body>
+<!-- #header -->
+<div id="header">
+    <div id="title">
+        <div class="content">
+            <div id="logo-left"><a href=""><img src="images/cssa_logo_new.jpg"></a></div>
+            <div id="logo-right"><a href="">
+                NTNU<br>
+                Chinese Student and Scholar Association</a>
+            </div>
+        </div>
+    </div>
+    <nav id="navigation" class="navbar navbar-default">
+        <div class="container-fluid content">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="#">WebSiteName</a>-->
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/news">News</a></li>
+                    <li><a href="/member/student/new2015">New Student</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/documents">Documents</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/board">Board Members 2015-2016</a></li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<c:choose>-->
+                    <!--<c:when test="${empty cookie.email}">-->
+                    <li id="nav-login"><a role="button"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
+                    </li>
+                    <li id="nav-register"><a role="button"><span class="glyphicon glyphicon-user"></span> Join Us</a>
+                    </li>
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                    <!--<li id="nav-member"><a role="button">${cookie.email.value}</a></li>-->
+                    <!--<li id="nav-logout"><a href="/user/logout" role="button"><span-->
+                    <!--class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+                    <!--</c:otherwise>-->
+                    <!--</c:choose>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="login-modal"></div>
+</div>
+
+
+<!-- #header end -->
+<div id="home-image-show" class="container">
+    <!--<div class="content">-->
+    <!--&lt;!&ndash; home image slider show: use mycarousel to overlay text&ndash;&gt;-->
+    <!--<div id="mycarousel" class="carousel slide" data-ride="carousel">-->
+    <!--<div class="carousel-inner">-->
+    <!--<div class="item active" id="home-image-show-slider">-->
+    <!--<div id="about-img" class="carousel-caption">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; controls &ndash;&gt;-->
+    <!--<a id="nav-slider-left" class="left carousel-control">-->
+    <!--<i class="glyphicon glyphicon-chevron-left"></i>-->
+    <!--</a>-->
+    <!--<a id="nav-slider-right" class="right carousel-control">-->
+    <!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+    <!--</a>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<div id="home-news">
+    <div class="content row">
+        <!-- home news picture-->
+        <div class="floater col-md-8">
+            <div id="home-news-img" class="news-content">
+                <c:choose>
+                    <c:when test="${not empty newsContentList[0].picName}">
+                        <a href="/news/detail?id=${news.id}">
+                            <img class="img-responsive"
+                                 src="http://media.chun.no/cssa/images/news/${newsContentList[0].picName}">
+                        </a>
+
+                        <h2>${newsContentList[0].picDescription}</h2>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/news/detail?id=${news.id}">
+                            <img class="img-responsive" src="../images/happynewyear.jpg">
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="floater col-md-4">
+            <div id="home-news-recent">
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+                <h1>Recent News</h1>
+
+                <c:forEach items="${newsList}" var="news">
+                    <p><a href="news/detail?id=${news.id}">[
+                        <fmt:formatDate pattern="yyyy-MM-dd"
+                                        value="${news.createTime.getTime()}"/>
+                                                           ]&nbsp;&nbsp;${news.title}</a>
+                    </p>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/cssa-index.js"></script>
+<!-- #Footer -->
+<div id="footer">
+    <div class="content row">
+        <!-- Left footer-->
+        <div class="floater col-md-4">
+            <div id="footer-left">
+                <p>Norwegian University of Science and Technology</p>
+
+                <p>Chinese Student and Scholar Association</p>
+
+                <p>挪威科技大学 中国学生学者联合会</p>
+
+            </div>
+        </div>
+        <!-- Middle footer -->
+        <div class="floater col-md-4">
+            <div id="footer-middle">
+                <ul>
+                    <li><a href="http://www.chinese-embassy.no/" target="_blank"><img src="images/emblem.png">Chinese
+                                                                                                              Embassy in
+                                                                                                              Norway</a>
+                    </li>
+                    <li><a href="http://www.stfk.no/" target="_blank"><img src="images/sor-trondelag.png">Sør-trøndelag
+                                                                                                          fylkeskommune</a>
+                    </li>
+                    <li><a href="http://www.ntnu.no/" target="_blank"><img src="images/ntnu-logo.jpg">Norges
+                                                                                                      teknisk-naturvitenskapelige
+                                                                                                      universitet</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- Right footer-->
+        <div class="floater col-md-4">
+            <div id="footer-right">
+                <ul class="socialicons">
+                    <li><a href="https://twitter.com/chunfantasy" target="_blank" class="icon fa-twitter">
+                        <span class="label">Twitter</span>
+                    </a></li>
+                    <li><a id="socialicon-fb" href="https://www.facebook.com/CSSA.NTNU" target="_blank"
+                           class="icon fa-facebook">
+                        <span class="label">Facebook</span>
+                    </a></li>
+                    <li><a id="socialicon-qq" href="#" target="_blank" class="icon fa-qq">
+                        <span class="label">QQ</span>
+                    </a></li>
+                    <li><a href="http://www.weibo.com/ntnucssa" target="_blank" class="icon fa-weibo">
+                        <span class="label">Wei Bo</span>
+                    </a></li>
+                </ul>
+                <div id="copyright"><a href="" class="icon fa-copyright">2007-2015 NTNU CSSA 中国学生学者联合会</a></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="web-designer" class="col-md-12">
+    <p>Website Administrator:
+        <a href="https://www.facebook.com/li.li.5070276" target="_blank">Li Li</a></p>
+
+    <p>Designed By:
+        <a href="http://junjunguo.com" target="_blank">Junjun Guo</a></p>
+
+    <p>All Supported By:
+        <a href="http://chun.no" target="_blank">Chun Fun</a></p>
+</div>
+<!-- #footer end-->
+
+</body>
+</html>
