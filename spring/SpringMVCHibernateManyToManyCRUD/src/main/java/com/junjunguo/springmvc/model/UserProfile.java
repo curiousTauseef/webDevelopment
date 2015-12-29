@@ -18,9 +18,17 @@ public class UserProfile {
             nullable = false)
     private String type = UserProfileType.USER.getUserProfileType();
 
-    @ManyToMany(mappedBy = "userProfiles",
-                cascade = CascadeType.ALL)
+//    @ManyToMany(mappedBy = "userProfiles",
+//                cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<User>();
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public Integer getId() {
         return id;

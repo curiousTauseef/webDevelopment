@@ -38,6 +38,14 @@ public class AppController {
 	@Autowired
 	MessageSource messageSource;
 
+	@RequestMapping(value = { "/edit-userprofile-{type}" }, method = RequestMethod.GET)
+	public String editUserProfile(@PathVariable String type, ModelMap model) {
+		UserProfile userProfile = userProfileService.findByTypeInitialized(type);
+		model.addAttribute("userProfile", userProfile);
+		model.addAttribute("edit", true);
+		return "userprofileregistration";
+	}
+
 	/**
 	 * This method will list all existing users.
 	 */

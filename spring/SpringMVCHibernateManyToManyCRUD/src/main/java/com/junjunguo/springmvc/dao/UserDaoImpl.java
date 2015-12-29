@@ -3,6 +3,7 @@ package com.junjunguo.springmvc.dao;
 import java.util.List;
 
 import com.junjunguo.springmvc.model.User;
+import com.junjunguo.springmvc.model.UserProfile;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
@@ -31,6 +32,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         }
         return user;
     }
+
 
     @SuppressWarnings("unchecked")
     public List<User> findAllUsers() {

@@ -133,7 +133,6 @@ These annotations can be used for:
     - and direct it to controller so we have this service ready
 
 #### the second methods looks difficult or have more coding
-
    - but in my practice it is much easier to handle 
    - no varies Json, no open section, No serializer found for class .................... errors
 

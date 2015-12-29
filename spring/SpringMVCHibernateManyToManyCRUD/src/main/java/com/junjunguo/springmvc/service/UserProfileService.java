@@ -12,5 +12,6 @@ public interface UserProfileService {
 	UserProfile findByType(String type);
 	
 	List<UserProfile> findAll();
-	
+
+	UserProfile findByTypeInitialized(String type);
 }

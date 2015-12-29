@@ -3,10 +3,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.junjunguo.springmvc</groupId>
-    <artifactId>SpringMVCHibernateManyToManyCRUDExample</artifactId>
+    <artifactId>SpringMVCHibernateManyToManyCRUD</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
-    <name>SpringMVCHibernateManyToManyCRUDExample</name>
+    <name>SpringMVCHibernateManyToManyCRUD</name>
 
     <properties>
         <hibernate.version>4.3.10.Final</hibernate.version>
@@ -135,12 +135,12 @@
                     <version>2.4</version>
                     <configuration>
                         <warSourceDirectory>src/main/webapp</warSourceDirectory>
-                        <warName>SpringMVCHibernateManyToManyCRUDExample</warName>
+                        <warName>SpringMVCHibernateManyToManyCRUD</warName>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
-        <finalName>SpringMVCHibernateManyToManyCRUDExample</finalName>
+        <finalName>SpringMVCHibernateManyToManyCRUD</finalName>
     </build>
 </project>

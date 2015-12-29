@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
                                                          .list();
         log("initialize users: ");
         for (User u : listUser) {
-            Hibernate.initialize(u.getTags());
+//            Hibernate.initialize(u.getTags());
         }
         log("users: " + listUser);
         return null;
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
             return null;
         } else {
             User user = (User) q.list().get(0);
-            Hibernate.initialize(user.getTags());
+//            Hibernate.initialize(user.getTags());
             return user;
         }
     }
@@ -83,7 +83,7 @@ public class UserDaoImpl implements UserDao {
             return null;
         } else {
             User user = (User) q.list().get(0);
-            Hibernate.initialize(user.getTags());
+//            Hibernate.initialize(user.getTags());
             return user;
         }
     }
