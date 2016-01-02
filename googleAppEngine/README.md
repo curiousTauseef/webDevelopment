@@ -69,10 +69,105 @@ Platform as a Service
 	- [https://console.developers.google.com/start/appengine](https://console.developers.google.com/start/appengine)
 - App Engine documentation [https://cloud.google.com/appengine/docs](https://cloud.google.com/appengine/docs)
 
+## 2 creating an Application
+
+- The Google Cloud SDK is a collection of tools and libraries for developing, testing, and deploying software for the Cloud Platform, including App Engine. 
+- App Engine Java apps use interfaces and features from Java Platform, Enterprise Edi‐ tion (Java EE).
+- The App Engine SDK includes implementations for the relevant Java EE features. 
+
+Restart shell
+
+```shell
+exec -l $SHELL
+```
+
+start:
+
+```shell
+./Development/google-cloud-sdk/bin/gcloud init
+```
+
+run gcloud command for help:
+
+```shell
+./Development/google-cloud-sdk/bin/gcloud -h
+```
+
+- Java web applications for App Engine use the Java Servlet standard interface for inter‐ acting with the application server.
+
+- An application consists of one or more servlet classes, each extending a servlet base class. Servlets are mapped to URLs using a stan‐ dard configuration file called a “deployment descriptor,” also known as web.xml.
+
+- When App Engine receives a request for a Java application, it determines which servlet class to use based on the URL and the deployment descriptor, instantiates the class, and then calls an appropriate method on the servlet object.
+
+- All the files for a Java application, including the compiled Java classes, configuration files, and static files, are organized in a standard directory structure called a Web Application Archive, or “WAR.”
+	- Everything in the WAR directory gets deployed to App Engine.
+
+- App Engine needs one additional configuration file that isn’t part of the servlet standard. Open or create the file war/WEB-INF/appengine-web.xml,
+
+- start the development server, using the ```dev_appserver``` command.
+
+## 3 Configuring an Application
+
+- App Engine does all the heavy lifting of accepting incoming TCP/IP connections, reading HTTP request data, ensuring that an instance of your app is running on an applica‐ tion server, routing the request to an available instance, calling the appropriate request handler code in your app, and collecting the response from the handler and sending it back over the connection to the client.
 
 
+-  can configure the frontend to handle different requests in different ways.
+	- For instance, you can tell the frontend to route requests for some URLs to App Engine’s static file servers instead of the application servers, for efficient delivery of your app’s images, CSS, or JavaScript code.
+
+App Engine request handling architecture:
+
+![gae](files/gae_request_architecture.png)
+
+- The frontends, app servers, and static file servers are governed by an “app master.”
+
+**configuring a java app**
+
+- A Java application consists of files bundled in a standard format called WAR (short for “web application archive”). The WAR standard specifies the layout of a directory structure for a Java web application, including the locations of several standard con‐ figuration files, compiled Java classes, JAR files, static files, and other auxiliary files. Some tools that manipulate WARs support compressing the directory structure into a single file similar to a JAR. App Engine’s tools generally expect the WAR to be a direc‐ tory on your computer’s filesystem.
+
+> Java servlet applications use a file called a “deployment descriptor” to specify how the server invokes the application. This file uses an XML format, and is part of the servlet standard specification.
+
+- App Engine uses dedicated servers for static files. Using dedicated servers also means the app servers don’t have to spend resources on requests for static files.
+
+- tell the deployment process and the frontend which of the application’s files are static files using app configuration. 
+
+- The static file configuration can also include a recommendation for a cache expira‐ tion interval. App Engine returns the cache instructions to the client in the HTTP header along with the file.
 
 
+- To save space and reduce the amount of data involved when setting up new app instances, static files are not pushed to the application servers. This means application code cannot access the contents of static files by using the filesystem.
+
+- Typically, files outside of WEB-INF/ represent resources that the user can access directly,
+
+By default, all files in the WAR are pushed to the application servers, and are accessi‐ ble by the application code via the filesystem. This includes the files that are identified as static files and also copied to the static file servers. In other words, all files are con‐ sidered resource files, and all files except for JSPs and files in the WEB-INF/ directory are considered static files.
+
+- to change it:
+	- using the appengine-web.xml file, with the <resource-files> and <static-files> elements, respectively. These elements can contain <include> and <exclude> elements that modify the default behavior of including all files.
+
+```xml
+<resource-files>
+	<exclude path="/images/**" />
+</resource-files>
+
+<static-files>
+	<exclude path="/**.xml" /> <include path="/sitemap.xml" />
+</static-files>
+```
+
+> The ** pattern matches any number of characters in file and directory names, including subdirectories.
+
+**Files in the WEB-INF/ directory are always considered resource files. They cannot be included as static files or excluded from the set of resource files.**
+
+**Domain Names**
+
+- Every app gets a free domain name on appspot.com, based on the application ID.
+	- `http://app-id.appspot.com/path...`
+
+**Google Apps**
+
+> Google Apps is currently the only way to use secure connections (SSL/TLS, aka “HTTPS”) with custom domains on App Engine.
+
+- make the Apps domain’s administrator account an owner of the app. This is required for setting up secure connections. There are three parts to this: adding the Cloud Console as an “app” that the domain admin can use, inviting the domain admin to be an owner of the app, and finally accepting the invita‐ tion as the domain admin. (You must add the Cloud Console as a service before the domain admin can accept the invitation.)
+
+**Configuring Secure connections**
 
 
 ##Sources:
