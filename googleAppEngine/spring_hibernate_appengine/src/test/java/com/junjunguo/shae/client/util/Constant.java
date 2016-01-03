@@ -8,6 +8,7 @@ package com.junjunguo.shae.client.util;
 public class Constant {
 
     public static final String SERVER_URL = "http://localhost:8080";
+//    public static final String SERVER_URL = "https://myguidings.appspot.com/";
     // Timeout in ms
     public static final int    TIMEOUT    = 3600000;
     public static final String SAVE_TO    = "/Users/Junjun/home/test/client/";

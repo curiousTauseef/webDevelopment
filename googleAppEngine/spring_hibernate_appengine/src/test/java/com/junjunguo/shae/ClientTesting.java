@@ -28,7 +28,9 @@ public class ClientTesting {
         VideoServices vs = new VideoServicesImpl();
         TagServices   ts = new TagServicesImpl();
 
-        User      jj   = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
+        User jj = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
+        log(us.createUser(jj));
+
         User      lee  = new User("Lee", "lee@gmail.com", "lee's password");
         List<Tag> tags = new ArrayList<Tag>();
         tags.add(new Tag("read"));
@@ -42,9 +44,9 @@ public class ClientTesting {
         Video v = new Video("file", tags, "a file", imgPath, "v", "file", jj, new Location(61.10, 10.3));
         //                File   file     = new File(v.getFilePath());
         //                log(vs.uploadVideo(v));
-        log(vs.fetchVideoFile(5));
-        //                User matilde = new User("Matilde", "ola@tsag.com", "matilde's password");
-        //                log(us.createUser(matilde));
+        //        log(vs.fetchVideoFile(5));
+        //                        User matilde = new User("Matilde", "ola@tsag.com", "matilde's password");
+        //                        log(us.createUser(matilde));
         //                log(us.listAllUsers().toString());
         //                log(us.createUser(jj));
         //                log(us.listAllUsers().toString());
