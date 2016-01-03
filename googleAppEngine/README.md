@@ -169,6 +169,38 @@ By default, all files in the WAR are pushed to the application servers, and are 
 
 **Configuring Secure connections**
 
+- App Engine accepts HTTPS connections for all URLs, and otherwise treats them like HTTP requests. 
+
+- All URL paths can be configured to use secure connections, including those mapped to application code and those mapped to static files. The frontend takes care of the secure connection on behalf of the app servers and static file servers.
+
+> App Engine only supports secure connections over TCP port 443
+
+## 4 Request Handlers and Instances
+
+## build
+
+Run this command to install dependencies and do a clean build:
+
+``` shell
+mvn clean install
+```
+
+Testing app
+
+```shell
+mvn appengine:devserver
+```
+
+http://localhost:8080/
+
+Upload app:
+
+```shell
+mvn appengine:update
+```
+
+
+
 
 ##Sources:
 
