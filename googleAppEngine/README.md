@@ -7,7 +7,16 @@ Platform as a Service
 
 -- [appengine](https://cloud.google.com/appengine/)
 
-**Google App Engine** (**GAE**)
+
+##Google Cloud Endpoints
+
+> Google Cloud Endpoints consists of tools, libraries and capabilities that allow you to generate APIs and client libraries from an App Engine application, referred to as an API backend, to simplify client access to data from other applications. Endpoints makes it easier to create a web backend for web clients and mobile clients such as Android or Apple's iOS.
+
+-- [Google Cloud Endpoints](https://cloud.google.com/appengine/docs/java/endpoints/)
+
+-- [my Cloud Endpoints](CloudEndpoints)
+
+# **Google App Engine** (**GAE**)
 
 ## 1 Introducing Google App Engine
 
@@ -28,7 +37,13 @@ Platform as a Service
 
 - App Engine provides a separate set of servers dedicated to delivering static files.
 
-**Cloud datastore**
+## **Cloud datastore**
+
+> Cloud Datastore is a highly-scalable NoSQL database for your applications. Cloud Datastore automatically handles sharding and replication, providing you with a highly available and durable database that scales automatically to handle your applications' load. Cloud Datastore provides a myriad of capabilities such as ACID transactions, SQL-like queries, indexes and much more.
+
+-- [Google Cloud Datastore](https://cloud.google.com/datastore/)
+
+-- [my Datastore](datastore.md)
 
 - Google Cloud SQL, a full-featured relational database service based on MySQL. Cloud SQL is a feature of Google Cloud Platform, and can be called directly from App Engine using standard database APIs.
 - Cloud Datastore scales automatically: with proper data design, it can handle as many simultaneous users as App Engine’s server instances can.
