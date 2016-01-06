@@ -24,6 +24,10 @@ Platform as a Service
 
 - [GCM overview](https://developers.google.com/cloud-messaging/gcm)
 - [Cloud Messaging](https://developers.google.com/cloud-messaging/)
+- GCM API key **[GCM_API_KEY: obtain Google Cloud Messaging API key: Credentials](https://console.cloud.google.com/project/_/apiui/credential?_ga=1.2024945.1166936385.1451481292)**
+- Sender ID (project number) **[SENDER_ID: get from Cloud PlatformConsole](https://console.cloud.google.com/?_ga=1.5090035.1166936385.1451481292)**
+- APPLICATION_ID = **The project ID for the project you created in the Cloud Platform Console.**
+
 
 ##OAuth
 

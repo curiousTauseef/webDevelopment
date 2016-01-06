@@ -1,28 +1,21 @@
 package com.junjunguo.sae.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 /**
- * This file is part of spring_hibernate_relation.
+ * This file is part of spring_datastore_appengine.
  * <p/>
- * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
+ * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 04/01/16.
  */
 @Entity
-@Table(name = "TAG")
-public class Tag implements Serializable {
+public class Tag {
     /**
      * tag id
      */
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
     private long id;
 
-    @Column(name = "LABEL",
-            unique = true,
-            nullable = false,
-            columnDefinition = "VARCHAR(128)")
     private String label;
 
     public Tag(String label) {
@@ -71,24 +64,5 @@ public class Tag implements Serializable {
      */
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Tag)) return false;
-
-        Tag tag = (Tag) o;
-
-        if (getId() != tag.getId()) return false;
-        return getLabel().equals(tag.getLabel());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + getLabel().hashCode();
-        return result;
     }
 }

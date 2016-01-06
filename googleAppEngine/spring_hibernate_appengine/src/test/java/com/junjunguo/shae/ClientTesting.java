@@ -29,12 +29,13 @@ public class ClientTesting {
         TagServices   ts = new TagServicesImpl();
 
         User jj = new User("JunjunGuo", "GuoJunjun@Gmail.com", "guojunjun's password");
-        log(us.createUser(jj));
 
         User      lee  = new User("Lee", "lee@gmail.com", "lee's password");
+        log(us.createUser(lee));
         List<Tag> tags = new ArrayList<Tag>();
         tags.add(new Tag("read"));
         tags.add(new Tag("JPA"));
+        log(ts.createTag("TEST"));
         String filePath = "/Users/Junjun/Movies/testing.f4v";
         String textPath = "/Users/Junjun/test.txt";
         String pdfPath =

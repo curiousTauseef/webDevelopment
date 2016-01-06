@@ -1,57 +1,29 @@
 package com.junjunguo.sae.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.junjunguo.sae.util.MyDate;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * This file is part of spring_hibernate_relation.
+ * This file is part of spring_datastore_appengine.
  * <p/>
- * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
+ * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 04/01/16.
  */
 @Entity
-@Table(name = "USER")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User implements Serializable {
+public class User {
     @Id
-    @GeneratedValue
-    @Column(name = "ID",
-            unique = true,
-            nullable = false)
     private long id;
 
-    @Column(name = "NAME",
-            nullable = true,
-            columnDefinition = "VARCHAR(128)")
     private String name;
-
-    @Column(name = "EMAIL",
-            nullable = false,
-            columnDefinition = "VARCHAR(128)")
+    @Index
     private String email;
-    @Column(name = "PASSWORD",
-            nullable = false,
-            columnDefinition = "VARCHAR(128)")
     private String password;
-    @Column(name = "COUNTRY",
-            nullable = true,
-            columnDefinition = "VARCHAR(128)")
     private String country;
-    @Column(name = "GENDER",
-            nullable = true,
-            columnDefinition = "VARCHAR(10)")
     private Gender gender;
-    @Column(name = "BIRTH",
-            nullable = true,
-            columnDefinition = "DATE")
     private Date   birth;
-    @Column(name = "REGISTEREDTIME",
-            nullable = false,
-            columnDefinition = "DATETIME")
     private Date   registeredtime;
 
     /**
@@ -243,48 +215,4 @@ public class User implements Serializable {
      * @param id New value of id.
      */
     public void setId(long id) { this.id = id; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-
-        User user = (User) o;
-
-        if (getId() != user.getId()) return false;
-        if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
-        if (!getEmail().equals(user.getEmail())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
-        if (getGender() != user.getGender()) return false;
-        if (getBirth() != null ? !getBirth().equals(user.getBirth()) : user.getBirth() != null) return false;
-        return !(getRegisteredtime() != null ? !getRegisteredtime().equals(user.getRegisteredtime()) :
-                user.getRegisteredtime() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + getEmail().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getGender() != null ? getGender().hashCode() : 0);
-        result = 31 * result + (getBirth() != null ? getBirth().hashCode() : 0);
-        result = 31 * result + (getRegisteredtime() != null ? getRegisteredtime().hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "User [name=" + name +
-               ", email='" + email +
-               ", country='" + country +
-               ", gender='" + gender.toString() +
-               ", password='" + password +
-               ", birth=" + new MyDate().getDateString(birth) +
-               ", registeredtime=" + new MyDate().getDateString(registeredtime) +
-               ']';
-    }
 }

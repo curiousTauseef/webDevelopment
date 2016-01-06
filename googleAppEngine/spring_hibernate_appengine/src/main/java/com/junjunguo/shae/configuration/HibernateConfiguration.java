@@ -1,5 +1,6 @@
 package com.junjunguo.shae.configuration;
 
+import com.google.appengine.api.utils.SystemProperty;
 import com.junjunguo.shae.dao.LocationDao;
 import com.junjunguo.shae.dao.TagDao;
 import com.junjunguo.shae.dao.UserDao;
@@ -37,8 +38,18 @@ public class HibernateConfiguration {
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/tsag_test");
+
+        if (SystemProperty.environment.value() ==
+            SystemProperty.Environment.Value.Production) {
+
+            dataSource.setDriverClassName("com.mysql.jdbc.GoogleDriver");
+            dataSource.setUrl("jdbc:google:mysql://your-project-id:your-instance-name/demo");
+        } else {
+            dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+            dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/tsag_test");
+        }
+        //        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        //        dataSource.setUrl("jdbc:mysql://localhost:3306/tsag_test");
         dataSource.setUsername("junjunguo");
         dataSource.setPassword("passwords");
         return dataSource;

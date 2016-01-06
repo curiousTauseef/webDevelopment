@@ -1,89 +1,49 @@
 package com.junjunguo.sae.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 /**
- * This file is part of spring_hibernate_relation.
+ * This file is part of spring_datastore_appengine.
  * <p/>
- * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 25/10/15.
+ * Created by <a href="http://junjunguo.com">GuoJunjun</a> on 04/01/16.
  */
 @Entity
-@Table(name = "VIDEO")
-public class Video implements Serializable {
+public class Video {
     /**
      * video id
      */
     @Id
-    @GeneratedValue
-    @Column(name = "ID")
     private long   id;
-    @Column(name = "TITLE",
-            nullable = true,
-            columnDefinition = "VARCHAR(255)")
     private String title;
 
-    @Column(name = "DESCRIPTION",
-            nullable = true,
-            columnDefinition = "TEXT")
     private String  description;
-    @Column(name = "UPLOADTIME",
-            nullable = false,
-            columnDefinition = "DATETIME")
     private Date    uploadTime;
-    @Column(name = "HASVIDEO",
-            nullable = true,
-            columnDefinition = "BOOLEAN")
     private boolean hasVideo;
-    @Column(name = "FILEPATH",
-            nullable = true,
-            columnDefinition = "VARCHAR(2083)")
     private String  filePath;
-    @Column(name = "FILENAME",
-            nullable = true,
-            columnDefinition = "VARCHAR(255)")
     private String  fileName;
-    @Column(name = "FILEEXTENSION",
-            nullable = true,
-            columnDefinition = "VARCHAR(64)")
     private String  fileExtension;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-                targetEntity = Tag.class,
-                cascade = {CascadeType.ALL})
-    @JoinTable(name = "VIDEO_TAG",
-               joinColumns = {@JoinColumn(name = "VIDEO_ID")},
-               inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
     private List<Tag> tags;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,
-               targetEntity = Location.class,
-               cascade = CascadeType.ALL
-    )
-    @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            targetEntity = User.class,
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(name = "OWNER_EMAIL")
     private User owner;
 
     public Video(String title, String description, String filePath, String fileName, String fileExtension, User owner,
             Location location) {
-        this(title, null, description, Calendar.getInstance().getTime(), filePath, fileName, fileExtension, owner,
+        this            (title, null, description, Calendar.getInstance().getTime(), filePath, fileName, fileExtension, owner,
                 location);
     }
 
     public Video(String title, List<Tag> tags, String description, String filePath, String fileName,
             String fileExtension, User owner, Location location) {
-        this(title, tags, description, Calendar.getInstance().getTime(), filePath, fileName, fileExtension, owner,
+        this            (title, tags, description, Calendar.getInstance().getTime(), filePath, fileName, fileExtension, owner,
                 location);
     }
 
@@ -322,45 +282,5 @@ public class Video implements Serializable {
      */
     public boolean isHasVideo() {
         return hasVideo;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Video)) return false;
-
-        Video video = (Video) o;
-
-        if (getId() != video.getId()) return false;
-        if (isHasVideo() != video.isHasVideo()) return false;
-        if (getTitle() != null ? !getTitle().equals(video.getTitle()) : video.getTitle() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(video.getDescription()) :
-                video.getDescription() != null)
-            return false;
-        if (getUploadTime() != null ? !getUploadTime().equals(video.getUploadTime()) : video.getUploadTime() != null)
-            return false;
-        if (!getFilePath().equals(video.getFilePath())) return false;
-        if (getFileName() != null ? !getFileName().equals(video.getFileName()) : video.getFileName() != null)
-            return false;
-        if (!getFileExtension().equals(video.getFileExtension())) return false;
-        if (getTags() != null ? !getTags().equals(video.getTags()) : video.getTags() != null) return false;
-        if (!getLocation().equals(video.getLocation())) return false;
-        return getOwner().equals(video.getOwner());
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getUploadTime() != null ? getUploadTime().hashCode() : 0);
-        result = 31 * result + (isHasVideo() ? 1 : 0);
-        result = 31 * result + getFilePath().hashCode();
-        result = 31 * result + (getFileName() != null ? getFileName().hashCode() : 0);
-        result = 31 * result + getFileExtension().hashCode();
-        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
-        result = 31 * result + getLocation().hashCode();
-        result = 31 * result + getOwner().hashCode();
-        return result;
     }
 }

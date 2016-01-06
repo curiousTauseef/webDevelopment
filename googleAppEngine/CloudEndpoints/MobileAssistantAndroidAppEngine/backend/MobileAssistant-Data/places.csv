@@ -1,0 +1,6 @@
+name,placeId,location,id,address
+A store at City1 Shopping Center,store101,"63.4290657,10.3957824",1,"Some address of the store in City 1"
+A big store at Some Mall,store102,"63.4347472,10.4139142",2,"Some address of the store in City 2"
+A big store at Some Mall,store103,"63.3642435,10.4250507",3,"Some address of the store in City 3"
+A big store at Some Mall,Bergen 104,"61.5731863,9.2405872",4,"Some address of the store in City Bergen"
+A big store at Some Mall,Oslo 105,"60.0629026,11.0533313",5,"Some address of the store in City Oslo"
