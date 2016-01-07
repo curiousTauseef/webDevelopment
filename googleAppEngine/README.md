@@ -14,6 +14,8 @@ Platform as a Service
 
 -- [Google Cloud Endpoints](https://cloud.google.com/appengine/docs/java/endpoints/)
 
+-- [Using Endpoints in an iOS Client](https://cloud.google.com/appengine/docs/java/endpoints/consume_ios)
+
 -- [my Cloud Endpoints](CloudEndpoints)
 
 ##Google Cloud Message (**GCM**)

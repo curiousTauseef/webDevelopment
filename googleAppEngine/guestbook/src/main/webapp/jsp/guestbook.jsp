@@ -22,11 +22,11 @@
     <meta name="description" content="GuoJunjun's Personal Web"/>
     <title>my Guest book</title>
 
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon"/>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="shortcut icon" href="http://junjunguo.com/junjunguofiles/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link type="text/css" rel="stylesheet" href="/css/animate.css"/>
     <link type="text/css" rel="stylesheet" href="/css/main.css"/>
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -136,8 +136,8 @@
             <input type="submit" value="Switch Guestbook"/></div>
     </form>
 </div>
-<script src="../js/jquery-1.11.3.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="../js/wow.min.js"></script>
 <script src="../js/main.js"></script>
 </body>
