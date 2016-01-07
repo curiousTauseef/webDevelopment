@@ -28,7 +28,7 @@ public final class Constants {
     /**
      * Google Cloud Messaging API key.
      */
-    public static final String GCM_API_KEY = "YOUR-GCM-API-KEY";
+    public static final String GCM_API_KEY = "AIzaSyAlGXgCeAYYtLoKOJ8o7AzfHBF5nUb-_uI";
 
     /**
      * Android client ID from Google Cloud console.
@@ -43,7 +43,7 @@ public final class Constants {
     /**
      * Web client ID from Google Cloud console.
      */
-    public static final String WEB_CLIENT_ID = "YOUR-WEB-CLIENT-ID";
+    public static final String WEB_CLIENT_ID = "994760477407-cmndblrro3f9ktskgs7gts2cpe68h25t.apps.googleusercontent.com";
 
     /**
      * Audience ID used to limit access to some client to the API.

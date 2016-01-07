@@ -65,10 +65,11 @@ mvn archetype:generate -Dappengine-version=1.9.30 -Dfilter=com.google.appengine.
 - Compute Engine & REST/gRPC
 	- Compute Engine lets you create and run virtual machines on Google infrastructure. You have administrator rights to the server and full control over its configuration. This also means that you are responsible for updates and maintenance.
 
-#Google Cloud Endpoint
+##Google Cloud Endpoint Annotations
 
-###[Endpoint Annotations](https://cloud.google.com/appengine/docs/java/endpoints/annotations)
+- **[Endpoint Annotations](https://cloud.google.com/appengine/docs/java/endpoints/annotations)**
 
+	- **[ApiClass: Multiclass APIs](https://cloud.google.com/appengine/docs/java/endpoints/multiclass#using_apiclass_for_properties_that_can_differ_between_classes)**
 
 
 [Creating a Simple Hello World Backend API](https://cloud.google.com/appengine/docs/java/endpoints/getstarted/backend/hello_world)
