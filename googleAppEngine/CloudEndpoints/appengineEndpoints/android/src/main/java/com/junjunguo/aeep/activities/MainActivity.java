@@ -1,4 +1,4 @@
-package com.junjunguo.aeep;
+package com.junjunguo.aeep.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.junjunguo.aeep.R;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;

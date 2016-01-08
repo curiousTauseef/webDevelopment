@@ -1,14 +1,10 @@
-package com.junjunguo.aeep;
+package com.junjunguo.aeep.util;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.junjunguo.backend.myEndpointsAPI.MyEndpointsAPI;
-
-import java.io.IOException;
 
 /**
  * This file is part of appengineEndpoints
@@ -29,20 +25,24 @@ public class ApiBuilderHelper {
      *
      * @return ShoppingAssistant endpoints to the GAE backend.
      */
-    static MyEndpointsAPI getEndpoints() {
+    public static MyEndpointsAPI getEndpoints() {
 
         // Create API handler
         MyEndpointsAPI.Builder builder =
-                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
-                        getRequestInitializer()).setRootUrl(Constant.ROOT_URL)
-                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                            @Override
-                            public void initialize(final AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
-                                    throws IOException {
-                                abstractGoogleClientRequest.setDisableGZipContent(true);
-                            }
-                        });
-
+                //                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new
+                // AndroidJsonFactory(),
+                //                        getRequestInitializer()).setRootUrl(Constant.ROOT_URL)
+                //                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                //                            @Override
+                //                            public void initialize(final AbstractGoogleClientRequest<?>
+                // abstractGoogleClientRequest)
+                //                                    throws IOException {
+                //                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                //                            }
+                //                        });
+                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                        .setRootUrl(Constant.ROOT_URL);
+        builder.setApplicationName("guo-junjun");
         return builder.build();
     }
 

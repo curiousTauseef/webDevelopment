@@ -1,5 +1,6 @@
-package com.junjunguo.aeep;
+package com.junjunguo.aeep.activities;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,10 +11,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.junjunguo.aeep.R;
+import com.junjunguo.aeep.model.Gender;
+import com.junjunguo.aeep.util.ApiBuilderHelper;
 import com.junjunguo.backend.myEndpointsAPI.MyEndpointsAPI;
 import com.junjunguo.backend.myEndpointsAPI.model.User;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class UserDetailActivity extends AppCompatActivity {
     private User user;
@@ -23,22 +28,37 @@ public class UserDetailActivity extends AppCompatActivity {
     private Gender gender;
     private TextView infoTV;
     private MyEndpointsAPI myEndpointsAPI;
+    private boolean createNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         myEndpointsAPI = ApiBuilderHelper.getEndpoints();
-        if (savedInstanceState != null) {
-            user = new Gson().fromJson(savedInstanceState.getString("UPDATE_USER"), User.class);
-            init(user);
+
+        String s;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                s = null;
+            } else {
+                s = extras.getString("UPDATE_USER");
+            }
         } else {
-            //            user = new User();
-            init(null);
+            s = (String) savedInstanceState.getSerializable("UPDATE_USER");
         }
+
+        if (s != null) {
+            user = new Gson().fromJson(s, User.class);
+            log("user to update: " + user);
+            createNew = false; // update user
+        } else {
+            createNew = true; // create new user
+        }
+        init();
     }
 
-    private void init(User user) {
+    private void init() {
         gender = Gender.UNKNOWN;
         emailEt = (EditText) findViewById(R.id.user_detail_et_email);
         firstNameEt = (EditText) findViewById(R.id.user_detail_et_first_name);
@@ -47,16 +67,17 @@ public class UserDetailActivity extends AppCompatActivity {
         femaleRb = (RadioButton) findViewById(R.id.user_detail_radio_female);
         confirmBtn = (Button) findViewById(R.id.user_detail_btn_confirm);
         infoTV = (TextView) findViewById(R.id.user_detail_tv_info);
-        if (user != null) {
+        if (!createNew) { // update
             emailEt.setKeyListener(null);
             emailEt.setText(user.getEmail());
             firstNameEt.setText(user.getFirstName());
             lastNameEt.setText(user.getLastName());
             confirmBtn.setText("update");
-            if (user.getGender().equals(Gender.FEMALE)) {
+
+            if (user.getGender().equals(Gender.FEMALE.toString())) {
                 femaleRb.setChecked(true);
                 maleRb.setChecked(false);
-            } else if (user.getGender().equals(Gender.MALE)) {
+            } else if (user.getGender().equals(Gender.MALE.toString())) {
                 femaleRb.setChecked(false);
                 maleRb.setChecked(true);
             } else {
@@ -65,7 +86,7 @@ public class UserDetailActivity extends AppCompatActivity {
             }
         } else {
             confirmBtn.setText("register");
-            this.user = new User();
+            user = new User();
         }
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -76,40 +97,52 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
     private void confirmAction() {
-        try {
-            String email = emailEt.getText().toString();
-            String message = "";
-            if (!isValidEmail(email)) {
-                message = "not valid email address !";
-            }
-            String firstName = firstNameEt.getText().toString();
-            if (firstName.length() < 2) {
-                message += "\nnot valid first name !";
-            }
-            String lastName = lastNameEt.getText().toString();
-            if (lastName.length() < 2) {
-                message += "\nnot valid last name !";
-            }
-            if (message.length() == 0) {
-                user.setEmail(email);
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setGender(gender.toString());
-                log("before api call");
-                try {
-                    log("print user: " + user.toString());
-                    //                    myEndpointsAPI.userServices().updateUser(user);
-                    showInfo(myEndpointsAPI.userServices().createUser(user).toString());
-                } catch (IOException e) {
-                    log("! ! ! ! ! error:");
-                    e.printStackTrace();
-                }
-            } else {
-                showInfo(message);
-            }
-        } catch (Exception e) {
-            log(e.toString());
+        String email = emailEt.getText().toString();
+        String message = "";
+        if (!isValidEmail(email)) {
+            message = "not valid email address !";
         }
+        String firstName = firstNameEt.getText().toString();
+        if (firstName.length() < 2) {
+            message += "\nnot valid first name !";
+        }
+        String lastName = lastNameEt.getText().toString();
+        if (lastName.length() < 2) {
+            message += "\nnot valid last name !";
+        }
+        if (message.length() == 0) {
+            user.setEmail(email);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setGender(gender.toString());
+            log("before api call");
+
+            performService(user);
+        } else {
+            showInfo(message);
+        }
+    }
+
+    private void performService(final User user) {
+        new AsyncTask<URL, Void, String>() {
+            @Override
+            protected String doInBackground(URL... params) {
+                try {
+                    if (createNew) {
+                        return "create user: " + myEndpointsAPI.userServices().createUser(user).execute();
+                    } else {
+                        return "update user: " + myEndpointsAPI.userServices().updateUser(user).execute();
+                    }
+                } catch (IOException e) {
+                    return "error: " + e.getMessage();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                showInfo(result);
+            }
+        }.execute();
     }
 
 

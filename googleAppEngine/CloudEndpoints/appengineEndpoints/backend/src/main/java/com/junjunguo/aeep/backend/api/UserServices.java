@@ -47,7 +47,8 @@ public class UserServices {
     /* GET */
     @ApiMethod(httpMethod = "GET")
     public User getUserByEmail(@Named("email") String email) {
-        return ofy().load().type(User.class).filter("email=", email).first().now();
+        //        return ofy().load().type(User.class).filter("email=", email).first().now();
+        return findUser(email);
     }
 
     /* POST */
