@@ -2,21 +2,23 @@ package com.junjunguo.aeep;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.junjunguo.backend.myEndpointsAPI.MyEndpointsAPI;
+import com.junjunguo.backend.myEndpointsAPI.model.User;
 
 import java.io.IOException;
 
 public class UserActivity extends AppCompatActivity {
     private EditText emailET;
-    private TextView inforTV;
+    private TextView infoTV;
     private Context context;
     private MyEndpointsAPI myEndpointsAPI;
 
@@ -28,7 +30,7 @@ public class UserActivity extends AppCompatActivity {
         myEndpointsAPI = ApiBuilderHelper.getEndpoints();
         initBtns();
         emailET = (EditText) findViewById(R.id.user_et_email);
-        inforTV = (TextView) findViewById(R.id.user_text_view);
+        infoTV = (TextView) findViewById(R.id.user_tv_info);
     }
 
     private void initBtns() {
@@ -51,9 +53,9 @@ public class UserActivity extends AppCompatActivity {
         listBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    showInfo(myEndpointsAPI.userServices().listUsers().toString());
+                    showInfo("List: " + myEndpointsAPI.userServices().listUsers());
                 } catch (IOException e) {
-                    showInfo(e.getMessage());
+                    showInfo("exceptions : " + e.getMessage());
                 }
             }
         });
@@ -64,9 +66,9 @@ public class UserActivity extends AppCompatActivity {
                 String email = emailET.getText().toString();
                 if (isValidEmail(email)) {
                     try {
-                        showInfo(myEndpointsAPI.userServices().getUserByEmail(email).toString());
+                        showInfo("find: " + myEndpointsAPI.userServices().getUserByEmail(email));
                     } catch (IOException e) {
-                        showInfo(e.getMessage());
+                        showInfo("exceptions : " + e.getMessage());
                     }
                 } else {
                     showInfo("not valid email address!");
@@ -80,9 +82,9 @@ public class UserActivity extends AppCompatActivity {
                 String email = emailET.getText().toString();
                 if (isValidEmail(email)) {
                     try {
-                        showInfo("DELETED:  " + myEndpointsAPI.userServices().deleteUserByEmail(email).toString());
+                        showInfo("DELETED:  " + myEndpointsAPI.userServices().deleteUserByEmail(email));
                     } catch (IOException e) {
-                        showInfo(e.getMessage());
+                        showInfo("exceptions : " + e.getMessage());
                     }
                 } else {
                     showInfo("not valid email address!");
@@ -96,10 +98,13 @@ public class UserActivity extends AppCompatActivity {
                 String email = emailET.getText().toString();
                 if (isValidEmail(email)) {
                     try {
-                        showInfo(myEndpointsAPI.userServices().getUserByEmail(email).toString());
-                        startActivity(new Intent(context, UserDetailActivity.class));
+                        User user = (User) myEndpointsAPI.userServices().getUserByEmail(email).get(User.class);
+                        showInfo(user.toString());
+                        Intent intent = new Intent(context, UserDetailActivity.class);
+                        intent.putExtra("UPDATE_USER", new Gson().toJson(user));
+                        startActivity(intent);
                     } catch (IOException e) {
-                        showInfo(e.getMessage());
+                        showInfo("exceptions : " + e.getMessage());
                     }
                 } else {
                     showInfo("not valid email address!");
@@ -113,7 +118,7 @@ public class UserActivity extends AppCompatActivity {
      */
 
     private void showInfo(String info) {
-        inforTV.setText(info);
+        infoTV.setText(info);
     }
 
     public boolean isValidEmail(CharSequence target) {

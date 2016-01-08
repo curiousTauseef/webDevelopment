@@ -25,7 +25,7 @@ public class Constant {
     /**
      * The URL to the API. Default when running locally on your computer: "http://10.0.2.2:8080/_ah/api/"
      */
-    public static final String ROOT_URL = "http://guo-junjun.appspot.com/_ah/api/";
+    public static final String ROOT_URL = "https://guo-junjun.appspot.com/_ah/api";
 
     /**
      * Defines whether authentication is required or not.

@@ -18,11 +18,16 @@ public final class OfyService {
     }
 
     static {
+        //        try {
         factory().register(User.class);
+        //        } catch (Exception e) {
+        //            e.getStackTrace();
+        //        }
     }
 
     /**
      * Returns the Objectify service wrapper.
+     *
      * @return The Objectify service wrapper.
      */
     public static Objectify ofy() {
@@ -31,6 +36,7 @@ public final class OfyService {
 
     /**
      * Returns the Objectify factory service.
+     *
      * @return The factory service.
      */
     public static ObjectifyFactory factory() {
