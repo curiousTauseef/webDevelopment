@@ -17,13 +17,13 @@ import static com.junjunguo.aeep.backend.dao.OfyService.ofy;
 
 /**
  * This file is part of appengineEndpoints
- * <p>
+ * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Api(name = "myEndpointsAPI", version = "v1",
      namespace = @ApiNamespace(ownerDomain = Constant.API_OWNER, ownerName = Constant.API_OWNER,
                                packagePath = Constant.API_PACKAGE_PATH))
-@ApiClass(resource = "user",
+@ApiClass(resource = "userServices",
           clientIds = {Constant.ANDROID_CLIENT_ID, Constant.IOS_CLIENT_ID, Constant.WEB_CLIENT_ID},
           audiences = {Constant.AUDIENCE_ID})
 public class UserServices {
@@ -68,7 +68,6 @@ public class UserServices {
 
     /**
      * Updates an entity. It uses HTTP PUT method.
-     *
      * @param user User
      * @return updated user
      */

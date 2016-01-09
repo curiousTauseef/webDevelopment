@@ -1,10 +1,15 @@
 package com.junjunguo.aeep.backend.model;
 
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.api.datastore.GeoPt;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * This file is part of appengineEndpoints
@@ -15,14 +20,12 @@ import java.util.Date;
  */
 @Entity
 public class Event {
-    //    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-    //    private List<Key<Tag>> tags;
-//    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-//    @Load
-//    private Ref<User> owner;
+    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+    private List<Key<Tag>> tags;
     private GeoPt location;
     @Id
     private long id;
+    private String ownerEmail;
     private String title;
     private String description;
     private boolean hasVideo;
@@ -30,36 +33,24 @@ public class Event {
     private Date uploadTime;
 
     public Event() {
-        //        this.tags = new ArrayList<>();
+        this.tags = new ArrayList<>();
     }
-    //
-    //    public void addTag(Key<Tag> tagKey) {
-    //        this.tags.add(tagKey);
-    //    }
-    //
-    //    public void removeTag(Key<Tag> tagKey) {
-    //        this.tags.remove(tagKey);
-    //    }
-    //
-    //    public List<Key<Tag>> getTags() {
-    //        return tags;
-    //    }
-    //
-    //    public void setTags(List<Key<Tag>> tags) {
-    //        this.tags = tags;
-    //    }
 
-//    public User getOwner() {
-//        return owner.get();
-//    }
-//
-//    public Ref<User> getOwnerKey() {
-//        return owner;
-//    }
-//
-//    public void setOwner(Ref<User> owner) {
-//        this.owner = owner;
-//    }
+    public void addTag(Key<Tag> tagKey) {
+        this.tags.add(tagKey);
+    }
+
+    public void removeTag(Key<Tag> tagKey) {
+        this.tags.remove(tagKey);
+    }
+
+    public List<Key<Tag>> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Key<Tag>> tags) {
+        this.tags = tags;
+    }
 
     public GeoPt getLocation() {
         return location;
@@ -75,6 +66,14 @@ public class Event {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     public String getTitle() {
