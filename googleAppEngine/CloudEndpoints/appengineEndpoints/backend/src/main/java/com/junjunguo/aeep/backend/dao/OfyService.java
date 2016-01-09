@@ -12,7 +12,7 @@ import com.junjunguo.aeep.backend.model.Event;
  * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
-public final class OfyService {
+public final class OfyService{
     /**
      * Default constructor, never called.
      */

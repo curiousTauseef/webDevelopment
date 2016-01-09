@@ -1,11 +1,7 @@
 package com.junjunguo.aeep.backend.model;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * UserAccount entity.
@@ -16,8 +12,8 @@ import java.util.List;
  */
 @Entity
 public class User {
-
-    private List<Key<Event>> events;
+//    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+//    private List<Key<Event>> events;
     private String firstName;
     private String lastName;
     @Id
@@ -26,24 +22,24 @@ public class User {
     private String password;
 
     public User() {
-        this.events = new ArrayList<>();
+//        this.events = new ArrayList<>();
     }
 
-    public void addEvent(Key<Event> eventKey) {
-        this.events.add(eventKey);
-    }
+//    public void addEvent(Key<Event> eventKey) {
+//        this.events.add(eventKey);
+//    }
+//
+//    public void removeEvent(Key<Event> eventKey) {
+//        this.events.remove(eventKey);
+//    }
 
-    public void removeEvent(Key<Event> eventKey) {
-        this.events.remove(eventKey);
-    }
-
-    public List<Key<Event>> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Key<Event>> events) {
-        this.events = events;
-    }
+//    public List<Key<Event>> getEvents() {
+//        return events;
+//    }
+//
+//    public void setEvents(List<Key<Event>> events) {
+//        this.events = events;
+//    }
 
     public String getFirstName() {
         return firstName;

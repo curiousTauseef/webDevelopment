@@ -23,7 +23,7 @@ import static com.junjunguo.aeep.backend.dao.OfyService.ofy;
 @Api(name = "myEndpointsAPI", version = "v1",
      namespace = @ApiNamespace(ownerDomain = Constant.API_OWNER, ownerName = Constant.API_OWNER,
                                packagePath = Constant.API_PACKAGE_PATH))
-@ApiClass(resource = "userServices",
+@ApiClass(resource = "user",
           clientIds = {Constant.ANDROID_CLIENT_ID, Constant.IOS_CLIENT_ID, Constant.WEB_CLIENT_ID},
           audiences = {Constant.AUDIENCE_ID})
 public class UserServices {

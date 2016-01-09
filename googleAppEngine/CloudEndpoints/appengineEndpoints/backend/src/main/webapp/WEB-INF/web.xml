@@ -5,7 +5,10 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.junjunguo.aeep.backend.api.UserServices</param-value>
+            <param-value>
+                com.junjunguo.aeep.backend.api.EventServices,
+                com.junjunguo.aeep.backend.api.UserServices
+            </param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

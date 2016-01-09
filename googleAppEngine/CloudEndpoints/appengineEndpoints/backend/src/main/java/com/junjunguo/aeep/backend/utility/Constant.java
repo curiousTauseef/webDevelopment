@@ -38,7 +38,7 @@ public final class Constant {
     /**
      * API package name.
      */
-    public static final String API_OWNER = "backend.junjunguo.com";
+    public static final String API_OWNER = "backend.aeep.junjunguo.com";
 
     /**
      * API package path.
