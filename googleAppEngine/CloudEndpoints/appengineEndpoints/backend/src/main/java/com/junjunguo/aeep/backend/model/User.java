@@ -1,41 +1,49 @@
 package com.junjunguo.aeep.backend.model;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * UserAccount entity.
- * <p/>
+ * <p>
  * This file is part of appengineEndpoints
- * <p/>
+ * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Entity
 public class User {
 
-    /**
-     * Unique identifier of this Entity in the database.
-     */
-//    @Id private Long key;
-
-    /**
-     * The user first name.
-     */
+    private List<Key<Event>> events;
     private String firstName;
-
-    /**
-     * The user last name.
-     */
     private String lastName;
-
-    /**
-     * The user email & Unique identifier of this Entity in the database.
-     */
-    @Id private String email;
-    /**
-     * The user gender
-     */
+    @Id
+    private String email;
     private Gender gender;
+    private String password;
+
+    public User() {
+        this.events = new ArrayList<>();
+    }
+
+    public void addEvent(Key<Event> eventKey) {
+        this.events.add(eventKey);
+    }
+
+    public void removeEvent(Key<Event> eventKey) {
+        this.events.remove(eventKey);
+    }
+
+    public List<Key<Event>> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Key<Event>> events) {
+        this.events = events;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -53,22 +61,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    /**
-     * Returns the user email.
-     *
-     * @return the user email.
-     */
-    public final String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    /**
-     * Sets the user email.
-     *
-     * @param pEmail the user email to set.
-     */
-    public final void setEmail(final String pEmail) {
-        this.email = pEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Gender getGender() {
@@ -79,4 +77,11 @@ public class User {
         this.gender = gender;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

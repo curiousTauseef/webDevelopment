@@ -1,7 +1,11 @@
 package com.junjunguo.aeep.backend.model;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This file is part of appengineEndpoints
@@ -9,60 +13,46 @@ import com.googlecode.objectify.annotation.Id;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Entity
-public class Tag{
-    /**
-     * tag id
-     */
+public class Tag {
+    private List<Key<Event>> events;
     @Id
-    private long   id;
+    private long id;
     private String label;
 
-    public Tag(String label) {
-        this.label = label;
-    }
-
-    public Tag(long id, String label) {
-        this.id = id;
-        this.label = label;
-    }
-
     public Tag() {
+        this.events = new ArrayList<>();
     }
 
-    /**
-     * Sets new tag id.
-     *
-     * @param id New value of tag id.
-     */
-    public void setId(long id) {
-        this.id = id;
+    public void addEvent(Key<Event> eventKey) {
+        this.events.add(eventKey);
     }
 
-    /**
-     * Gets tag id.
-     *
-     * @return Value of tag id.
-     */
+    public void removeEvent(Key<Event> eventKey) {
+        this.events.remove(eventKey);
+    }
+
+
+    public List<Key<Event>> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Key<Event>> events) {
+        this.events = events;
+    }
+
     public long getId() {
         return id;
     }
 
-    /**
-     * Gets label.
-     *
-     * @return Value of label.
-     */
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getLabel() {
         return label;
     }
 
-    /**
-     * Sets new label.
-     *
-     * @param label New value of label.
-     */
     public void setLabel(String label) {
         this.label = label;
     }
-
 }

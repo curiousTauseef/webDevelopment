@@ -3,11 +3,13 @@ package com.junjunguo.aeep.backend.dao;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
+import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.model.User;
+import com.junjunguo.aeep.backend.model.Event;
 
 /**
  * This file is part of appengineEndpoints
- * <p/>
+ * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 public final class OfyService {
@@ -18,11 +20,9 @@ public final class OfyService {
     }
 
     static {
-        //        try {
+        factory().register(Tag.class);
         factory().register(User.class);
-        //        } catch (Exception e) {
-        //            e.getStackTrace();
-        //        }
+        factory().register(Event.class);
     }
 
     /**

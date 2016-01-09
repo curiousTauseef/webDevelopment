@@ -45,14 +45,5 @@ public final class Constant {
      */
     public static final String API_PACKAGE_PATH = "";
 
-    /**
-     * name the the api
-     */
-    //    public static final String API_NAME = "myEndpointsAPI";
-    /**
-     * api version
-     */
-    //    public static final String API_VERSION = "V1";
-
 
 }
