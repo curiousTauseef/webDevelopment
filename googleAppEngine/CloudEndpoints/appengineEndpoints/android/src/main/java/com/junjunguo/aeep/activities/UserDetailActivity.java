@@ -12,17 +12,17 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.junjunguo.aeep.R;
+import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
+import com.junjunguo.aeep.backend.myEndpointsAPI.model.User;
 import com.junjunguo.aeep.model.Gender;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
-import com.junjunguo.backend.myEndpointsAPI.MyEndpointsAPI;
-import com.junjunguo.backend.myEndpointsAPI.model.User;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class UserDetailActivity extends AppCompatActivity {
     private User user;
-    private EditText emailEt, firstNameEt, lastNameEt;
+    private EditText emailEt, firstNameEt, lastNameEt, passwordEt;
     private RadioButton maleRb, femaleRb;
     private Button confirmBtn;
     private Gender gender;
@@ -63,6 +63,7 @@ public class UserDetailActivity extends AppCompatActivity {
         emailEt = (EditText) findViewById(R.id.user_detail_et_email);
         firstNameEt = (EditText) findViewById(R.id.user_detail_et_first_name);
         lastNameEt = (EditText) findViewById(R.id.user_detail_et_last_name);
+        passwordEt = (EditText) findViewById(R.id.user_detail_et_password);
         maleRb = (RadioButton) findViewById(R.id.user_detail_radio_male);
         femaleRb = (RadioButton) findViewById(R.id.user_detail_radio_female);
         confirmBtn = (Button) findViewById(R.id.user_detail_btn_confirm);
@@ -72,6 +73,7 @@ public class UserDetailActivity extends AppCompatActivity {
             emailEt.setText(user.getEmail());
             firstNameEt.setText(user.getFirstName());
             lastNameEt.setText(user.getLastName());
+            passwordEt.setText(user.getPassword());
             confirmBtn.setText("update");
 
             if (user.getGender().equals(Gender.FEMALE.toString())) {
@@ -109,6 +111,14 @@ public class UserDetailActivity extends AppCompatActivity {
         String lastName = lastNameEt.getText().toString();
         if (lastName.length() < 2) {
             message += "\nnot valid last name !";
+        }
+        String password = passwordEt.getText().toString();
+        if (password.length() == 0) {
+
+        } else if (password.length() < 4) {
+            message += "\npassword too short !";
+        } else {
+            user.setPassword(password);
         }
         if (message.length() == 0) {
             user.setEmail(email);

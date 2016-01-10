@@ -3,16 +3,16 @@ package com.junjunguo.aeep.backend.dao;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
+import com.junjunguo.aeep.backend.model.Event;
 import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.model.User;
-import com.junjunguo.aeep.backend.model.Event;
 
 /**
  * This file is part of appengineEndpoints
- * <p>
+ * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
-public final class OfyService{
+public final class OfyService {
     /**
      * Default constructor, never called.
      */
@@ -27,7 +27,6 @@ public final class OfyService{
 
     /**
      * Returns the Objectify service wrapper.
-     *
      * @return The Objectify service wrapper.
      */
     public static Objectify ofy() {
@@ -36,7 +35,6 @@ public final class OfyService{
 
     /**
      * Returns the Objectify factory service.
-     *
      * @return The factory service.
      */
     public static ObjectifyFactory factory() {

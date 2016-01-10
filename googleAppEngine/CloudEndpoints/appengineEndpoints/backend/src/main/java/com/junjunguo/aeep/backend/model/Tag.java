@@ -18,12 +18,18 @@ import java.util.List;
 public class Tag {
     @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
     private List<Key<Event>> events;
+//    private Long id;
     @Id
-    private long id;
     private String label;
 
     public Tag() {
+//        this.id = null;
         this.events = new ArrayList<>();
+    }
+
+    public Tag(String label) {
+        this();
+        this.label = label;
     }
 
     public void addEvent(Key<Event> eventKey) {
@@ -43,13 +49,13 @@ public class Tag {
         this.events = events;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getLabel() {
         return label;

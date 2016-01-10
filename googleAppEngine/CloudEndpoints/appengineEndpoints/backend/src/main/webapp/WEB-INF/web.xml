@@ -7,7 +7,8 @@
             <param-name>services</param-name>
             <param-value>
                 com.junjunguo.aeep.backend.api.EventServices,
-                com.junjunguo.aeep.backend.api.UserServices
+                com.junjunguo.aeep.backend.api.UserServices,
+                com.junjunguo.aeep.backend.api.TagServices
             </param-value>
         </init-param>
     </servlet>

@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.junjunguo.aeep.R;
+import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
+import com.junjunguo.aeep.backend.myEndpointsAPI.model.User;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
-import com.junjunguo.backend.myEndpointsAPI.MyEndpointsAPI;
-import com.junjunguo.backend.myEndpointsAPI.model.User;
 
 import java.io.IOException;
 import java.net.URL;

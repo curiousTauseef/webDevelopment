@@ -5,15 +5,16 @@ import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Unindex;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * UserAccount entity.
- * <p>
+ * <p/>
  * This file is part of appengineEndpoints
- * <p>
+ * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Entity
@@ -25,6 +26,7 @@ public class User {
     @Id
     private String email;
     private Gender gender;
+    @Unindex
     private String password;
 
     public User() {

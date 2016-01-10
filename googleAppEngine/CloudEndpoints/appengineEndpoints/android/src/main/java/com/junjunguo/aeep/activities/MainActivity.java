@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
         tagBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(context, UserActivity.class));
+                startActivity(new Intent(context, TagActivity.class));
             }
         });
         localBtn.setOnClickListener(new View.OnClickListener() {

@@ -4,7 +4,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
-import com.junjunguo.backend.myEndpointsAPI.MyEndpointsAPI;
+import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
 
 /**
  * This file is part of appengineEndpoints

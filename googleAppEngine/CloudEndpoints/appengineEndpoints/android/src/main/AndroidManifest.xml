@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!--Getting the user credentials and using the account picker requires you to have the following Android permissions:-->
+    <!-- Getting the user credentials and using the account picker requires you to have the following Android permissions: -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
@@ -24,10 +24,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.UserActivity">
+        <activity
+            android:name=".activities.UserActivity"
+            android:label="User services">
         </activity>
-        <activity android:name=".activities.UserDetailActivity">
+        <activity
+            android:name=".activities.UserDetailActivity"
+            android:label="User detail">
         </activity>
+        <activity
+            android:name=".activities.TagActivity"
+            android:label="tag">
+        </activity>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>
