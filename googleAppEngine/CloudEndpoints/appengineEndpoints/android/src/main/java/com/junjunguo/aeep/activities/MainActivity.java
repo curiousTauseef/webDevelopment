@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBtns() {
-        final Button userBtn, videoBtn, tagBtn, localBtn;
+        final Button userBtn, eventBtn, tagBtn, localBtn;
         userBtn = (Button) findViewById(R.id.main_btn_user);
-        videoBtn = (Button) findViewById(R.id.main_btn_video);
+        eventBtn = (Button) findViewById(R.id.main_btn_event);
         tagBtn = (Button) findViewById(R.id.main_btn_tag);
         localBtn = (Button) findViewById(R.id.main_btn_location);
 
@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(context, UserActivity.class));
             }
         });
-        videoBtn.setOnClickListener(new View.OnClickListener() {
+        eventBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(context, UserActivity.class));
+                startActivity(new Intent(context, EventActivity.class));
             }
         });
         tagBtn.setOnClickListener(new View.OnClickListener() {

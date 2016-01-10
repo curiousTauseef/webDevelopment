@@ -21,10 +21,10 @@
         android:text="User services"/>
 
     <Button
-        android:id="@+id/main_btn_video"
+        android:id="@+id/main_btn_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="video services"/>
+        android:text="Event services"/>
 
     <Button
         android:id="@+id/main_btn_tag"

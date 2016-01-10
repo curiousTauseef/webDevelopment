@@ -5,25 +5,25 @@ import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This file is part of appengineEndpoints
- * <p/>
+ * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Entity
 public class Tag {
     @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+    @Index
     private List<Key<Event>> events;
-//    private Long id;
     @Id
     private String label;
 
     public Tag() {
-//        this.id = null;
         this.events = new ArrayList<>();
     }
 
@@ -32,14 +32,13 @@ public class Tag {
         this.label = label;
     }
 
-    public void addEvent(Key<Event> eventKey) {
-        this.events.add(eventKey);
+    public void addEvent(Event event) {
+        this.events.add(Key.create(Event.class, event.getId()));
     }
 
-    public void removeEvent(Key<Event> eventKey) {
-        this.events.remove(eventKey);
+    public void removeEvent(Event event) {
+        this.events.remove(Key.create(Event.class, event.getId()));
     }
-
 
     public List<Key<Event>> getEvents() {
         return events;
@@ -48,14 +47,6 @@ public class Tag {
     public void setEvents(List<Key<Event>> events) {
         this.events = events;
     }
-
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
 
     public String getLabel() {
         return label;

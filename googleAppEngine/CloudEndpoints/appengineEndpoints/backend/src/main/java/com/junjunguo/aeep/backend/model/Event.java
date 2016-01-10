@@ -6,6 +6,8 @@ import com.google.appengine.api.datastore.GeoPt;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,12 +23,15 @@ import java.util.List;
 @Entity
 public class Event {
     @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+    @Index
     private List<Key<Tag>> tags;
+//    private List<Tag>
     private GeoPt location;
     @Id
-    private long id;
+    private Long id;
     private String ownerEmail;
     private String title;
+    @Unindex
     private String description;
     private boolean hasVideo;
     private String videoPath;
@@ -35,6 +40,21 @@ public class Event {
     public Event() {
         this.tags = new ArrayList<>();
     }
+
+    //    public Event(Event e) {
+    //        this();
+    //        this.location = e.getLocation();
+    //        this.ownerEmail = e.getOwnerEmail();
+    //        this.title = e.getTitle();
+    //        this.description = e.getDescription();
+    //        this.hasVideo = e.hasVideo;
+    //        this.videoPath = e.videoPath;
+    //        this.uploadTime = e.uploadTime;
+    //    }
+
+    //    public Key<Event> getKey() {
+    //        return Key.create(Event.class, this.getId());
+    //    }
 
     public void addTag(Key<Tag> tagKey) {
         this.tags.add(tagKey);
@@ -60,11 +80,11 @@ public class Event {
         this.location = location;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -115,4 +135,5 @@ public class Event {
     public void setUploadTime(Date uploadTime) {
         this.uploadTime = uploadTime;
     }
+
 }

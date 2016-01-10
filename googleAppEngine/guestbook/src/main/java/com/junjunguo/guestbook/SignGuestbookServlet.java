@@ -18,11 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Form Handling Servlet
- * Most of the action for this sample is in webapp/guestbook.jsp, which displays the
- * {@link Greeting}'s. This servlet has one method
- * {@link #doPost(<#HttpServletRequest req#>, <#HttpServletResponse resp#>)} which takes the form
- * data and saves it.
+ * Form Handling Servlet Most of the action for this sample is in webapp/guestbook.jsp, which displays the {@link
+ * Greeting}'s. This servlet has one method {@link #(<#HttpServletRequest #>, <#HttpServletResponse #>)} which takes the
+ * form data and saves it.
  */
 public class SignGuestbookServlet extends HttpServlet {
 
@@ -32,10 +30,10 @@ public class SignGuestbookServlet extends HttpServlet {
         Greeting greeting;
 
         UserService userService = UserServiceFactory.getUserService();
-        User user = userService.getCurrentUser();  // Find out who the user is.
+        User        user        = userService.getCurrentUser();  // Find out who the user is.
 
         String guestbookName = req.getParameter("guestbookName");
-        String content = req.getParameter("content");
+        String content       = req.getParameter("content");
         if (user != null) {
             greeting = new Greeting(guestbookName, content, user.getUserId(), user.getEmail());
         } else {
@@ -46,6 +44,14 @@ public class SignGuestbookServlet extends HttpServlet {
         // will immediately get a new page using redirect and we want the data to be present.
         ObjectifyService.ofy().save().entity(greeting).now();
 
+        //
+//        log("-------- create new book: ");
+        //        Book b = new Book();
+        //        b.setName("book-" + ((int) Math.random() * 100000));
+        //        log("--------create : " + b);
+        //        ObjectifyService.ofy().save().entity(b).now();
+        //
         resp.sendRedirect("jsp/guestbook.jsp?guestbookName=" + guestbookName);
     }
+
 }

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,15 +16,15 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.junjunguo.aeep.R;
 import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
-import com.junjunguo.aeep.backend.myEndpointsAPI.model.User;
+import com.junjunguo.aeep.backend.myEndpointsAPI.model.Event;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-public class UserActivity extends AppCompatActivity {
-    private EditText emailET;
+public class EventActivity extends AppCompatActivity {
+    private EditText idET;
     private TextView infoTV;
     private Context context;
     private MyEndpointsAPI myEndpointsAPI;
@@ -31,80 +32,97 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.activity_event);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         context = this;
         myEndpointsAPI = ApiBuilderHelper.getEndpoints();
         initBtns();
-        emailET = (EditText) findViewById(R.id.user_et_email);
-        infoTV = (TextView) findViewById(R.id.user_tv_info);
+        idET = (EditText) findViewById(R.id.event_et_id);
+        infoTV = (TextView) findViewById(R.id.event_tv_info);
     }
 
     private void initBtns() {
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.user_fab_add);
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.event_fab_add);
         final Button listBtn, findBtn, deleteBtn, updateBtn;
-        listBtn = (Button) findViewById(R.id.user_btn_list_users);
-        findBtn = (Button) findViewById(R.id.user_btn_find);
-        deleteBtn = (Button) findViewById(R.id.user_btn_delete);
-        updateBtn = (Button) findViewById(R.id.user_btn_update);
+        listBtn = (Button) findViewById(R.id.event_btn_list_events);
+        findBtn = (Button) findViewById(R.id.event_btn_find);
+        deleteBtn = (Button) findViewById(R.id.event_btn_delete);
+        updateBtn = (Button) findViewById(R.id.event_btn_update);
 
-        //  add a new user
+        //  add a new event
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, UserDetailActivity.class));
+                startActivity(new Intent(context, EventAddActivity.class));
             }
         });
 
-        //  list all users
+        //  list all events
         listBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                listUsersService();
+                listEventsService();
             }
         });
 
-        //  find user by email
+        //  find event by id
         findBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String email = emailET.getText().toString();
-                if (isValidEmail(email)) {
-                    findUserService(email);
+                String input = idET.getText().toString();
+                if (input.length() >= 1) {
+                    try {
+                        long id = Long.parseLong(input);
+                        findEventService(id);
+                    } catch (Exception e) {
+                        showInfo("error: " + e.getMessage());
+                    }
                 } else {
-                    showInfo("not valid email address!");
+                    showInfo("not valid id!");
                 }
             }
         });
 
-        //  delete a user
+        //  delete a event
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String email = emailET.getText().toString();
-                if (isValidEmail(email)) {
-                    deleteService(email);
+                String input = idET.getText().toString();
+                if (input.length() >= 1) {
+                    try {
+                        long id = Long.parseLong(input);
+                        deleteEventService(id);
+                    } catch (Exception e) {
+                        showInfo("error: " + e.getMessage());
+                    }
                 } else {
-                    showInfo("not valid email address!");
+                    showInfo("not valid id!");
                 }
             }
         });
 
-        //  update a user
+        //  update a event
         updateBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String email = emailET.getText().toString();
-                if (isValidEmail(email)) {
-                    updateService(email);
+                String input = idET.getText().toString();
+                if (input.length() >= 1) {
+                    try {
+                        long id = Long.parseLong(input);
+                        updateEventService(id);
+                    } catch (Exception e) {
+                        showInfo("error: " + e.getMessage());
+                    }
                 } else {
-                    showInfo("not valid email address!");
+                    showInfo("not valid id!");
                 }
             }
         });
     }
 
-    private void updateService(final String email) {
-        new AsyncTask<URL, Void, User>() {
+    private void updateEventService(final long id) {
+        new AsyncTask<URL, Void, Event>() {
             @Override
-            protected User doInBackground(URL... params) {
+            protected Event doInBackground(URL... params) {
                 try {
-                    return myEndpointsAPI.userServices().getUserByEmail(email).execute();
+                    return myEndpointsAPI.eventServices().getEventById(id).execute();
                 } catch (IOException e) {
                     showInfo("error: " + e.getMessage());
                     return null;
@@ -112,24 +130,24 @@ public class UserActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(User user) {
-                if (user != null) {
-                    Intent intent = new Intent(context, UserDetailActivity.class);
-                    intent.putExtra("UPDATE_USER", new Gson().toJson(user));
+            protected void onPostExecute(Event event) {
+                if (event != null) {
+                    Intent intent = new Intent(context, EventAddActivity.class);
+                    intent.putExtra("UPDATE_EVENT", new Gson().toJson(event));
                     startActivity(intent);
                 } else {
-                    showInfo("user with email: " + email + " not found!");
+                    showInfo("event with id: " + id + " not found!");
                 }
             }
         }.execute();
     }
 
-    private void deleteService(final String email) {
+    private void deleteEventService(final long id) {
         new AsyncTask<URL, Void, String>() {
             @Override
             protected String doInBackground(URL... params) {
                 try {
-                    return "DELETED:  " + myEndpointsAPI.userServices().deleteUserByEmail(email).execute();
+                    return "DELETED:  " + myEndpointsAPI.eventServices().deleteEventById(id).execute();
                 } catch (IOException e) {
                     return "error: " + e.getMessage();
                 }
@@ -142,16 +160,16 @@ public class UserActivity extends AppCompatActivity {
         }.execute();
     }
 
-    private void findUserService(final String email) {
+    private void findEventService(final long id) {
         new AsyncTask<URL, Void, String>() {
             @Override
             protected String doInBackground(URL... params) {
                 try {
-                    User user = myEndpointsAPI.userServices().getUserByEmail(email).execute();
-                    if (user == null) {
-                        return "user with: " + email + " not found!";
+                    Event event = myEndpointsAPI.eventServices().getEventById(id).execute();
+                    if (event == null) {
+                        return "event with: " + id + " not found!";
                     } else {
-                        return "found: " + user;
+                        return "found: " + event;
                     }
                 } catch (IOException e) {
                     return "error: " + e.getMessage();
@@ -165,12 +183,12 @@ public class UserActivity extends AppCompatActivity {
         }.execute();
     }
 
-    private void listUsersService() {
+    private void listEventsService() {
         new AsyncTask<URL, Void, List>() {
             @Override
             protected List doInBackground(URL... params) {
                 try {
-                    return myEndpointsAPI.userServices().listUsers().execute().getItems();
+                    return myEndpointsAPI.eventServices().listEvents().execute().getItems();
                 } catch (IOException e) {
                     showInfo(e.getMessage());
                     log(e.getMessage());
@@ -188,17 +206,9 @@ public class UserActivity extends AppCompatActivity {
         }.execute();
     }
 
-    /**
-     * @param info showing on text view
-     */
 
     private void showInfo(String info) {
         infoTV.setText(info);
-    }
-
-    public boolean isValidEmail(CharSequence target) {
-        if (target == null) return false;
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
     public void log(String s) {

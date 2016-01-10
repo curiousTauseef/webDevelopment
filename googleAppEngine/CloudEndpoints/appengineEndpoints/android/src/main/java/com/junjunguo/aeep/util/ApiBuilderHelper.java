@@ -22,26 +22,27 @@ public class ApiBuilderHelper {
 
     /**
      * *
-     *
      * @return ShoppingAssistant endpoints to the GAE backend.
      */
     public static MyEndpointsAPI getEndpoints() {
 
         // Create API handler
+        //        MyEndpointsAPI.Builder builder =
+        //                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
+        //                        getRequestInitializer()).setRootUrl(Constant.LOCAL_URL)
+        //                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+        //                            @Override
+        //                            public void initialize(final AbstractGoogleClientRequest<?>
+        // abstractGoogleClientRequest)
+        //                                    throws IOException {
+        //                                abstractGoogleClientRequest.setDisableGZipContent(true);
+        //                            }
+        //                        });
+
         MyEndpointsAPI.Builder builder =
-                //                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new
-                // AndroidJsonFactory(),
-                //                        getRequestInitializer()).setRootUrl(Constant.ROOT_URL)
-                //                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                //                            @Override
-                //                            public void initialize(final AbstractGoogleClientRequest<?>
-                // abstractGoogleClientRequest)
-                //                                    throws IOException {
-                //                                abstractGoogleClientRequest.setDisableGZipContent(true);
-                //                            }
-                //                        });
                 new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                         .setRootUrl(Constant.ROOT_URL);
+
         builder.setApplicationName("guo-junjun");
         return builder.build();
     }
@@ -49,7 +50,6 @@ public class ApiBuilderHelper {
     /**
      * Returns appropriate HttpRequestInitializer depending whether the application is configured to require users to be
      * signed in or not.
-     *
      * @return an appropriate HttpRequestInitializer.
      */
     static HttpRequestInitializer getRequestInitializer() {

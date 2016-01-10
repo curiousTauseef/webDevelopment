@@ -91,10 +91,10 @@ public class EventServices {
         if (false) {//TODO: check if already uploaded
             throw new ConflictException("event already uploaded!");
         }
+        //        Event nt = new Event(event); // same result
         ofy().save().entity(event).now();   // save event
         return event;
     }
-
     /* PUT */
 
     /**
