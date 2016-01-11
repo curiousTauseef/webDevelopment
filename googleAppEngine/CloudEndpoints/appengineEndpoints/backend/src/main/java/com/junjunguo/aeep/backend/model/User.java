@@ -2,7 +2,7 @@ package com.junjunguo.aeep.backend.model;
 
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
-import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -13,16 +13,16 @@ import java.util.List;
 
 /**
  * UserAccount entity.
- * <p/>
+ * <p>
  * This file is part of appengineEndpoints
- * <p/>
+ * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Entity
 public class User {
     @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
     @Index
-    private List<Key<Event>> events;
+    private List<Ref<Event>> events;
     private String firstName;
     private String lastName;
     @Id
@@ -35,21 +35,25 @@ public class User {
         this.events = new ArrayList<>();
     }
 
-    public void addEvent(Key<Event> eventKey) {
-        this.events.add(eventKey);
+    public void addEvent(Event event) {
+        this.events.add(Ref.create(event));
     }
 
-    public void removeEvent(Key<Event> eventKey) {
-        this.events.remove(eventKey);
+    public void removeEvent(Event event) {
+        this.events.remove(Ref.create(event));
     }
 
-    public List<Key<Event>> getEvents() {
-        return events;
+    public List<Event> getEvents() {
+        List<Event> el = new ArrayList<>();
+        for (Ref<Event> e : events) {
+            el.add(e.get());
+        }
+        return el;
     }
 
-    public void setEvents(List<Key<Event>> events) {
-        this.events = events;
-    }
+//    public void setEvents(List<Key<Event>> events) {
+//        this.events = events;
+//    }
 
     public String getFirstName() {
         return firstName;

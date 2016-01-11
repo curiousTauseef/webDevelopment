@@ -1,17 +1,15 @@
 package com.junjunguo.aeep.backend.model;
 
-import com.google.api.server.spi.config.AnnotationBoolean;
-import com.google.api.server.spi.config.ApiResourceProperty;
 import com.google.appengine.api.datastore.GeoPt;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Unindex;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * This file is part of appengineEndpoints
@@ -22,10 +20,12 @@ import java.util.List;
  */
 @Entity
 public class Event {
-    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-    @Index
-    private List<Key<Tag>> tags;
-//    private List<Tag>
+    //    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
+    //    @Index
+    //    private List<Ref<Tag>> tags;
+    //    private List<Tag>
+    @Ignore
+    private List<Tag> tags;
     private GeoPt location;
     @Id
     private Long id;
@@ -38,39 +38,56 @@ public class Event {
     private Date uploadTime;
 
     public Event() {
+        //        this.tags = new HashSet<>();
         this.tags = new ArrayList<>();
     }
 
-    //    public Event(Event e) {
-    //        this();
-    //        this.location = e.getLocation();
-    //        this.ownerEmail = e.getOwnerEmail();
-    //        this.title = e.getTitle();
-    //        this.description = e.getDescription();
-    //        this.hasVideo = e.hasVideo;
-    //        this.videoPath = e.videoPath;
-    //        this.uploadTime = e.uploadTime;
-    //    }
+    public List<Tag> getTags() {
+        return tags;
+    }
 
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
     //    public Key<Event> getKey() {
     //        return Key.create(Event.class, this.getId());
     //    }
 
-    public void addTag(Key<Tag> tagKey) {
-        this.tags.add(tagKey);
-    }
-
-    public void removeTag(Key<Tag> tagKey) {
-        this.tags.remove(tagKey);
-    }
-
-    public List<Key<Tag>> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Key<Tag>> tags) {
-        this.tags = tags;
-    }
+    //    public void addTagsKey(Tag tag) {
+    //        tagsKey.add()
+    //    }
+    //
+    //    public void addTag(Tag tag) {
+    //        this.tags.add(Ref.create(tag));
+    //    }
+    //
+    //    public void removeTag(Tag tag) {
+    //        this.tags.remove(Ref.create(tag));
+    //    }
+    //
+    //    public List<Tag> getTags() {
+    //        List<Tag> ts = new ArrayList<>();
+    //        for (Ref<Tag> tagRef : this.tags) {
+    //            ts.add(tagRef.get());
+    //        }
+    //        return ts;
+    //    }
+    //
+    //    public void setTags(List<Tag> tags) {
+    //        List<Ref<Tag>> tagRef = new ArrayList<>();
+    //        for (Tag t : tags) {
+    //            tagRef.add(Ref.create(t));
+    //        }
+    //        this.tags = tagRef;
+    //    }
 
     public GeoPt getLocation() {
         return location;

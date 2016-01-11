@@ -4,6 +4,7 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 import com.junjunguo.aeep.backend.model.Event;
+import com.junjunguo.aeep.backend.model.QueryWrapper;
 import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.model.User;
 
@@ -23,6 +24,7 @@ public final class OfyService {
         factory().register(Tag.class);
         factory().register(User.class);
         factory().register(Event.class);
+        factory().register(QueryWrapper.class);
     }
 
     /**
