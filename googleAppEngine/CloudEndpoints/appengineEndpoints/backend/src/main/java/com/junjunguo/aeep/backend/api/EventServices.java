@@ -15,6 +15,7 @@ import com.junjunguo.aeep.backend.model.TaggedEvent;
 import com.junjunguo.aeep.backend.model.User;
 import com.junjunguo.aeep.backend.utility.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.junjunguo.aeep.backend.dao.OfyService.ofy;
@@ -69,35 +70,58 @@ public class EventServices {
 
     /* GET */
 
-    //    /**
-    //     * Gets events nearby.
-    //     * @param radius the radius in meters
-    //     * @param center the center
-    //     * @return the events nearby
-    //     */
-    //    @ApiMethod(httpMethod = "GET", path = "event/nearby")
-    //    public List<Event> getEventsNearby(@Named("radius") double radius, GeoPt center) {
-    //        Query.Filter f = new Query.StContainsFilter("location", new Query.GeoRegion.Circle(center, radius));
-    //        return ofy().load().type(Event.class).filter(f).list();
-    //    }
+    /**
+     * Gets events nearby.
+     * @param radius the radius in meters
+     * @param center the center
+     * @return the events nearby
+     */
+    @ApiMethod(httpMethod = "GET", path = "event/nearby")
+    public List<Event> getEventsNearby(@Named("radius") double radius, GeoPt center) {
+        Query.Filter f = new Query.StContainsFilter("location", new Query.GeoRegion.Circle(center, radius));
+        return ofy().load().type(Event.class).filter(f).list();
+    }
 
     /**
      * Gets events nearby.
      * @return the events nearby
      */
-    @ApiMethod(httpMethod = "GET", path = "event/nearby")
-    public List<Event> getEventsNearby(QueryWrapper qw) {
+    @ApiMethod(httpMethod = "GET", path = "event/querywrapper")
+    public List<Event> getEventsByQueryWrapper(QueryWrapper qw) {
         if (qw.getCenter() == null) {
             return null;
         }
+        Query.Filter f =
+                new Query.StContainsFilter("location", new Query.GeoRegion.Circle(qw.getCenter(), qw.getRadius()));
+        List<Event> events = ofy().load().type(Event.class).filter(f).list();
+        events = initEvents(events);
         if (qw.getTags().isEmpty()) {
-            Query.Filter f =
-                    new Query.StContainsFilter("location", new Query.GeoRegion.Circle(qw.getCenter(), qw.getRadius()));
-            return ofy().load().type(Event.class).filter(f).list();
+            return events;
         } else {
-            
-            return ;
+            List<Event> es = new ArrayList<>();
+            for (Event e : events) {
+                if (e.getTags().containsAll(qw.getTags())) {
+                    es.add(e);
+                }
+            }
+            return es;
         }
+    }
+
+    private List<Event> initEvents(List<Event> events) {
+        for (Event e : events) {
+            e.setTags(getEventTags(e));
+        }
+        return null;
+    }
+
+    private List<Tag> getEventTags(Event e) {
+        List<Tag> tags = new ArrayList<>();
+        List<TaggedEvent> te = ofy().load().type(TaggedEvent.class).filter("eventId", e.getId()).list();
+        for (TaggedEvent t : te) {
+            tags.add(ofy().load().type(Tag.class).id(t.getTagId()).now());
+        }
+        return tags;
     }
 
     /* POST */
