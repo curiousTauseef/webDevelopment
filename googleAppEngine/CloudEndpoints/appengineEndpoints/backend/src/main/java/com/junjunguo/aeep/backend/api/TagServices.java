@@ -101,7 +101,11 @@ public class TagServices {
     //        return ofy().load().type(Tag.class).id(id).now();
     //    }
 
+    //    private Tag findTag(String label) {
+    //        return ofy().load().type(Tag.class).filter("label=", label).first().now();
+    //    }
+
     private Tag findTag(String label) {
-        return ofy().load().type(Tag.class).filter("label=", label).first().now();
+        return ofy().load().type(Tag.class).id(label).now();
     }
 }

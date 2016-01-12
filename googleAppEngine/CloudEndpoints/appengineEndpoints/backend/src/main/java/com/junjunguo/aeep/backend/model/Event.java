@@ -4,6 +4,7 @@ import com.google.appengine.api.datastore.GeoPt;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
  * An Event start with a video may end without video;
  */
 @Entity
+@Index
 public class Event {
     //    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
     //    @Index
@@ -34,12 +36,25 @@ public class Event {
     @Unindex
     private String description;
     private boolean hasVideo;
+    @Unindex
     private String videoPath;
     private Date uploadTime;
 
     public Event() {
         //        this.tags = new HashSet<>();
         this.tags = new ArrayList<>();
+    }
+
+    public Event(Event e) {
+        this();
+        this.tags = e.getTags();
+        this.location = e.getLocation();
+        this.ownerEmail = e.getOwnerEmail();
+        this.title = e.getTitle();
+        this.description = e.getDescription();
+        this.hasVideo = e.hasVideo;
+        this.videoPath = e.videoPath;
+        this.uploadTime = e.uploadTime;
     }
 
     public List<Tag> getTags() {

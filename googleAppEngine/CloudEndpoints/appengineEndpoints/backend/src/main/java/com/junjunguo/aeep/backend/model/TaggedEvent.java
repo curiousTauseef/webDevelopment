@@ -1,6 +1,7 @@
 package com.junjunguo.aeep.backend.model;
 
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 /**
@@ -9,10 +10,11 @@ import com.googlecode.objectify.annotation.Index;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 11, 2016.
  */
 @Entity
+@Index
 public class TaggedEvent {
-    @Index
+    @Id
+    private Long id;
     private long eventId;
-    @Index
     private String tagId;
 
     public TaggedEvent() {
@@ -37,5 +39,17 @@ public class TaggedEvent {
 
     public void setTagId(String tagId) {
         this.tagId = tagId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
     }
 }

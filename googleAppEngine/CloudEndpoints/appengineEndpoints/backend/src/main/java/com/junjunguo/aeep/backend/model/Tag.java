@@ -3,6 +3,7 @@ package com.junjunguo.aeep.backend.model;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Index;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 @Entity
+@Index
 public class Tag {
     //    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
     //    @Index

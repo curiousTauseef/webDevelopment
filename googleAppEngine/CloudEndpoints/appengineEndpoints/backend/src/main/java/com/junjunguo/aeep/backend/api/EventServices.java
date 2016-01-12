@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.ApiClass;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Query;
@@ -72,47 +73,111 @@ public class EventServices {
 
     /**
      * Gets events nearby.
-     * @param radius the radius in meters
-     * @param center the center
+     * @param radius    the radius in meters
+     * @param latitude  the latitude
+     * @param longitude the longitude
      * @return the events nearby
      */
     @ApiMethod(httpMethod = "GET", path = "event/nearby")
-    public List<Event> getEventsNearby(@Named("radius") double radius, GeoPt center) {
-        Query.Filter f = new Query.StContainsFilter("location", new Query.GeoRegion.Circle(center, radius));
+    public List<Event> getEventsNearby(@Named("radius") double radius, @Named("latitude") float latitude,
+            @Named("longitude") float longitude) {
+        //        log("nearby: radius: " + radius + "m; center: " + center.getLatitude() + " " + center.getLongitude());
+        Query.Filter f = new Query.StContainsFilter("location",
+                new Query.GeoRegion.Circle(new GeoPt(latitude, longitude), radius));
+        log("filter: " + f.toString());
         return ofy().load().type(Event.class).filter(f).list();
+    }
+
+
+    /**
+     * Gets tagged events nearby.
+     * @param radius    the radius in meters
+     * @param latitude  the latitude of the center
+     * @param longitude the longitude of the center
+     * @param tag1      the tag 1 & nullable tag 1, 2, 3 are and relations, all can be empty
+     * @param tag2      the tag 2 & nullable
+     * @param tag3      the tag 3 nullable
+     * @return the tagged events nearby
+     */
+    @ApiMethod(httpMethod = "GET", path = "event/taggedeventnearby")
+    public List<Event> getTaggedEventsNearby(@Named("radius") double radius, @Named("latitude") float latitude,
+            @Named("longitude") float longitude, @Named("tag1") @Nullable String tag1,
+            @Named("tag2") @Nullable String tag2, @Named("tag3") @Nullable String tag3) {
+        Query.Filter f = new Query.StContainsFilter("location",
+                new Query.GeoRegion.Circle(new GeoPt(latitude, longitude), radius));
+        log("filter: " + f.toString());
+        List<Event> events = ofy().load().type(Event.class).filter(f).list();
+
+        ArrayList<Tag> tags = new ArrayList<>();
+
+        if (tag1 != null && tag1.length() > 0) {
+            Tag tag = findTag(tag1);
+            log("find " + tag1 + " result : " + tag);
+            tags.add(findTag(tag1));
+        }
+        if (tag2 != null && tag2.length() > 0) tags.add(findTag(tag2));
+        if (tag3 != null && tag3.length() > 0) tags.add(findTag(tag3));
+        if (tags.isEmpty()) {
+            return events;
+        } else {
+            // events loaded from data store Event entity has no tags, init it  to fill its tag
+            events = initEvents(events);
+            List<Event> result = new ArrayList<>();
+            for (Event e : events) {
+                log("event tags: " + e.getTags().toString() + "; tags: " + tags);
+                if (e.getTags().containsAll(tags)) {
+                    log("event tags: " + e.getTags().toString() + " >= tags: " + tags);
+                    result.add(e);
+                }
+            }
+            return result;
+        }
     }
 
     /**
      * Gets events nearby.
+     * @param qw the qw
      * @return the events nearby
      */
     @ApiMethod(httpMethod = "GET", path = "event/querywrapper")
     public List<Event> getEventsByQueryWrapper(QueryWrapper qw) {
+        log("querywrapper: " + qw.toString() + " .getCenter: " + qw.getCenter() + " radius: " + qw.getRadius() +
+                " tags: " + qw.getTags());
         if (qw.getCenter() == null) {
             return null;
         }
         Query.Filter f =
                 new Query.StContainsFilter("location", new Query.GeoRegion.Circle(qw.getCenter(), qw.getRadius()));
+        log("q w: filter " + f.toString());
+        // get filtered events
         List<Event> events = ofy().load().type(Event.class).filter(f).list();
-        events = initEvents(events);
         if (qw.getTags().isEmpty()) {
             return events;
         } else {
-            List<Event> es = new ArrayList<>();
+            // events loaded from data store Event entity has no tags, init it  to fill its tag
+            events = initEvents(events);
+            List<Event> result = new ArrayList<>();
             for (Event e : events) {
                 if (e.getTags().containsAll(qw.getTags())) {
-                    es.add(e);
+                    result.add(e);
                 }
             }
-            return es;
+            return result;
         }
     }
 
+    /**
+     * events loaded from data store Event entity has no tags, init it  to fill its tag
+     * @param events list
+     * @return events list with tags objects in
+     */
     private List<Event> initEvents(List<Event> events) {
+        List<Event> result = new ArrayList<>();
         for (Event e : events) {
             e.setTags(getEventTags(e));
+            result.add(e);
         }
-        return null;
+        return result;
     }
 
     private List<Tag> getEventTags(Event e) {
@@ -137,8 +202,11 @@ public class EventServices {
         if (false) {//TODO: check if already uploaded
             throw new ConflictException("event already uploaded!");
         }
-        saveTaggedEvent(event);
+        //        event = new Event(event);
+        log("get id " + event.getId());
         ofy().save().entity(event).now();   // save event
+        log("saved get id " + event.getId());
+        saveTaggedEvent(event);
         return event;
     }
 
@@ -151,8 +219,8 @@ public class EventServices {
      */
     @ApiMethod(httpMethod = "PUT", path = "event/update")
     public Event updateEvent(Event event) {
-        saveTaggedEvent(event);
         ofy().save().entity(event).now();
+        saveTaggedEvent(event);
         return event;
     }
 
@@ -184,16 +252,27 @@ public class EventServices {
             if (!hasTag(tag)) {
                 tag = new Tag(tag.getLabel());
                 tag.addEvent(event);
-                ofy().save().entity(tag);
+                ofy().save().entity(tag).now();
             }
-            TaggedEvent taggedEvent = new TaggedEvent(event.getId(), tag.getLabel());
-            ofy().save().entity(taggedEvent);
+            log("event.get id: " + event.getId() + " get tags: " + event.getTags());
+            try {
+                TaggedEvent taggedEvent = new TaggedEvent(event.getId(), tag.getLabel());
+                log(taggedEvent.toString());
+                ofy().save().entity(taggedEvent).now();
+            } catch (Exception e) {
+                e.fillInStackTrace();
+            }
         }
     }
+
 
     private boolean hasTag(Tag tag) {
         //TODO: crate a cache instance to sync the data store when needed and compare with search data store every time
         return (ofy().load().type(Tag.class).filterKey(tag).first().now() != null);
+    }
+
+    private Tag findTag(String label) {
+        return ofy().load().type(Tag.class).id(label).now();
     }
 
     private Event findEvent(long id) {
@@ -204,4 +283,7 @@ public class EventServices {
         return ofy().load().type(User.class).id(email).now();
     }
 
+    private void log(String s) {
+        System.out.println(this.getClass().getSimpleName() + "------" + s);
+    }
 }
