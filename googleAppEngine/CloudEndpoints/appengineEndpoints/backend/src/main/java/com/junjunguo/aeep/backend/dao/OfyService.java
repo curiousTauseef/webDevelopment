@@ -7,6 +7,7 @@ import com.junjunguo.aeep.backend.model.Event;
 import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.model.TaggedEvent;
 import com.junjunguo.aeep.backend.model.User;
+import com.junjunguo.aeep.backend.model.UsersEvents;
 
 /**
  * This file is part of appengineEndpoints
@@ -24,6 +25,7 @@ public final class OfyService {
         factory().register(Tag.class);
         factory().register(User.class);
         factory().register(Event.class);
+        factory().register(UsersEvents.class);
         factory().register(TaggedEvent.class);
     }
 

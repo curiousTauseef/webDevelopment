@@ -1,10 +1,8 @@
 package com.junjunguo.aeep.backend.model;
 
-import com.google.api.server.spi.config.AnnotationBoolean;
-import com.google.api.server.spi.config.ApiResourceProperty;
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
 
@@ -21,8 +19,8 @@ import java.util.List;
 @Entity
 @Index
 public class User {
-    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-    private List<Ref<Event>> events;
+    @Ignore
+    private List<Event> events;
     private String firstName;
     private String lastName;
     @Id
@@ -31,66 +29,105 @@ public class User {
     @Unindex
     private String password;
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
         this.events = new ArrayList<>();
     }
 
-    public void addEvent(Event event) {
-        this.events.add(Ref.create(event));
-    }
-
-    public void removeEvent(Event event) {
-        this.events.remove(Ref.create(event));
-    }
-
+    /**
+     * Gets events.
+     * @return the events
+     */
     public List<Event> getEvents() {
-        List<Event> el = new ArrayList<>();
-        for (Ref<Event> e : events) {
-            el.add(e.get());
-        }
-        return el;
+        return events;
     }
 
-    //    public void setEvents(List<Key<Event>> events) {
-    //        this.events = events;
-    //    }
+    /**
+     * Sets events: will be set by server
+     * @param events the events
+     */
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
+    /**
+     * Gets first name.
+     * @return the first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Sets first name.
+     * @param firstName the first name
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Gets last name.
+     * @return the last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Sets last name.
+     * @param lastName the last name
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Gets email.
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     * @param email the email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets gender.
+     * @return the gender
+     */
     public Gender getGender() {
         return gender;
     }
 
+    /**
+     * Sets gender.
+     * @param gender the gender
+     */
     public void setGender(Gender gender) {
         this.gender = gender;
     }
 
+    /**
+     * Gets password.
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets password.
+     * @param password the password
+     */
     public void setPassword(String password) {
         this.password = password;
     }

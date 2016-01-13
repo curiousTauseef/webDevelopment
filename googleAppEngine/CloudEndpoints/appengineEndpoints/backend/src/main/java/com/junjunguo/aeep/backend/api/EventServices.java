@@ -14,6 +14,7 @@ import com.junjunguo.aeep.backend.model.QueryWrapper;
 import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.model.TaggedEvent;
 import com.junjunguo.aeep.backend.model.User;
+import com.junjunguo.aeep.backend.model.UsersEvents;
 import com.junjunguo.aeep.backend.utility.Constant;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import static com.junjunguo.aeep.backend.dao.OfyService.ofy;
 
 /**
  * This file is part of appengineEndpoints
- * <p/>
+ * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 09, 2016.
  */
 @Api(name = "myEndpointsAPI", version = "v1",
@@ -202,10 +203,8 @@ public class EventServices {
         if (false) {//TODO: check if already uploaded
             throw new ConflictException("event already uploaded!");
         }
-        //        event = new Event(event);
-        log("get id " + event.getId());
         ofy().save().entity(event).now();   // save event
-        log("saved get id " + event.getId());
+        saveUserEvent(event);
         saveTaggedEvent(event);
         return event;
     }
@@ -242,6 +241,10 @@ public class EventServices {
         return event;
     }
 
+    private void saveUserEvent(Event event) {
+        ofy().save().entity(new UsersEvents(event.getId(), event.getOwnerEmail())).now();
+    }
+
     private void deleteRelevent(Event event) { // find all tags of the event
         List taggedEvents = ofy().load().type(TaggedEvent.class).filter("eventId", event.getId()).list();
         ofy().delete().entities(taggedEvents).now(); // delete taggedEvents from data store
@@ -264,7 +267,6 @@ public class EventServices {
             }
         }
     }
-
 
     private boolean hasTag(Tag tag) {
         //TODO: crate a cache instance to sync the data store when needed and compare with search data store every time
