@@ -19,14 +19,13 @@ import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
 import com.junjunguo.aeep.backend.myEndpointsAPI.model.BlobAccess;
 import com.junjunguo.aeep.backend.myEndpointsAPI.model.Event;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
-import com.junjunguo.aeep.util.MultipartUtility;
+import com.junjunguo.aeep.util.VideoUploadHelper;
 
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 public class EventAddActivity extends AppCompatActivity {
     private Event event;
@@ -43,24 +42,22 @@ public class EventAddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_add);
         context = this;
         myEndpointsAPI = ApiBuilderHelper.getEndpoints();
-        String s;
+        String updateEvent;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
-                s = null;
+                updateEvent = null;
             } else {
-                s = extras.getString("UPDATE_EVENT");
+                updateEvent = extras.getString("UPDATE_EVENT");
             }
         } else {
-            s = (String) savedInstanceState.getSerializable("UPDATE_EVENT");
+            updateEvent = (String) savedInstanceState.getSerializable("UPDATE_EVENT");
         }
 
-        if (s != null) {
+        if (updateEvent != null) {
             try {
-                //                log("json: " + s);
-                JSONObject jo = new JSONObject(s);
+                JSONObject jo = new JSONObject(updateEvent);
                 long id = jo.getLong("id");
-                //                log("id: " + id);
                 event = new Event();
                 event.setId(id);
                 event.setDescription(jo.getString("description"));
@@ -70,8 +67,7 @@ public class EventAddActivity extends AppCompatActivity {
                 event.setVideoPath(jo.getString("videoPath"));
                 JSONObject jot = new JSONObject(jo.getString("uploadTime"));
                 DateTime dt = new DateTime(jot.getBoolean("dateOnly"), jot.getLong("value"), jot.getInt("tzShift"));
-                //                event = new Gson().fromJson(s, Event.class);
-                //                log("event to update: " + event);
+                event.setUploadTime(dt);
                 createNew = false; // update event
             } catch (Exception e) {
                 e.printStackTrace();
@@ -153,7 +149,6 @@ public class EventAddActivity extends AppCompatActivity {
         }
     }
 
-
     private void confirmAction() {
         Event e = new Event();
         String email = emailEt.getText().toString();
@@ -189,85 +184,17 @@ public class EventAddActivity extends AppCompatActivity {
         }
     }
 
-    //    private void uploadFile(final Event e) {
-    //        log("upload file called ...");
-    //        new AsyncTask<URL, Void, String>() {
-    //            @Override
-    //            protected String doInBackground(URL... params) {
-    //                String responseString = "error";
-    //                try {
-    //                    HttpClient httpclient = new DefaultHttpClient();
-    //                    HttpConnectionParams.setConnectionTimeout(httpclient.getParams(), 10000); //Timeout Limit
-    //
-    //                    HttpGet httpGet = new HttpGet("http://example.com/blob/getuploadurl");
-    //                    HttpResponse response = httpclient.execute(httpGet);
-    //                    log("response: " + response);
-    //                    String uploadURL = response.getEntity().getContent().toString();
-    //                    log(response.getEntity().getContentEncoding().getName().toString());
-    //                    log(response.getEntity().getContentType().getName().toString());
-    //                    log(response.getEntity().getContentEncoding().getElements().toString());
-    //                    log(response.getEntity().getContentEncoding().getValue().toString());
-    //                    log(response.getAllHeaders().toString());
-    //                    log("upload url: " + uploadURL);
-    //                    return responseString;
-    //                } catch (Exception e) {
-    //                    e.fillInStackTrace();
-    //                    return "error: " + e.getMessage();
-    //                }
-    //            }
-    //
-    //            @Override
-    //            protected void onPostExecute(String result) {
-    //                showInfo(result);
-    //                if (!result.contains("error")) {
-    //                    e.setVideoPath(result);
-    //                    performService(e);
-    //                }
-    //            }
-    //        }.execute();
-    //    }
     private void uploadFile(final Event e) {
-        log("upload file called ...");
         new AsyncTask<URL, Void, String>() {
             @Override
             protected String doInBackground(URL... params) {
-                String responseString = "error";
                 try {
-                    //                    URL url = new URL(Constant.REDIRECT_URL);
-                    //                    HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-                    //                    httpConn.connect();
                     BlobAccess blobAccess = myEndpointsAPI.eventServices().getUploadUrl().execute();
                     String POST_URL = blobAccess.getBlobStoreURL();
-                    //                            httpConn.getResponseMessage();
                     log("post url: " + POST_URL);
-
-                    MultipartUtility multipart = new MultipartUtility(POST_URL);
-
-                    // In your case you are not adding form data so ignore this
-                    /*This is to add parameter values */
-                    //                    for (int i = 0; i < myFormDataArray.size(); i++) {
-                    //                        multipart.addFormField(myFormDataArray.get(i).getParamName(),
-                    //                                myFormDataArray.get(i).getParamValue());
-                    //                    }
-
-                    //                    myFileArray = data.getData();
-                    //                    //add your file here.
-                    //                /*This is to add file content*/
-                    //                    for (int i = 0; i < myFileArray.size(); i++) {
-                    //                        multipart.addFilePart(myFileArray.getParamName(), new File
-                    //     (myFileArray
-                    // .getFileName()));
-                    //                    }
+                    VideoUploadHelper multipart = new VideoUploadHelper(POST_URL);
                     multipart.addFilePart("myFile", new File(data.getData().getPath()));
-
-                    List<String> response = multipart.finish();
-                    log("SERVER REPLIED:");
-                    for (String line : response) {
-                        log("Upload Files Response:::" + line);
-                        // get your server response here.
-                        responseString = line;
-                    }
-                    return responseString;
+                    return multipart.finish();
                 } catch (Exception e) {
                     e.fillInStackTrace();
                     return "error: " + e.getMessage();

@@ -18,17 +18,6 @@ import javax.servlet.http.HttpServletResponse;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 13, 2016.
  */
-//@Api(name = "myEndpointsAPI", version = "v1",
-//     namespace = @ApiNamespace(ownerDomain = Constant.API_OWNER, ownerName = Constant.API_OWNER,
-//                               packagePath = Constant.API_PACKAGE_PATH))
-//@ApiClass(resource = "videoServices",
-//          clientIds = {Constant.ANDROID_CLIENT_ID, Constant.IOS_CLIENT_ID, Constant.WEB_CLIENT_ID},
-//          audiences = {Constant.AUDIENCE_ID})
-//public class VideoServices {
-//    @ApiMethod(httpMethod = "GET")
-//    public BlobstoreService getUploadService() {
-//
-//    }
 
 public class VideoServe extends HttpServlet {
 

@@ -26,18 +26,16 @@ public class ApiBuilderHelper {
      */
     public static MyEndpointsAPI getEndpoints() {
 
-        // Create API handler
-        //        MyEndpointsAPI.Builder builder =
-        //                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
-        //                        getRequestInitializer()).setRootUrl(Constant.LOCAL_URL)
-        //                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-        //                            @Override
-        //                            public void initialize(final AbstractGoogleClientRequest<?>
-        // abstractGoogleClientRequest)
-        //                                    throws IOException {
-        //                                abstractGoogleClientRequest.setDisableGZipContent(true);
-        //                            }
-        //                        });
+//        MyEndpointsAPI.Builder builder =
+//                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
+//                        getRequestInitializer()).setRootUrl(Constant.LOCAL_URL)
+//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+//                            @Override
+//                            public void initialize(final AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
+//                                    throws IOException {
+//                                abstractGoogleClientRequest.setDisableGZipContent(true);
+//                            }
+//                        });
 
         MyEndpointsAPI.Builder builder =
                 new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
