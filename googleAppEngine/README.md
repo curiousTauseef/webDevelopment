@@ -16,7 +16,12 @@ Platform as a Service
 
 -- [Using Endpoints in an iOS Client](https://cloud.google.com/appengine/docs/java/endpoints/consume_ios)
 
--- [my Cloud Endpoints](CloudEndpoints)
+- **[my Cloud Endpoints](CloudEndpoints)**
+	- [Using Auth with Endpoints](https://cloud.google.com/appengine/docs/java/endpoints/auth)
+	- [Using Endpoints in an Android Client](https://cloud.google.com/appengine/docs/java/endpoints/consume_android#making_authenticated_calls)
+	- [Interface Authenticator](https://cloud.google.com/appengine/docs/java/endpoints/javadoc/com/google/api/server/spi/config/Authenticator)
+		- Interface for Endpoints authenticators. To create a custom authenticator, implement and assign your authenticator class in the authenticator configuration property.
+
 
 ##Google Cloud Message (**GCM**)
 
@@ -38,6 +43,14 @@ Platform as a Service
 - [Using OAuth 2.0 to Access Google APIs](https://developers.google.com/identity/protocols/OAuth2)
 - [http://oauth.net/](http://oauth.net/)
 
+##Blobstore
+Google App Engine includes the Blobstore service, which allows applications to serve data objects limited only by the amount of data that can be uploaded or downloaded over a single HTTP connection. These objects are called Blobstore values, or blobs. 
+
+- Blobstore values are served as responses from request handlers and are created as uploads via web forms. 
+	- Applications do not create blob data directly; 
+		- instead, blobs are created indirectly, by a submitted web form or other HTTP POST request. 
+- Blobstore values can be served to the user, or accessed by the application in a file-like stream, using the Blobstore API.
+- [Blobstore Java API Overview](https://cloud.google.com/appengine/docs/java/blobstore/)
 
 # **Google App Engine** (**GAE**)
 
