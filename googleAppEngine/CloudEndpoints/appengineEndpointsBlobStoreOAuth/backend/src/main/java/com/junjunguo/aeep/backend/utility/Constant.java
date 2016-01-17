@@ -29,7 +29,7 @@ public final class Constant {
      * Web client ID from Google Cloud console.
      */
     public static final String WEB_CLIENT_ID =
-            "994760477407-cmndblrro3f9ktskgs7gts2cpe68h25t.apps.googleusercontent.com";
+            "994760477407-5kgom8kh8vsghv9v28b2pcv7itj9gh0k.apps.googleusercontent.com";
 
     /**
      * The audiences argument is currently used only for Android clients. The clientIds list protects the backend API
@@ -37,7 +37,7 @@ public final class Constant {
      * work only for the intended backend API. For Android clients, this mechanism is the audiences attribute, in which
      * you specify the client ID of the backend API.
      */
-    public static final String AUDIENCE_ID = ANDROID_CLIENT_ID;
+    public static final String AUDIENCE_ID = WEB_CLIENT_ID;
 
     /**
      * API package name.
@@ -48,5 +48,7 @@ public final class Constant {
      * API package path.
      */
     public static final String API_PACKAGE_PATH = "";
+
+    public static final String EMAIL_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
 
 }

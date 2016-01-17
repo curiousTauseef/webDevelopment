@@ -34,18 +34,19 @@ import static com.junjunguo.aeep.backend.dao.OfyService.ofy;
  * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 09, 2016.
  */
-@Api(name = "myEndpointsAPI", version = "v1",
-     namespace = @ApiNamespace(ownerDomain = Constant.API_OWNER, ownerName = Constant.API_OWNER,
-                               packagePath = Constant.API_PACKAGE_PATH))
+@Api(name = "myEndpointsAPI", version = "v1", scopes = {Constant.EMAIL_SCOPE},
+        namespace = @ApiNamespace(ownerDomain = Constant.API_OWNER, ownerName = Constant.API_OWNER,
+                packagePath = Constant.API_PACKAGE_PATH))
 @ApiClass(resource = "eventServices",
-          clientIds = {Constant.ANDROID_CLIENT_ID, Constant.IOS_CLIENT_ID, Constant.WEB_CLIENT_ID},
-          audiences = {Constant.AUDIENCE_ID})
+        clientIds = {Constant.ANDROID_CLIENT_ID, Constant.IOS_CLIENT_ID, Constant.WEB_CLIENT_ID},
+        audiences = {Constant.AUDIENCE_ID})
 public class EventServices {
 
     /* GET */
 
     /**
      * List events list.
+     *
      * @return Lists all the video entities inserted in dataStore.
      */
     @ApiMethod(httpMethod = "GET", path = "event/list")
@@ -55,6 +56,7 @@ public class EventServices {
 
     /**
      * Gets events by owner's email.
+     *
      * @param email the email
      * @return the events by email
      */
@@ -68,6 +70,7 @@ public class EventServices {
 
     /**
      * Gets event by event id.
+     *
      * @param id the id
      * @return the event by id
      */
@@ -80,6 +83,7 @@ public class EventServices {
 
     /**
      * Gets events nearby.
+     *
      * @param radius    the radius in meters
      * @param latitude  the latitude
      * @param longitude the longitude
@@ -98,6 +102,7 @@ public class EventServices {
 
     /**
      * Gets tagged events nearby.
+     *
      * @param radius    the radius in meters
      * @param latitude  the latitude of the center
      * @param longitude the longitude of the center
@@ -143,13 +148,14 @@ public class EventServices {
 
     /**
      * Gets events nearby.
+     *
      * @param qw the qw
      * @return the events nearby
      */
     @ApiMethod(httpMethod = "GET", path = "event/querywrapper")
     public List<Event> getEventsByQueryWrapper(QueryWrapper qw) {
         log("querywrapper: " + qw.toString() + " .getCenter: " + qw.getCenter() + " radius: " + qw.getRadius() +
-                " tags: " + qw.getTags());
+            " tags: " + qw.getTags());
         if (qw.getCenter() == null) {
             return null;
         }
@@ -185,6 +191,7 @@ public class EventServices {
 
     /**
      * events loaded from data store Event entity has no tags, init it  to fill its tag
+     *
      * @param events list
      * @return events list with tags objects in
      */
@@ -198,8 +205,8 @@ public class EventServices {
     }
 
     private List<Tag> getEventTags(Event e) {
-        List<Tag> tags = new ArrayList<>();
-        List<TaggedEvent> te = ofy().load().type(TaggedEvent.class).filter("eventId", e.getId()).list();
+        List<Tag>         tags = new ArrayList<>();
+        List<TaggedEvent> te   = ofy().load().type(TaggedEvent.class).filter("eventId", e.getId()).list();
         for (TaggedEvent t : te) {
             tags.add(ofy().load().type(Tag.class).id(t.getTagId()).now());
         }
@@ -211,6 +218,7 @@ public class EventServices {
 
     /**
      * Create event.
+     *
      * @param event Inserts the event entity into App Engine datastore. It uses HTTP POST method.
      * @return result event
      * @throws ConflictException the conflict exception
@@ -233,6 +241,7 @@ public class EventServices {
 
     /**
      * Update event event.
+     *
      * @param event the event
      * @return the event
      */
@@ -250,6 +259,7 @@ public class EventServices {
 
     /**
      * Delete event by id event.
+     *
      * @param id the id
      * @return the event
      */

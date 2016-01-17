@@ -19,6 +19,7 @@ import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
 import com.junjunguo.aeep.backend.myEndpointsAPI.model.BlobAccess;
 import com.junjunguo.aeep.backend.myEndpointsAPI.model.Event;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
+import com.junjunguo.aeep.util.AuthenticateHelper;
 import com.junjunguo.aeep.util.VideoUploadHelper;
 
 import org.json.JSONObject;
@@ -92,6 +93,7 @@ public class EventAddActivity extends AppCompatActivity {
             infoTV = (TextView) findViewById(R.id.event_add_tv_info);
             idEt.setKeyListener(null);
             pathEt.setKeyListener(null);
+            emailEt.setKeyListener(null);
             if (!createNew) { // update
                 idEt.setText(String.valueOf(event.getId()));
                 titleEt.setText(event.getTitle());
@@ -104,6 +106,11 @@ public class EventAddActivity extends AppCompatActivity {
             } else {
                 pathBtn.setText("PATH:");
                 confirmBtn.setText("create");
+                if (AuthenticateHelper.getInstance().getAccountName() == null) {
+                    Toast.makeText(EventAddActivity.this, "Please Sing In!", Toast.LENGTH_SHORT).show();
+                } else {
+                    emailEt.setText(AuthenticateHelper.getInstance().getAccountName());
+                }
             }
             pathBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -153,6 +160,14 @@ public class EventAddActivity extends AppCompatActivity {
         Event e = new Event();
         String email = emailEt.getText().toString();
         String message = "";
+        if (!isValidEmail(AuthenticateHelper.getInstance().getAccountName())) {
+            log("error! your account: " + AuthenticateHelper.getInstance().getAccountName() + " is not an valid email" +
+                    " address");
+            message = "error! your account: " + AuthenticateHelper.getInstance().getAccountName() +
+                    " is not an valid email  address!";
+        } else {
+            e.setOwnerEmail(AuthenticateHelper.getInstance().getAccountName());
+        }
         if (!isValidEmail(email)) {
             message = "not valid email address !";
         }

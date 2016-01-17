@@ -16,6 +16,7 @@ import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
 import com.junjunguo.aeep.backend.myEndpointsAPI.model.Person;
 import com.junjunguo.aeep.model.Gender;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
+import com.junjunguo.aeep.util.AuthenticateHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,6 +69,7 @@ public class UserDetailActivity extends AppCompatActivity {
         femaleRb = (RadioButton) findViewById(R.id.user_detail_radio_female);
         confirmBtn = (Button) findViewById(R.id.user_detail_btn_confirm);
         infoTV = (TextView) findViewById(R.id.user_detail_tv_info);
+        userSignedIn();
         if (!createNew) { // update
             emailEt.setKeyListener(null);
             emailEt.setText(user.getEmail());
@@ -96,6 +98,12 @@ public class UserDetailActivity extends AppCompatActivity {
                 confirmAction();
             }
         });
+    }
+
+    private void userSignedIn() {
+        if (AuthenticateHelper.getInstance().getAccountName() != null) {
+            //TODO
+        }
     }
 
     private void confirmAction() {
