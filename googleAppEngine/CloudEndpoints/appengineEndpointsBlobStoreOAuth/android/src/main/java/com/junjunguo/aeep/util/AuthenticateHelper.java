@@ -43,18 +43,8 @@ public class AuthenticateHelper {
     private AuthenticateHelper() {
     }
 
-
-    public void forgetAccount() {
-        this.signedIn = false;
-        SharedPreferences.Editor editor2 = sharedPreferences.edit();
-        editor2.remove(PREF_AUTH_TOKEN);
-        editor2.commit();
-    }
-
     public void setAccountName(String accountName) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PREF_ACCOUNT_NAME, accountName);
-        editor.commit();
+        sharedPreferences.edit().putString(PREF_ACCOUNT_NAME, accountName).apply();
         credential.setSelectedAccountName(accountName);
         this.accountName = accountName;
     }
@@ -87,6 +77,16 @@ public class AuthenticateHelper {
         this.signedIn = signedIn;
     }
 
+    public void signOut() {
+        setSignedIn(false);
+        sharedPreferences.edit().putString(PREF_ACCOUNT_NAME, " ").apply();
+        sharedPreferences.edit().putString(PREF_AUTH_TOKEN, " ").apply();
+        //                sharedPreferences.edit().remove(PREF_ACCOUNT_NAME).apply();
+        //                sharedPreferences.edit().remove(PREF_AUTH_TOKEN).apply();
+        credential.setSelectedAccountName(" ");
+
+    }
+
     public Context getContext() {
         return context;
     }
@@ -97,4 +97,5 @@ public class AuthenticateHelper {
         setSharedPreferences(context.getSharedPreferences(TAG, 0));
         setAccountName(sharedPreferences.getString(PREF_ACCOUNT_NAME, null));
     }
+
 }

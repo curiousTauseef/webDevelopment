@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.junjunguo.aeep.R;
 import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
+import com.junjunguo.aeep.util.AuthenticateHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +28,7 @@ public class TagActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
-        myEndpointsAPI = ApiBuilderHelper.getEndpoints();
+        myEndpointsAPI = ApiBuilderHelper.getInstance().getEndpoints();
         initView();
     }
 
@@ -137,8 +138,11 @@ public class TagActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(URL... params) {
                 try {
-                    return "create tag: " + myEndpointsAPI.tagServices().createTag(label).execute();
-                } catch (IOException e) {
+                    log("create tag:" + label);
+                    return "create tag: " + myEndpointsAPI.tagServices().createTag(label)
+                            .setOauthToken(AuthenticateHelper.getInstance().getCredential().getToken()).execute();
+                } catch (Exception e) {
+                    e.fillInStackTrace();
                     return "error: " + e.getMessage();
                 }
             }
@@ -151,7 +155,11 @@ public class TagActivity extends AppCompatActivity {
     }
 
     private void show(String info) {
-        tvTags.setText(info);
+        try {
+            tvTags.setText(info);
+        } catch (Exception e) {
+            e.fillInStackTrace();
+        }
     }
 
     public void log(String s) {

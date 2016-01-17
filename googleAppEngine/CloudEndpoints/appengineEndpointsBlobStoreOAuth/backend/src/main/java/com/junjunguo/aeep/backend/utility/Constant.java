@@ -2,9 +2,9 @@ package com.junjunguo.aeep.backend.utility;
 
 /**
  * This file is part of appengineEndpoints
- * <p>
+ * <p/>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
- * <p>
+ * <p/>
  * API Keys, Client Ids and Audience Ids for accessing APIs and configuring Cloud Endpoints.
  */
 public final class Constant {
@@ -17,7 +17,8 @@ public final class Constant {
     /**
      * Android client ID from Google Cloud console.
      */
-    public static final String ANDROID_CLIENT_ID = "YOUR-ANDROID-CLIENT-ID";
+    public static final String ANDROID_CLIENT_ID =
+            "994760477407-oac3vklid202l6hi8c7qq5p70j0t53lr.apps.googleusercontent.com";
 
     /**
      * iOS client ID from Google Cloud console.
@@ -31,9 +32,12 @@ public final class Constant {
             "994760477407-cmndblrro3f9ktskgs7gts2cpe68h25t.apps.googleusercontent.com";
 
     /**
-     * Audience ID used to limit access to some client to the API.
+     * The audiences argument is currently used only for Android clients. The clientIds list protects the backend API
+     * from unauthorized clients. But further protection is needed to protect the clients, so that their auth token will
+     * work only for the intended backend API. For Android clients, this mechanism is the audiences attribute, in which
+     * you specify the client ID of the backend API.
      */
-    public static final String AUDIENCE_ID = WEB_CLIENT_ID;
+    public static final String AUDIENCE_ID = ANDROID_CLIENT_ID;
 
     /**
      * API package name.

@@ -18,11 +18,11 @@ public class Constant {
      * Web client ID from Google Cloud console.
      */
     static final String WEB_CLIENT_ID = "994760477407-cmndblrro3f9ktskgs7gts2cpe68h25t.apps.googleusercontent.com";
-
     /**
      * The web client ID from Google Cloud Console.
      */
-    static final String AUDIENCE_ANDROID_CLIENT_ID = "server:client_id:" + WEB_CLIENT_ID;
+    static final String AUDIENCE_ANDROID_CLIENT_ID =
+            "994760477407-oac3vklid202l6hi8c7qq5p70j0t53lr.apps.googleusercontent.com";
 
     /**
      * The URL to the API. Default when running locally on your computer: "http://10.0.2.2:8080/_ah/api/"
@@ -35,9 +35,9 @@ public class Constant {
     /**
      * Defines whether authentication is required or not.
      */
-    public static final boolean SIGN_IN_REQUIRED = false;
+    public static final boolean SIGN_IN_REQUIRED = true;
 
-    public static final String AUDIENCE_ID = WEB_CLIENT_ID;
+    public static final String AUDIENCE_ID = "server:client_id:" + WEB_CLIENT_ID;
 
 
     /**

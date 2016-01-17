@@ -33,7 +33,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         context = this;
-        myEndpointsAPI = ApiBuilderHelper.getEndpoints();
+        myEndpointsAPI = ApiBuilderHelper.getInstance().getEndpoints();
         initBtns();
         emailET = (EditText) findViewById(R.id.user_et_email);
         infoTV = (TextView) findViewById(R.id.user_tv_info);
@@ -183,6 +183,8 @@ public class UserActivity extends AppCompatActivity {
                 log("on post execute: " + list);
                 if (list != null) {
                     showInfo(list.toString());
+                } else {
+                    showInfo("result: " + list);
                 }
             }
         }.execute();

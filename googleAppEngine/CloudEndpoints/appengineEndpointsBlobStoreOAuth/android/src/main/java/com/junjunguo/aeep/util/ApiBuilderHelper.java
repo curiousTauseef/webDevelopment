@@ -1,10 +1,16 @@
 package com.junjunguo.aeep.util;
 
+import android.util.Log;
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
+
+import java.io.IOException;
 
 /**
  * This file is part of appengineEndpoints
@@ -13,6 +19,14 @@ import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
  */
 public class ApiBuilderHelper {
 
+    private static ApiBuilderHelper instance;
+
+    public static ApiBuilderHelper getInstance() {
+        if (instance == null) {
+            instance = new ApiBuilderHelper();
+        }
+        return instance;
+    }
 
     /**
      * Default constructor, never called.
@@ -24,22 +38,18 @@ public class ApiBuilderHelper {
      * *
      * @return ShoppingAssistant endpoints to the GAE backend.
      */
-    public static MyEndpointsAPI getEndpoints() {
-
-//        MyEndpointsAPI.Builder builder =
-//                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
-//                        getRequestInitializer()).setRootUrl(Constant.LOCAL_URL)
-//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-//                            @Override
-//                            public void initialize(final AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
-//                                    throws IOException {
-//                                abstractGoogleClientRequest.setDisableGZipContent(true);
-//                            }
-//                        });
-
+    public MyEndpointsAPI getEndpoints() {
         MyEndpointsAPI.Builder builder =
-                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                        .setRootUrl(Constant.ROOT_URL);
+                new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
+                        AuthenticateHelper.getInstance().getCredential()).setRootUrl(Constant.ROOT_URL)
+//                        getRequestInitializer()).setRootUrl(Constant.ROOT_URL)
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(final AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
+                                    throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
 
         builder.setApplicationName("guo-junjun");
         return builder.build();
@@ -50,10 +60,10 @@ public class ApiBuilderHelper {
      * signed in or not.
      * @return an appropriate HttpRequestInitializer.
      */
-    static HttpRequestInitializer getRequestInitializer() {
+    private HttpRequestInitializer getRequestInitializer() {
         if (Constant.SIGN_IN_REQUIRED) {
-            return null;
-            //            return SignInActivity.getCredential();
+            log(AuthenticateHelper.getInstance().getCredential().toString());
+            return AuthenticateHelper.getInstance().getCredential();
         } else {
             return new HttpRequestInitializer() {
                 @Override
@@ -61,5 +71,9 @@ public class ApiBuilderHelper {
                 }
             };
         }
+    }
+
+    public void log(String s) {
+        Log.i(this.getClass().getSimpleName(), "- - - - :" + s);
     }
 }

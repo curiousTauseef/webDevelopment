@@ -4,7 +4,6 @@ import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -45,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     public void signIn(View v) {
         if (!authenHelper.isSignedIn()) {
             chooseAccount();
-        } else {
-            authenHelper.forgetAccount();
+        } else {// sign out:
+            authenHelper.signOut();
             setSignInEnablement(true);
             setAccountLabel("(not signed in)");
         }
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setAccountLabel(String label) {
-        log("setAccountLabel: " + label);
         TextView userLabel = (TextView) findViewById(R.id.main_tv_login);
         userLabel.setText(label);
     }
@@ -93,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
                     String accountName = data.getExtras().getString(AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
                         authenHelper.setAccountName(accountName);
-                        SharedPreferences.Editor editor = authenHelper.getSharedPreferences().edit();
-                        editor.putString(AuthenticateHelper.PREF_ACCOUNT_NAME, accountName);
-                        editor.commit();
                         onSignIn();
                     }
                 }

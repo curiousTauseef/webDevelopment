@@ -34,7 +34,7 @@ public class UserDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
-        myEndpointsAPI = ApiBuilderHelper.getEndpoints();
+        myEndpointsAPI = ApiBuilderHelper.getInstance().getEndpoints();
 
         String s;
         if (savedInstanceState == null) {

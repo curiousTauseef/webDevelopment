@@ -7,16 +7,19 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.ConflictException;
+import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.oauth.OAuthRequestException;
+import com.google.appengine.api.users.User;
 import com.junjunguo.aeep.backend.model.BlobAccess;
 import com.junjunguo.aeep.backend.model.Event;
+import com.junjunguo.aeep.backend.model.Person;
 import com.junjunguo.aeep.backend.model.QueryWrapper;
 import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.model.TaggedEvent;
-import com.junjunguo.aeep.backend.model.Person;
 import com.junjunguo.aeep.backend.model.UsersEvents;
 import com.junjunguo.aeep.backend.utility.Constant;
 
@@ -173,10 +176,10 @@ public class EventServices {
     private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
     @ApiMethod(httpMethod = "GET", path = "event/uploadurl")
-    public BlobAccess getUploadUrl() {
-        log("getUploadUrl called");
-        log("rul" + blobstoreService.createUploadUrl("/videoservice"));
-
+    public BlobAccess getUploadUrl(User user) throws OAuthRequestException {
+        if (user == null) {
+            throw new OAuthRequestException("NOT authorized! Please Sign in!");
+        }
         return new BlobAccess(blobstoreService.createUploadUrl("/videoservice"));
     }
 
@@ -213,7 +216,10 @@ public class EventServices {
      * @throws ConflictException the conflict exception
      */
     @ApiMethod(httpMethod = "POST", path = "event/create")
-    public Event createEvent(Event event) throws ConflictException {
+    public Event createEvent(Event event, User user) throws ConflictException, OAuthRequestException {
+        if (user == null) {
+            throw new OAuthRequestException("NOT authorized! Please Sign In!");
+        }
         if (false) {//TODO: check if already uploaded
             throw new ConflictException("event already uploaded!");
         }
@@ -231,7 +237,10 @@ public class EventServices {
      * @return the event
      */
     @ApiMethod(httpMethod = "PUT", path = "event/update")
-    public Event updateEvent(Event event) {
+    public Event updateEvent(Event event, User user) throws OAuthRequestException {
+        if (user == null) {
+            throw new OAuthRequestException("NOT authorized! Please Sign In!");
+        }
         ofy().save().entity(event).now();
         saveTaggedEvent(event);
         return event;
@@ -245,10 +254,13 @@ public class EventServices {
      * @return the event
      */
     @ApiMethod(httpMethod = "DELETE", path = "event/delete")
-    public Event deleteEventById(@Named("id") long id) {
+    public Event deleteEventById(@Named("id") long id, User user) throws OAuthRequestException, NotFoundException {
+        if (user == null) {
+            throw new OAuthRequestException("NOT authorized! Please login!");
+        }
         Event event = findEvent(id);
         if (event == null) {
-            return null;
+            throw new NotFoundException("Event with id = " + id + " not found");
         }
         deleteRelevent(event);
         ofy().delete().entity(event).now();

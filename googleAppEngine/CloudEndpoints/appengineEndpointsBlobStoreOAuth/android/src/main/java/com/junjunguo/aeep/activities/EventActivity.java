@@ -36,7 +36,7 @@ public class EventActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context = this;
-        myEndpointsAPI = ApiBuilderHelper.getEndpoints();
+        myEndpointsAPI = ApiBuilderHelper.getInstance().getEndpoints();
         initBtns();
         idET = (EditText) findViewById(R.id.event_et_id);
         infoTV = (TextView) findViewById(R.id.event_tv_info);

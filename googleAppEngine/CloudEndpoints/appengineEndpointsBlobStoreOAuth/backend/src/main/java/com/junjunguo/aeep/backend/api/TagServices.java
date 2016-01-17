@@ -5,6 +5,8 @@ import com.google.api.server.spi.config.ApiClass;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.config.Named;
+import com.google.appengine.api.oauth.OAuthRequestException;
+import com.google.appengine.api.users.User;
 import com.junjunguo.aeep.backend.model.Tag;
 import com.junjunguo.aeep.backend.utility.Constant;
 
@@ -47,7 +49,10 @@ public class TagServices {
 
 
     @ApiMethod(httpMethod = "POST", path = "tag")
-    public Tag createTag(@Named("tag") String tag) {
+    public Tag createTag(@Named("tag") String tag, User user) throws OAuthRequestException {
+        if (user == null) {
+            throw new OAuthRequestException("NOT authorized! Please Sign In!");
+        }
         Tag t = findTag(tag);
         if (t != null) {
             return t;                   // return tag from data store

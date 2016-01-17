@@ -41,7 +41,7 @@ public class EventAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_add);
         context = this;
-        myEndpointsAPI = ApiBuilderHelper.getEndpoints();
+        myEndpointsAPI = ApiBuilderHelper.getInstance().getEndpoints();
         String updateEvent;
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
