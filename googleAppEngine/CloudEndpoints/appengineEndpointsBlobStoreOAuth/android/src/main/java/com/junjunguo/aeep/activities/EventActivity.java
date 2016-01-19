@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.junjunguo.aeep.R;
 import com.junjunguo.aeep.backend.myEndpointsAPI.MyEndpointsAPI;
 import com.junjunguo.aeep.backend.myEndpointsAPI.model.Event;
 import com.junjunguo.aeep.util.ApiBuilderHelper;
+import com.junjunguo.aeep.util.AuthenticateHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,6 +56,10 @@ public class EventActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!AuthenticateHelper.getInstance().isSignedIn()) {
+                    Toast.makeText(EventActivity.this, "Please Sign In!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(new Intent(context, EventAddActivity.class));
             }
         });
@@ -85,6 +91,10 @@ public class EventActivity extends AppCompatActivity {
         //  delete a event
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!AuthenticateHelper.getInstance().isSignedIn()) {
+                    Toast.makeText(EventActivity.this, "Please Sign In!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String input = idET.getText().toString();
                 if (input.length() >= 1) {
                     try {
@@ -102,6 +112,10 @@ public class EventActivity extends AppCompatActivity {
         //  update a event
         updateBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (!AuthenticateHelper.getInstance().isSignedIn()) {
+                    Toast.makeText(EventActivity.this, "Please Sign In!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String input = idET.getText().toString();
                 if (input.length() >= 1) {
                     try {

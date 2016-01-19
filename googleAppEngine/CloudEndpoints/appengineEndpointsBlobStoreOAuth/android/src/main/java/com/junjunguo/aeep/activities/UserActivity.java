@@ -97,6 +97,7 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void updateService(final String email) {

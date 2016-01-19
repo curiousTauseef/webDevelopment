@@ -70,6 +70,7 @@ public class UserDetailActivity extends AppCompatActivity {
         confirmBtn = (Button) findViewById(R.id.user_detail_btn_confirm);
         infoTV = (TextView) findViewById(R.id.user_detail_tv_info);
         userSignedIn();
+
         if (!createNew) { // update
             emailEt.setKeyListener(null);
             emailEt.setText(user.getEmail());
@@ -103,6 +104,8 @@ public class UserDetailActivity extends AppCompatActivity {
     private void userSignedIn() {
         if (AuthenticateHelper.getInstance().getAccountName() != null) {
             //TODO
+            emailEt.setText(AuthenticateHelper.getInstance().getAccountName());
+            emailEt.setKeyListener(null);
         }
     }
 

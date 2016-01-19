@@ -41,8 +41,9 @@ public class ApiBuilderHelper {
     public MyEndpointsAPI getEndpoints() {
         MyEndpointsAPI.Builder builder =
                 new MyEndpointsAPI.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(),
-                        AuthenticateHelper.getInstance().getCredential()).setRootUrl(Constant.ROOT_URL)
-//                        getRequestInitializer()).setRootUrl(Constant.ROOT_URL)
+                        //                        AuthenticateHelper.getInstance().getCredential()).setRootUrl
+                        // (Constant.ROOT_URL)
+                        getRequestInitializer()).setRootUrl(Constant.ROOT_URL)
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(final AbstractGoogleClientRequest<?> abstractGoogleClientRequest)
@@ -61,7 +62,7 @@ public class ApiBuilderHelper {
      * @return an appropriate HttpRequestInitializer.
      */
     private HttpRequestInitializer getRequestInitializer() {
-        if (Constant.SIGN_IN_REQUIRED) {
+        if (AuthenticateHelper.getInstance().isSignedIn()) {
             log(AuthenticateHelper.getInstance().getCredential().toString());
             return AuthenticateHelper.getInstance().getCredential();
         } else {

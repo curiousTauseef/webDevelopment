@@ -157,6 +157,10 @@ public class EventAddActivity extends AppCompatActivity {
     }
 
     private void confirmAction() {
+        if (!AuthenticateHelper.getInstance().isSignedIn()) {
+            Toast.makeText(EventAddActivity.this, "Please Sign In!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Event e = new Event();
         String email = emailEt.getText().toString();
         String message = "";
@@ -200,6 +204,10 @@ public class EventAddActivity extends AppCompatActivity {
     }
 
     private void uploadFile(final Event e) {
+        if (!AuthenticateHelper.getInstance().isSignedIn()) {
+            Toast.makeText(EventAddActivity.this, "Please Sign In!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         new AsyncTask<URL, Void, String>() {
             @Override
             protected String doInBackground(URL... params) {

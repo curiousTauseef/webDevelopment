@@ -81,8 +81,6 @@ public class AuthenticateHelper {
         setSignedIn(false);
         sharedPreferences.edit().putString(PREF_ACCOUNT_NAME, null).apply();
         sharedPreferences.edit().putString(PREF_AUTH_TOKEN, null).apply();
-        //                sharedPreferences.edit().remove(PREF_ACCOUNT_NAME).apply();
-        //                sharedPreferences.edit().remove(PREF_AUTH_TOKEN).apply();
         credential.setSelectedAccountName(null);
 
     }
