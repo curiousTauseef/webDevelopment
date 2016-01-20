@@ -2,7 +2,7 @@
 
 ##Contents:
 
-###OAuth2 with Google account login + custom (username + password login)
+###OAuth2 with Google account login + FaceBook login
 
 ###Android Client + App Engine + Cloud Endpoints + DataStore + Objectify + Cloud Blobstore
 
