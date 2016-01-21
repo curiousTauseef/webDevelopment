@@ -20,12 +20,19 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.junjunguo.aeep.R;
 import com.junjunguo.aeep.model.LoginStatus;
 import com.junjunguo.aeep.util.AuthenticationHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
@@ -52,20 +59,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFB() {
-        callbackManager = CallbackManager.Factory.create();
         loginBtnFB = (LoginButton) findViewById(R.id.main_btn_fb_login);
-        loginBtnFB.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        loginBtnFB.setReadPermissions(Arrays.asList("public_profile, email"));
 
-            }
-        });
+        callbackManager = CallbackManager.Factory.create();
 
         loginBtnFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                authenHelper.setAccessTokenFB(loginResult.getAccessToken());
-                setSignInEnablement(false);
-                setAccountLabel(authenHelper.getAccountName());
+            public void onSuccess(final LoginResult loginResult) {
+                GraphRequest request = GraphRequest
+                        .newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                // Application code
+                                String email = "", name = "";
+                                try {
+                                    email = object.getString("email");
+                                    name = object.getString("name");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                if (email.length() > 1) {
+                                    authenHelper.setAccountName(email);
+                                } else if (name.length() > 1) {
+                                    authenHelper.setAccountName(name);
+                                } else {
+                                    authenHelper.setAccountName(loginResult.getAccessToken().getUserId());
+                                }
+                                log("json: " + object.toString());
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender");
+                request.setParameters(parameters);
+                request.executeAsync();
 
                 new AccessTokenTracker() {
                     @Override
@@ -79,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 };
+
+                authenHelper.setAccessTokenFB(loginResult.getAccessToken());
+                setSignInEnablement(false);
+                setAccountLabel(authenHelper.getAccountName());
             }
 
             @Override
@@ -114,12 +145,18 @@ public class MainActivity extends AppCompatActivity {
                 authenHelper.REQUEST_ACCOUNT_PICKER_G);
     }
 
+
     private void setSignInEnablement(boolean state) {
-        Button button = (Button) findViewById(R.id.main_btn_g_login);
-        if (state) {
-            button.setText("Sign In");
+        Button loginGbtn = (Button) findViewById(R.id.main_btn_g_login);
+        if (authenHelper.getLoginStatus() == LoginStatus.FACEBOOK) {
+            loginGbtn.setVisibility(View.INVISIBLE);
         } else {
-            button.setText("Sign Out");
+            loginGbtn.setVisibility(View.VISIBLE);
+            if (state) {
+                loginGbtn.setText("Sign In with Google");
+            } else {
+                loginGbtn.setText("Sign Out");
+            }
         }
     }
 

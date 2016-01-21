@@ -56,7 +56,7 @@ public class AuthenticationHelper {
      */
     public void setCredentialG() {
         setLoginStatus(LoginStatus.GOOGLE);
-        setAccountName(sharedPreferences.getString(PREF_ACCOUNT_NAME, null));
+        this.credentialG.setSelectedAccountName(accountName);
     }
 
     /**
@@ -66,13 +66,15 @@ public class AuthenticationHelper {
     public void setAccessTokenFB(AccessToken accessTokenFB) {
         this.accessTokenFB = accessTokenFB;
         setLoginStatus(LoginStatus.FACEBOOK);
-        setAccountName(accessTokenFB.getUserId());
+        //        Profile profile = Profile.getCurrentProfile();
+        //        setAccountName(accessTokenFB.getUserId());
     }
 
     public void setContext(Context context) {
         this.context = context;
         this.credentialG = GoogleAccountCredential.usingAudience(context, Constant.AUDIENCE_ID);
         setSharedPreferences(context.getSharedPreferences(TAG, 0));
+        setAccountName(sharedPreferences.getString(PREF_ACCOUNT_NAME, null));
     }
 
     /**

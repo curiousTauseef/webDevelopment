@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * This file is part of appengineEndpoints
- * <p/>
+ * <p>
  * Created by <a href="http://junjunguo.com">GuoJunjun</a> on January 07, 2016.
  */
 public class ApiBuilderHelper {
@@ -65,6 +65,9 @@ public class ApiBuilderHelper {
     private HttpRequestInitializer getRequestInitializer() {
         AuthenticationHelper helper = AuthenticationHelper.getInstance();
         if (helper.getLoginStatus() == LoginStatus.GOOGLE) {
+            log("google credential : " + helper.getCredentialG());
+            log("google  acc name : " + helper.getAccountName());
+            log("google credential name: " + helper.getCredentialG().getSelectedAccountName());
             return helper.getCredentialG();
         } else if (helper.getLoginStatus() == LoginStatus.FACEBOOK) {
             return helper.getCredentialForFB();
