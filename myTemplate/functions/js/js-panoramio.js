@@ -45,15 +45,16 @@ $('#my-btn').on('click', function () {
             jsonString += '{ "id":"' + array[i].getPhotoId() + '", "title":"' + array[i].getPhotoTitle() + '" },';
         }
     }
-    jsonString = jsonString.slice(0, -1);
-    jsonString += ']}';
-    //console.log(jsonString);
 });
 /**
  * make file ready
  */
 $('#my-btn-done').on('click', function () {
+    jsonString = jsonString.slice(0, -1);
+    jsonString += ']}';
+    console.log(jsonString);
     download(jsonString, 'myphotos.txt', 'text/plain');
+    //jsonString = '{ "photos" : ['; // start over again
 });
 /** download the file: convert data to text file
  *
@@ -69,9 +70,9 @@ function download(text, name, type) {
 }
 
 
-// load image
+// ------------------- load image ---------------
 
-var textfil = './doc/myphotos.txt';
+var textfil = './doc/mylikesphotos.txt';
 
 var reader = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
 var jsonString;
@@ -92,7 +93,6 @@ function getJSONobject() {
     if (reader.readyState == 4) {
         jsonString = reader.responseText;
         array      = JSON.parse(jsonString).photos;
-        console.log(array);
         loadimages(array);
     } else {
         // error occurred
@@ -128,7 +128,7 @@ function addImage(title, imgsrc) {
 }
 
 
-loadJSONfile(textfil);
+//loadJSONfile(textfil);
 
 /*
  original
