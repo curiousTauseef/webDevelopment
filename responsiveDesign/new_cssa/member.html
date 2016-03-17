@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="img/ico" media="screen">
+    <title>NTNU CSSA</title>
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <!-- scripts-->
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/cssa-login.js"></script>
+    <script src="js/cssa-socialmedia.js"></script>
+</head>
+<body>
+<!-- #header -->
+<div id="header">
+    <div id="title">
+        <div class="content">
+            <div id="logo-left"><a href=""><img src="images/cssa_logo_new.jpg"></a></div>
+            <div id="logo-right"><a href="">
+                NTNU<br>
+                Chinese Student and Scholar Association</a>
+            </div>
+        </div>
+    </div>
+    <nav id="navigation" class="navbar navbar-default">
+        <div class="container-fluid content">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="cssa.no">CSSA</a>-->
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/news">News</a></li>
+                    <li><a href="/member/student/new2015">New Student</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/documents">Documents</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/board">Board Members 2015-2016</a></li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<c:choose>-->
+                    <!--<c:when test="${empty cookie.email}">-->
+                    <li id="nav-login"><a role="button"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
+                    </li>
+                    <li id="nav-register"><a role="button"><span class="glyphicon glyphicon-user"></span> Join
+                                                                                                          Us</a>
+                    </li>
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                    <!--<li id="nav-member"><a role="button">${cookie.email.value}</a></li>-->
+                    <!--<li id="nav-logout"><a href="/user/logout" role="button"><span-->
+                    <!--class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+                    <!--</c:otherwise>-->
+                    <!--</c:choose>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="login-modal"></div>
+</div>
+<!-- #header end -->
+
+<div class="container">
+
+    <div class="row" id="board">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">CSSA 2015-2016 board members</h1>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/lili.jpg"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>李力</h3>
+
+                    <p>主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <a href="https://www.facebook.com/li.li.5070276"><i class="fa fa-facebook-official"> </i></a>
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <a href="https://no.linkedin.com/in/li-li-00a298b2"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="mailto:leo.china.desire@gmail.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>包晨</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:chenb@stud.ntnu.no"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>郭峰</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:898290878@qq.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/guojunjun.jpg"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>郭军君</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <a href="http://junjunguo.com/"><i class="fa fa-home"></i></a>
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <a href="https://www.linkedin.no/in/guojunjun"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="mailto:guojunjun@gmail.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>马建宇</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:jianyu_ma@hotmail.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>孙天齐</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:ninosun@126.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>史明树</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:mingshu.shi@ntnu.no"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>王启迪</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:qw9201@hotmail.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>魏巍</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:weiwei18w@hotmail.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>郁佳玲</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:yogaling@icloud.com"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <div class="thumbnail">
+                <img src="/images/profile/profile.png"
+                     alt="board of directors">
+
+                <div class="caption text-center board-member">
+                    <h3>赵梓杰</h3>
+
+                    <p>副主席</p>
+
+                    <p class="board-member-social">
+                        <!--<a href="#"><i class="fa fa-home"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weixin"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-weibo"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-facebook-official"> </i></a>-->
+                        <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+                        <!--<a href="#"><i class="fa fa-linkedin-square"></i></a>-->
+                        <a href="mailto:chits250192@live.cn"><i class="fa fa-envelope"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--<div id="home-image-show" class="container">-->
+    <!--&lt;!&ndash;<div class="content">&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash; home image slider show: use mycarousel to overlay text&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<div id="mycarousel" class="carousel slide" data-ride="carousel">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="carousel-inner">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="item active" id="home-image-show-slider">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div id="about-img" class="carousel-caption">&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash; controls &ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<a id="nav-slider-left" class="left carousel-control">&ndash;&gt;-->
+    <!--&lt;!&ndash;<i class="glyphicon glyphicon-chevron-left"></i>&ndash;&gt;-->
+    <!--&lt;!&ndash;</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;<a id="nav-slider-right" class="right carousel-control">&ndash;&gt;-->
+    <!--&lt;!&ndash;<i class="glyphicon glyphicon-chevron-right"></i>&ndash;&gt;-->
+    <!--&lt;!&ndash;</a>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+<!--<div id="home-news">-->
+    <!--<div class="content row">-->
+        <!--&lt;!&ndash; home news picture&ndash;&gt;-->
+        <!--<div class="floater col-md-8">-->
+            <!--<div id="home-news-img" class="news-content">-->
+                <!--<c:choose>-->
+                    <!--<c:when test="${not empty newsContentList[0].picName}">-->
+                        <!--<a href="/news/detail?id=${news.id}">-->
+                            <!--<img class="img-responsive"-->
+                                 <!--src="http://media.chun.no/cssa/images/news/${newsContentList[0].picName}">-->
+                        <!--</a>-->
+
+                        <!--<h2>${newsContentList[0].picDescription}</h2>-->
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                        <!--<a href="/news/detail?id=${news.id}">-->
+                            <!--<img class="img-responsive" src="../images/happynewyear.jpg">-->
+                        <!--</a>-->
+                    <!--</c:otherwise>-->
+                <!--</c:choose>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="floater col-md-4">-->
+            <!--<div id="home-news-recent">-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+                <!--<h1>Recent News</h1>-->
+
+                <!--<c:forEach items="${newsList}" var="news">-->
+                    <!--<p><a href="news/detail?id=${news.id}">[-->
+                        <!--<fmt:formatDate pattern="yyyy-MM-dd"-->
+                                        <!--value="${news.createTime.getTime()}"/>-->
+                                                           <!--]&nbsp;&nbsp;${news.title}</a>-->
+                    <!--</p>-->
+                <!--</c:forEach>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<script src="/js/cssa-index.js"></script>-->
+<!-- #Footer -->
+<div id="footer">
+    <div class="content row">
+        <!-- Left footer-->
+        <div class="floater col-md-4">
+            <div id="footer-left">
+                <p>Norwegian University of Science and Technology</p>
+
+                <p>Chinese Student and Scholar Association</p>
+
+                <p>挪威科技大学 中国学生学者联合会</p>
+
+            </div>
+        </div>
+        <!-- Middle footer -->
+        <div class="floater col-md-4">
+            <div id="footer-middle">
+                <ul>
+                    <li><a href="http://www.chinese-embassy.no/" target="_blank"><img src="images/emblem.png">Chinese
+                                                                                                              Embassy in
+                                                                                                              Norway</a>
+                    </li>
+                    <li><a href="http://www.stfk.no/" target="_blank"><img src="images/sor-trondelag.png">Sør-trøndelag
+                                                                                                          fylkeskommune</a>
+                    </li>
+                    <li><a href="http://www.ntnu.no/" target="_blank"><img src="images/ntnu-logo.jpg">Norges
+                                                                                                      teknisk-naturvitenskapelige
+                                                                                                      universitet</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- Right footer-->
+        <div class="floater col-md-4">
+            <div id="footer-right">
+                <ul class="socialicons">
+                    <li><a href="https://twitter.com/chunfantasy" target="_blank" class="icon fa-twitter">
+                        <span class="label">Twitter</span>
+                    </a></li>
+                    <li><a id="socialicon-fb" href="https://www.facebook.com/CSSA.NTNU" target="_blank"
+                           class="icon fa-facebook">
+                        <span class="label">Facebook</span>
+                    </a></li>
+                    <li><a id="socialicon-qq" href="#" target="_blank" class="icon fa-qq">
+                        <span class="label">QQ</span>
+                    </a></li>
+                    <li><a href="http://www.weibo.com/ntnucssa" target="_blank" class="icon fa-weibo">
+                        <span class="label">Wei Bo</span>
+                    </a></li>
+                </ul>
+                <div id="copyright"><a href="" class="icon fa-copyright">2007-2015 NTNU CSSA 中国学生学者联合会</a></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="web-designer" class="col-md-12">
+    <p>Website Administrator:
+        <a href="https://www.facebook.com/li.li.5070276" target="_blank">Li Li</a></p>
+
+    <p>Designed By:
+        <a href="http://junjunguo.com" target="_blank">Junjun Guo</a></p>
+
+    <p>All Supported By:
+        <a href="http://chun.no" target="_blank">Chun Fun</a></p>
+</div>
+<!-- #footer end-->
+
+</body>
+</html>

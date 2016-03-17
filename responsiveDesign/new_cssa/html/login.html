@@ -1,0 +1,210 @@
+<!-- Modal HTML -->
+<div id="cssaLoginModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                <h4 class="modal-title form-signin-heading">Please Login to NTNU CSSA</h4>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" class="form-signin" data-toggle="validator"
+                      role="form">
+                    <div id="form-group-email-login">
+                        <label for="inputEmail" class="sr-only">Email
+                            address</label>
+                        <input type="email" id="inputEmailLogin" class="form-control"
+                               placeholder="Email address" required
+                               oninvalid="this.setCustomValidity('Please fill out your Email')"
+                               oninput="setCustomValidity('')"
+                               autofocus>
+                        <span id="form-span-email-login" aria-hidden="true"></span>
+                    </div>
+                    <div id="form-group-password-login">
+                        <label for="inputPassword"
+                               class="sr-only">Password</label>
+                        <input type="password" id="inputPasswordLogin"
+                               class="form-control" placeholder="Password"
+                               required
+                               oninvalid="this.setCustomValidity('Please fill out your Password')"
+                               oninput="setCustomValidity('')">
+                        <span id="form-span-password-login" aria-hidden="true"></span>
+                    </div>
+                    <p id="message-from-server"></p>
+                    <button id="loginSubmit"
+                            class="btn btn-lg btn-primary btn-block"
+                            type="submit">
+                        <span id="login-submit-btn-span"></span> Login
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal welcome back-->
+<div class="modal fade" id="welcome-back" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a type="button" class="close hide-t-c" aria-hidden="true">×</a>
+                <h4 class="modal-title">Welcome Back</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+                <h4 id="welcome-back-user"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-lg"
+                        data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!--register-->
+
+<div class="modal fade" id="cssaRegisterModal">
+    <div class="modal-dialog modal-lg">
+        <div class="row modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title form-signin-heading">Please Sign Up</h4>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                <form role="form" id="registerForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-first-name">
+                                <input type="text" id="inputFirstName" class="form-control input-lg"
+                                       placeholder="First Name" tabindex="1" autofocus pattern=".{1,16}" required
+                                       title="1 to 16 characters">
+                                <span id="form-span-first-name" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-last-name">
+                                <input type="text" id="inputLastName" class="form-control input-lg"
+                                       placeholder="Last Name" tabindex="2" pattern=".{1,16}" required
+                                       title="1 to 16 characters">
+                                <span id="form-span-last-name" aria-hidden="true"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<input type="text"  id="display_name" class="form-control input-lg"-->
+                    <!--placeholder="Display Name" tabindex="3">-->
+                    <!--</div>-->
+                    <div id="form-group-email">
+                        <input type="email" id="inputEmail" class="form-control input-lg"
+                               placeholder="Email Address" tabindex="4" required>
+                        <span id="form-span-email" aria-hidden="true"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-password">
+                                <input type="password" id="inputPassword" class="form-control input-lg"
+                                       placeholder="Password" tabindex="5" pattern=".{4,}" required
+                                       title="password too short !">
+                                <span id="form-span-password" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div id="form-group-password-confirm">
+                                <input type="password" id="inputPasswordConfirm"
+                                       class="form-control input-lg" placeholder="Confirm Password"
+                                       tabindex="6" required>
+                                <span id="form-span-password-confirm" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            By clicking <strong class="label label-primary">Register</strong>, you agree to the
+                            <a href="#" id="btn-t-c">Terms and Conditions</a>
+                            set out by this site.
+                        </div>
+                    </div>
+
+                    <!--<hr class="colorgraph">-->
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg"
+                                    tabindex="7" id="registerSubmit">
+                                <span id="register-submit-btn-span"></span> Register
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <button type="button" class="btn btn-default btn-block btn-lg" data-dismiss="modal">Close
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- terms and conditions Modal -->
+    <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close hide-t-c" aria-hidden="true">×</a>
+                    <h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
+                </div>
+                <div class="modal-body">
+                    <p>NTNU CSSA is Chinese Student and Scholar Association at Norwegian University of Science Technology.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary hide-t-c" aria-hidden="true">I Agree</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!-- Modal register succeed -->
+    <div class="modal fade" id="register-succeed" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a type="button" class="close hide-t-c" aria-hidden="true">×</a>
+                    <h4 class="modal-title">Register succeed</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Congratulations: </p>
+                    <h4 id="congratulations-user"></h4>
+
+                    <p>You are now successfully registered</p>
+
+                    <h5>Please sign up!</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-lg"
+                            data-dismiss="modal">Close
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+</div>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" type="img/ico" media="screen">
+    <title>NTNU CSSA</title>
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css"/>
+    <link rel="stylesheet" href="../css/style.css"/>
+
+    <!-- scripts-->
+    <script src="../js/jquery-1.11.2.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/cssa-login.js"></script>
+    <script src="../js/cssa-socialmedia.js"></script>
+</head>
+<body>
+<!-- #header -->
+<div id="header">
+    <div id="title">
+        <div class="content">
+            <div id="logo-left"><a href=""><img src="../images/cssa_logo_new.jpg"></a></div>
+            <div id="logo-right"><a href="">
+                NTNU<br>
+                Chinese Student and Scholar Association</a>
+            </div>
+        </div>
+    </div>
+    <nav id="navigation" class="navbar navbar-default">
+        <div class="container-fluid content">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="cssa.no">CSSA</a>-->
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/news">News</a></li>
+                    <li><a href="/member/student/new2015">New Student</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/documents">Documents</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/board">Board Members 2015-2016</a></li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<c:choose>-->
+                    <!--<c:when test="${empty cookie.email}">-->
+                    <li id="nav-login"><a role="button"><span class="glyphicon glyphicon-log-in"></span> Sign In</a>
+                    </li>
+                    <li id="nav-register"><a role="button"><span class="glyphicon glyphicon-user"></span> Join
+                                                                                                          Us</a>
+                    </li>
+                    <!--</c:when>-->
+                    <!--<c:otherwise>-->
+                    <!--<li id="nav-member"><a role="button">${cookie.email.value}</a></li>-->
+                    <!--<li id="nav-logout"><a href="/user/logout" role="button"><span-->
+                    <!--class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+                    <!--</c:otherwise>-->
+                    <!--</c:choose>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="login-modal"></div>
+</div>
+<!-- #header end -->
+
+<!-- Page Content -->
+<div class="container">
+    <div class="gap-top-down">
+        <h1 class="text-center">PHOTO GALLERIES</h1>
+    </div>
+
+    <div class="content gap-top-down flickr-slider">
+        <h3 class="text-center">2016 Chinese New Year Gala</h3>
+        <p class="text-center">2016 特隆赫姆猴年春晚</p>
+
+        <div id="carousel-flickr-2016" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-flickr-2016" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-flickr-2016" data-slide-to="1"></li>
+                <li data-target="#carousel-flickr-2016" data-slide-to="2"></li>
+                <li data-target="#carousel-flickr-2016" data-slide-to="3"></li>
+                <li data-target="#carousel-flickr-2016" data-slide-to="4"></li>
+                <li data-target="#carousel-flickr-2016" data-slide-to="5"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div id="flickr-slides-2016" class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img class="img-responsive" src="../images/events/24496968659_e8c2266d59_b.jpg"
+                         alt="image">
+                    <div class="carousel-caption">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="../images/events/24746672232_1d93349d93_b.jpg"
+                         alt="image">
+                    <div class="carousel-caption">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="../images/events/24746680932_46943873f1_b.jpg"
+                         alt="image">
+                    <div class="carousel-caption">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="../images/events/24864554425_8598cc55a8_b.jpg"
+                         alt="image">
+                    <div class="carousel-caption">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="../images/events/24864567065_8841fe5193_b.jpg"
+                         alt="image">
+                    <div class="carousel-caption">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <img class="img-responsive" src="../images/events/24237721003_5c161f3621_b.jpg"
+                         alt="image">
+                    <div class="carousel-caption">
+                        <div>
+                            <h4><a href="https://www.flickr.com/photos/guojunjun"
+                                   class="icon fa-flickr">
+                                View photo gallery at Flickr</a></h4>
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-flickr-2016" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-flickr-2016" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+    <div id="slider-btn" class="content gap-top-down">
+        <button type="button" class="btn btn-default">2016 Chinese New Year Gala</button>
+    </div>
+
+</div>
+<script type="application/javascript" src="../js/cssa-flickr-slider.js"></script>
+
+
+<!-- #Footer -->
+<div id="footer">
+    <div class="content row">
+        <!-- Left footer-->
+        <div class="floater col-md-4">
+            <div id="footer-left">
+                <p>Norwegian University of Science and Technology</p>
+
+                <p>Chinese Student and Scholar Association</p>
+
+                <p>挪威科技大学 中国学生学者联合会</p>
+
+            </div>
+        </div>
+        <!-- Middle footer -->
+        <div class="floater col-md-4">
+            <div id="footer-middle">
+                <ul>
+                    <li><a href="http://www.chinese-embassy.no/" target="_blank"><img src="../images/emblem.png">Chinese
+                                                                                                                 Embassy in
+                                                                                                                 Norway</a>
+                    </li>
+                    <li><a href="http://www.stfk.no/" target="_blank"><img src="../images/sor-trondelag.png">Sør-trøndelag
+                                                                                                             fylkeskommune</a>
+                    </li>
+                    <li><a href="http://www.ntnu.no/" target="_blank"><img src="../images/ntnu-logo.jpg">Norges
+                                                                                                         teknisk-naturvitenskapelige
+                                                                                                         universitet</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- Right footer-->
+        <div class="floater col-md-4">
+            <div id="footer-right">
+                <ul class="socialicons">
+                    <li><a href="https://twitter.com/chunfantasy" target="_blank" class="icon fa-twitter">
+                        <span class="label">Twitter</span>
+                    </a></li>
+                    <li><a id="socialicon-fb" href="https://www.facebook.com/CSSA.NTNU" target="_blank"
+                           class="icon fa-facebook">
+                        <span class="label">Facebook</span>
+                    </a></li>
+                    <li><a id="socialicon-qq" href="#" target="_blank" class="icon fa-qq">
+                        <span class="label">QQ</span>
+                    </a></li>
+                    <li><a href="http://www.weibo.com/ntnucssa" target="_blank" class="icon fa-weibo">
+                        <span class="label">Wei Bo</span>
+                    </a></li>
+                </ul>
+                <div id="copyright"><a href="" class="icon fa-copyright">2007-2015 NTNU CSSA 中国学生学者联合会</a></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="web-designer" class="col-md-12">
+    <p>Website Administrator:
+        <a href="https://www.facebook.com/li.li.5070276" target="_blank">Li Li</a></p>
+
+    <p>Designed By:
+        <a href="http://junjunguo.com" target="_blank">Junjun Guo</a></p>
+
+    <p>All Supported By:
+        <a href="http://chun.no" target="_blank">Chun Fun</a></p>
+</div>
+<!-- #footer end-->
+
+</body>
+</html>
